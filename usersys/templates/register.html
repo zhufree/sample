@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block title %}注册{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="jumbotron">
+  <h1>你已经注册过啦！</h1>
+  <p><a class="btn btn-primary btn-lg" href="/" role="button">酷爱看看大圣的美图吧wwww</a></p>
+</div>
+{% else %}
+<form method='POST' action='.' class='form-horizontal row'>{% csrf_token %}
+{% for field in form %}
+<div class="form-group col-md-12 col-md-offset-1">
+	<label  class="col-sm-1 control-label" for="id_{{field.name}}">{{field.label}}:</label>
+	<div class="col-sm-10 ">{{field}}</div>
+	<div class="col-sm-10 text-danger">{{ field.errors }}</div>
+</div>
+{% endfor %}
+<div class="form-group col-md-10 col-md-offset-4">
+	<input type='submit' class="col-md-8 col-md-offset-2 btn btn-lg btn-primary" value='Register'/>
+</div>
+</form>
+{% endif %}
+{% endblock %}

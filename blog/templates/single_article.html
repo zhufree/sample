@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{article.title}}{% endblock %}
+{% block content %}
+{% if article %}
+<div class="page-header">
+  <h1>{{article.title}}
+      {% for tag in article.tags.all %}
+      <small><a href="/blog/tag/{{tag.id}}"><span class="label label-default">{{tag}}</span></a></small>
+      {% endfor %}
+  </h1>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body">
+      {{ article.content|safe }}
+      <footer>at <cite title="Source Title">{{article.time|date:"H:i:s"}}</cite></footer>
+  </div>
+</div>
+
+
+{% endif %}
+{% endblock %}
