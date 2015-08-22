@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 """
 Django settings for sample project.
 
@@ -71,7 +71,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'zh'
+LANGUAGE_CODE = 'zh-CN'
 
 TIME_ZONE = 'GMT'
 

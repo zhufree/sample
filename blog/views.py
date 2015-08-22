@@ -1,10 +1,9 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, Http404
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from blog.models import *
-import markdown
+# import markdown
 # Create your views here.
 
 
@@ -17,7 +16,11 @@ def index(request):
 
 def single_blog(request, id):
     cur_article = get_object_or_404(Article, pk=id)
-    return render_to_response('single_article.html', RequestContext(request, {'article': cur_article}))
+    comments=cur_article.has_comments.all().order_by('id')
+    return render_to_response('single_article.html', RequestContext(request, {
+        'article': cur_article,
+        'comments': comments,
+    }))
 
 
 def tag_blogs(request, id):
@@ -27,3 +30,19 @@ def tag_blogs(request, id):
         'articles': articles,
         'tag': cur_tag,
     }))
+
+
+@csrf_protect
+def post(request):
+    if request.method == 'POST':
+        if request.POST.get('post_type') == 'post_comment':
+            new_comment = Comment.objects.create(
+                email=request.POST.get('email', 'default@example.com'),
+                name=request.POST.get('name', 'someone'),
+                content=request.POST.get('content', ''),
+                article=Article.objects.get(id=request.POST.get('article_id'))
+            )
+            new_comment.save()
+            return HttpResponseRedirect('/blog/article/%s' % request.POST.get('article_id'))
+    else:
+        raise Http404

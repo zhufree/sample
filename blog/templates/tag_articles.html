@@ -2,23 +2,23 @@
 {% block title %}{{tag.name}}{% endblock %}
 {% block content %}
 {% if tag %}
-<div class="jumbotron">
-  <h1>{{tag.name}}</h1>
+<div class="jumbotron col-md-10 col-md-offset-1">
+  <h1 align="center">{{tag.name}}</h1>
 </div>
 {% endif %}
 {% for article in articles %}
-<div class="panel panel-default">
+<div class="panel panel-default col-md-10 col-md-offset-1">
     <div class="panel-heading bg-primary">
-        <h3 class="panel-title"><a href="article/{{article.id}}/">{{article.title}}</a>
+        <h3 class="panel-title"><a href="/blog/article/{{article.id}}/">{{article.title}}</a>
         {% for tag in article.tags.all %}
-        <span class="label label-default">{{tag}}</span>
+        <a href="/blog/tag/{{tag.id}}"><span class="label label-default">{{tag}}</span></a>
         {% endfor %}
         </h3>
     </div>
     <div class="panel-body">
         {{ article.content|safe|truncatewords_html:20 }}
         <br>
-        <a href="article/{{article.id}}/">查看更多</a>
+        <a href="/blog/article/{{article.id}}/">鏌ョ湅鏇村</a>
     </div>
     <footer>at <cite title="Source Title">{{article.time|date:"H:i:s"}}</cite></footer>
 </div>

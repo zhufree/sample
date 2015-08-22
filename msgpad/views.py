@@ -20,4 +20,4 @@ def index(request):
         return HttpResponseRedirect('/msg/')
     else:
         msgs = Message.objects.all().order_by('-time')
-        return render_to_response('msgindex.html', RequestContext(request, {'msgs': msgs}))
+        return render_to_response('msg_index.html', RequestContext(request, {'msgs': msgs}))

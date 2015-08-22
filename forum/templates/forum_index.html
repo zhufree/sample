@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}论坛{% endblock %}
+{% block content %}
+{% for post in posts %}
+<div class="list-group col-md-10 col-md-offset-1">
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">
+            <span class="label label-info">{{post.topic}}</span>
+            <a href="p/{{post.id}}/">{{post.title}}</a>
+            <span class="badge">create by {{post.author.username}}</span>
+            <span class="badge">{{post.reply_count}}</span>
+            <span class="badge">{{post.last_reply_time}}</span>
+        </h4>
+    </div>
+</div>
+{% endfor %}
+<form class="form-horizontal panel col-md-10 col-md-offset-1 container" method="POST" action="post/">{% csrf_token %}
+
+    <div class="form-group col-md-12">
+        <label  class="control-label" for="exampleTitle">标题</label>
+        <input type="text" name="title" value="" class="form-control" id="exampleTitle" placeholder="">
+    </div>
+    <div class="form-group col-md-12">
+        <label  class="control-label" for="exampleContent">正文</label>
+        <textarea rows="6" name="content" class="form-control" id="exampleContent" placeholder=""></textarea>
+    </div>
+    <div class="form-group col-md-10">
+        <label  class="control-label" for="exampleContent">选择话题</label>
+        <select class="form-control" name="belong_to_topic">
+            {% for topic in topics %}
+                <option value="{{topic.id}}">{{topic.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <input type="hidden" name="post_type" value="post_post"/>
+        <input type="submit" class="btn btn-lg btn-primary" value="发布"/>
+    </div>
+</form>
+{% endblock %}
