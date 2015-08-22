@@ -60,4 +60,4 @@ target/
 .sqlite3
 
 .idea/
-.migration/
+*.migrations/
