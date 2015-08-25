@@ -19,6 +19,11 @@ def single_post(request, id):
     })
 
 
+def show_topic(request,id):
+    cur_topic = Topic.objects.get(pk=id)
+    posts=cur_topic.has_posts.all()
+    return render(request,'topic_index.html')
+
 @login_required
 def post(request):
     if request.method == 'POST':

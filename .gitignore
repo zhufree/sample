@@ -57,7 +57,7 @@ docs/_build/
 target/
 
 # Database
-.sqlite3
+*.sqlite3
 
 .idea/
 *.migrations/

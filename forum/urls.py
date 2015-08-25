@@ -7,7 +7,7 @@ urlpatterns = patterns(
     # Examples:
     url(r'^$', index),
     url(r'^p/(?P<id>\d+)/$', single_post),
-    #url(r'^tag/(?P<id>\d+)/$', tag_blogs),
+    url(r'^topic/(?P<id>\d+)/$', show_topic),
     url(r'^post/$', post),
 
 )
