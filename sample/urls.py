@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^accounts/', include('usersys.urls')),
     url(r'^blog/', include('blog.urls')),
     url(r'^forum/', include('forum.urls')),
+    url(r'^gallery/', include('gallery.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve'),

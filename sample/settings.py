@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'usersys',
     'blog',
     'forum',
+    'gallery',
 )
 
 MIDDLEWARE_CLASSES = (

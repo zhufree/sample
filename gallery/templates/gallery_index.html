@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}画廊{% endblock %}
+{% block content %}
+<form class="form-horizontal panel container" method="POST" action=".">{% csrf_token %}
+	<div class="form-group">
+		<label  class="control-label" for="exampleTitle">标题（必填，每张图片都必须有名字哦）：</label>
+		<input type='text' name='title' value="" class="form-control" id="exampleTitle" placeholder=""/>
+	</div>
+	<div class="form-group">
+		<label  class="control-label" for="exampleLink">链接（不支持直接上传，可以先把图片发布到堆糖等网站再把链接粘贴过来，谢谢合作）：</label>
+		<input type='text' name='url' value="" class="form-control" id="exampleLink" placeholder=""/>
+	</div>
+	<div class="form-group">
+		<label  class="control-label" for="exampleTag">标签（多个可用空格隔开）：</label>
+		<input type='text' name='tags' value="" class="form-control" id="exampleTag" placeholder=""/>
+		<label  class="control-label" for="exampleTag">最好使用含义明确的名词或形容词，能够指明图片来源和图片类型最好。已有的标签见下</label>
+	</div>
+	<div class="form-group col-md-2">
+		<input type="hidden" name="next" value="/"/>
+		<input type="submit" class="btn btn-lg btn-primary" value="发布"/>
+	</div>
+</form>
+<ul class="list-group">
+{% for tag in tags %}
+<a href="/t/{{tag.id}}/"><li class="list-group-item"><span class="badge">{{tag.count}}</span>{{tag.name}}</li></a>
+{% endfor %}
+</ul>
+{% endblock %}

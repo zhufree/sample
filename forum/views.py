@@ -1,11 +1,12 @@
-from django.shortcuts import render,Http404
+from django.shortcuts import render, Http404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from models import *
 # Create your views here.
 
+
 def index(request):
-    topics=Topic.objects.all()
+    topics = Topic.objects.all()
     posts = Post.objects.all().order_by('last_reply_time')
     return render(request, 'forum_index.html', {'posts': posts, 'topics': topics})
 
@@ -19,10 +20,11 @@ def single_post(request, id):
     })
 
 
-def show_topic(request,id):
+def show_topic(request, id):
     cur_topic = Topic.objects.get(pk=id)
-    posts=cur_topic.has_posts.all()
-    return render(request,'topic_index.html')
+    posts = cur_topic.has_posts.all()
+    return render(request, 'single_topic.html', {'topic': cur_topic, 'posts': posts})
+
 
 @login_required
 def post(request):
@@ -41,7 +43,7 @@ def post(request):
         elif post_type == 'post_reply':
             cur_post = Post.objects.get(id=request.POST.get('post_id'))
             if request.POST.get('reply_id'):
-                cur_reply=Reply.objects.get(id=int(request.POST.get('reply_id'))-1)
+                cur_reply = Reply.objects.get(id=int(request.POST.get('reply_id')) - 1)
                 new_reply = Reply.objects.create(
                     author=request.user,
                     floor_num=cur_post.reply_count+2,
@@ -57,7 +59,7 @@ def post(request):
                     to_post=cur_post,
                 )
             new_reply.save()
-            cur_post.reply_count+=1
+            cur_post.reply_count += 1
             cur_post.save()
             return HttpResponseRedirect('/forum/p/%d/' % cur_post.id)
     else:

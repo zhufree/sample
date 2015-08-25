@@ -5,7 +5,7 @@
 <div class="list-group col-md-10 col-md-offset-1">
     <div class="list-group-item">
         <h4 class="list-group-item-heading">
-            <span class="label label-info">{{post.topic}}</span>
+            <span class="label label-info"><a href="/forum/topic/{{post.topic.id}}">{{post.topic}}</a> </span>
             <a href="p/{{post.id}}/">{{post.title}}</a>
             <span class="badge">create by {{post.author.username}}</span>
             <span class="badge">{{post.reply_count}}</span>

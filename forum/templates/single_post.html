@@ -5,7 +5,7 @@
 <div class="panel panel-default col-md-10 col-md-offset-1">
     <div class="panel-heading">
         <h4>
-            <span class="label label-info">{{post.topic}}</span>
+            <span class="label label-info"><a href="/forum/topic/{{post.topic.id}}">{{post.topic}}</a></span>
             <a href="/forum/p/{{post.id}}/">{{post.title}}</a>
             <span class="badge">create by {{post.author.username}}</span>
             <span class="badge">{{post.reply_count}}</span>
@@ -34,9 +34,8 @@
 <form class="form-horizontal panel col-md-10 col-md-offset-1 container" method="POST" action="/forum/post/">{% csrf_token %}
     <div class="form-group col-md-12">
         <label  class="control-label" for="exampleContent"></label>
-        <br/><br/>
-        <textarea rows="6" name="content" class="form-control" id="exampleContent" placeholder="">
-        </textarea>
+        <br><br/>
+        <textarea rows="6" name="content" class="form-control" id="exampleContent"></textarea>
     </div>
     <div class="form-group col-md-4" id="post_field">
         <input type="hidden" name="post_type" value="post_reply"/>
@@ -60,7 +59,7 @@ function cause_reply(obj){
     new_inp.setAttribute("name", "reply_id");
     new_inp.setAttribute("value", reply_floor);
     $('#post_field').append(new_inp);
-    $("textarea").append("回复"+reply_floor+"楼："+quote_reply_content);
+    $("textarea").append("回复"+reply_floor+"楼：<br>"+quote_reply_content+"<br>");
 
 }
 </script>

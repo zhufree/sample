@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{topic.name}}{% endblock %}
+{% block content %}
+<div class="jumbotron col-md-10 col-md-offset-1" align="center">
+  <h1>{{topic.name}}</h1>
+</div>
+<div class="list-group col-md-10 col-md-offset-1">
+    {% for post in posts %}
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">
+            <span class="label label-info">{{post.topic}}</span>
+            <a href="/forum/p/{{post.id}}/">{{post.title}}</a>
+            <span class="badge">create by {{post.author.username}}</span>
+            <span class="badge">{{post.reply_count}}</span>
+            <span class="badge">{{post.last_reply_time}}</span>
+        </h4>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
