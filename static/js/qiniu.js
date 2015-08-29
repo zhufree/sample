@@ -1,7 +1,6 @@
 /*global plupload ,mOxie*/
 /*global ActiveXObject */
 /*exported Qiniu */
-/*exported QiniuJsSDK */
 
 function QiniuJsSDK() {
 
@@ -247,12 +246,6 @@ function QiniuJsSDK() {
         that.key_handler = typeof op.init.Key === 'function' ? op.init.Key : '';
         this.domain = op.domain;
         var ctx = '';
-        var speedCalInfo = {
-            isResumeUpload: false,
-            resumeFilesize: 0,
-            startTime: '',
-            currentTime: ''
-        };
 
         var reset_chunk_size = function() {
             var ie = that.detectIEVersion();
@@ -318,7 +311,7 @@ function QiniuJsSDK() {
         };
 
         plupload.extend(option, op, {
-            url: 'http://upload.qiniu.com',
+            url: 'http://up.qiniu.com',
             multipart_params: {
                 token: ''
             }
@@ -335,7 +328,7 @@ function QiniuJsSDK() {
             var auto_start = up.getOption && up.getOption('auto_start');
             auto_start = auto_start || (up.settings && up.settings.auto_start);
             if (auto_start) {
-                plupload.each(files, function(i, file) {
+                $.each(files, function(i, file) {
                     up.start();
                 });
             }
@@ -343,11 +336,11 @@ function QiniuJsSDK() {
         });
 
         uploader.bind('BeforeUpload', function(up, file) {
-            file.speed = file.speed || 0; // add a key named speed for file obj
+
             ctx = '';
 
             var directUpload = function(up, file, func) {
-                speedCalInfo.startTime = new Date().getTime();
+
                 var multipart_params_obj;
                 if (op.save_key) {
                     multipart_params_obj = {
@@ -375,7 +368,7 @@ function QiniuJsSDK() {
 
 
                 up.setOption({
-                    'url': 'http://upload.qiniu.com/',
+                    'url': 'http://up.qiniu.com/',
                     'multipart': true,
                     'chunk_size': undefined,
                     'multipart_params': multipart_params_obj
@@ -398,33 +391,22 @@ function QiniuJsSDK() {
                         var aDay = 24 * 60 * 60 * 1000; //  milliseconds
                         if (now - before < aDay) {
                             if (localFileInfo.percent !== 100) {
-                                if (file.size === localFileInfo.total) {
-                                    // 通过文件名和文件大小匹配，找到对应的 localstorage 信息，恢复进度
-                                    file.percent = localFileInfo.percent;
-                                    file.loaded = localFileInfo.offset;
-                                    ctx = localFileInfo.ctx;
-
-                                    //  计算速度时，会用到
-                                    speedCalInfo.isResumeUpload = true;
-                                    speedCalInfo.resumeFilesize = localFileInfo.offset;
-                                    if (localFileInfo.offset + blockSize > file.size) {
-                                        blockSize = file.size - localFileInfo.offset;
-                                    }
-                                } else {
-                                    localStorage.removeItem(file.name);
+                                file.percent = localFileInfo.percent;
+                                file.loaded = localFileInfo.offset;
+                                ctx = localFileInfo.ctx;
+                                if (localFileInfo.offset + blockSize > file.size) {
+                                    blockSize = file.size - localFileInfo.offset;
                                 }
-
                             } else {
-                                // 进度100%时，删除对应的localStorage，避免 499 bug
+                                // 删除localStorage，避免 499 bug
                                 localStorage.removeItem(file.name);
                             }
                         } else {
                             localStorage.removeItem(file.name);
                         }
                     }
-                    speedCalInfo.startTime = new Date().getTime();
                     up.setOption({
-                        'url': 'http://upload.qiniu.com/mkblk/' + blockSize,
+                        'url': 'http://up.qiniu.com/mkblk/' + blockSize,
                         'multipart': false,
                         'chunk_size': chunk_size,
                         'required_features': "chunks",
@@ -439,19 +421,6 @@ function QiniuJsSDK() {
             }
         });
 
-        uploader.bind('UploadProgress', function(up, file) {
-
-            // 计算速度
-
-            speedCalInfo.currentTime = new Date().getTime();
-            var timeUsed = speedCalInfo.currentTime - speedCalInfo.startTime; // ms
-            var fileUploaded = file.loaded || 0;
-            if (speedCalInfo.isResumeUpload) {
-                fileUploaded = file.loaded - speedCalInfo.resumeFilesize;
-            }
-            file.speed = (fileUploaded / timeUsed * 1000).toFixed(0) || 0; // unit: byte/s
-        });
-
         uploader.bind('ChunkUploaded', function(up, file, info) {
             var res = that.parseJSON(info.response);
 
@@ -461,7 +430,7 @@ function QiniuJsSDK() {
             chunk_size = chunk_size || (up.settings && up.settings.chunk_size);
             if (leftSize < chunk_size) {
                 up.setOption({
-                    'url': 'http://upload.qiniu.com/mkblk/' + leftSize
+                    'url': 'http://up.qiniu.com/mkblk/' + leftSize
                 });
             }
             localStorage.setItem(file.name, JSON.stringify({
@@ -618,7 +587,7 @@ function QiniuJsSDK() {
                         }
                     }
 
-                    var url = 'http://upload.qiniu.com/mkfile/' + file.size + key + x_vars_url;
+                    var url = 'http://up.qiniu.com/mkfile/' + file.size + key + x_vars_url;
                     var ajax = that.createAjax();
                     ajax.open('POST', url, true);
                     ajax.setRequestHeader('Content-Type', 'text/plain;charset=UTF-8');
@@ -666,7 +635,7 @@ function QiniuJsSDK() {
         var mode = op.mode || '',
             w = op.w || '',
             h = op.h || '',
-            q = op.q || '',
+            q = op.quality || '',
             format = op.format || '';
         if (!mode) {
             return false;

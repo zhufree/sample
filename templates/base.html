@@ -6,10 +6,12 @@
     {% block link %}{% endblock %}
     <title>Sample|{% block title %}首页{% endblock%}</title>
 </head>
-<body style="background-color:#81C7D4;">
-    <div class='container-fluid'>
+{% block style %}
+{% endblock %}
+<body style="background-color:e0e0e0;">
+    <div class='container-fluid'  style="opacity:0.5;">
         <div class='row panel panel-default'>
-            <ul class="nav nav-pills panel-body col-md-4 col-md-offset-8">
+            <ul class="nav nav-pills panel-body">
                 <li role="presentation" ><a href="/">首页</a></li>
                 <li role="presentation" ><a href="/msg/">留言板</a></li>
                 <li role="presentation" ><a href="/blog/">博客</a></li>

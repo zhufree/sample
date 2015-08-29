@@ -14,8 +14,8 @@ $(function() {
         flash_swf_url: 'js/plupload/Moxie.swf',
         dragdrop: true,
         chunk_size: '4mb',
-        uptoken_url: '/gallery/uptoken',
-        domain: 'http://7xlfws.com1.z0.glb.clouddn.com/',
+        uptoken_url: '/video/uptoken',
+        domain: 'http://7xlfws.com1.z0.glb.clouddn.com',
 
         //uptoken_url: $('#uptoken_url').val(),
         //domain: $('#domain').val(),
