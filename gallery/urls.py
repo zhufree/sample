@@ -6,9 +6,9 @@ urlpatterns = patterns(
     '',
     # Examples:
     url(r'^$', index),
-    url(r'^uptoken/$', uptoken, name='uptoken'),
-    # url(r'^p/(?P<id>\d+)/$', single_post),
-    # url(r'^topic/(?P<id>\d+)/$', show_topic),
+    url(r'^uptoken/$', uptoken),
+    url(r'^p/(?P<pid>\d+)/$', show_photo),
+    url(r'^t/(?P<tid>\d+)/$', show_tag),
     url(r'^post/$', post),
 
 )

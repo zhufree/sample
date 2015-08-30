@@ -61,4 +61,4 @@ target/
 
 .idea/
 migrations/
-private_settings.py
+privatesettings.py

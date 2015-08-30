@@ -1,0 +1,25 @@
+{% extends "gallery_index.html" %}
+{% block title %}画廊|{{tag.name}}{% endblock %}
+{% block content %}
+<div class='container-fluid grid'>
+    <div class="grid-sizer"></div>
+    {% for photo in photos %}
+    <div class="grid-item">
+      <a href="/gallery/p/{{photo.id}}/" target="_blank">
+        <img src="{{photo.link}}">
+      </a>
+      <p>{{photo.title}}</p>
+      <p>{% for tag in photo.tags.all %} <a href='/gallery/t/{{tag.id}}/' target="_blank">{{tag.name}}</a> {% endfor %}</p>
+      {% for cmt in photo.photo_comments.all %}
+        <div class="list-group">
+            <div class="list-group-item">
+              <h4 class="list-group-item-head">{{cmt.content}}</h4>
+              <p class="list-group-item-text" align="right">——{{cmt.author}}</p>
+              <p class="list-group-item-text" align="right">at {{cmt.time}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

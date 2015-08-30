@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 import json
 from qiniu import Auth
 from models import *
-from privatesettings import *# 关于七牛的key信息
+# 关于七牛的key信息
+from private_settings import *
 # Create your views here.
 
 
@@ -20,9 +21,21 @@ def index(request):
     return render(request, 'gallery_index.html',{'photos': photos})
 
 
+def show_tag(request, tid):
+    cur_tag = Tag.objects.get(id=tid)
+    photos = cur_tag.tag_has_photos.all()
+    return render(request, 'show_tag.html', {'tag':cur_tag, 'photos':photos})
+
+
+def show_photo(request,pid):
+    cur_photo = Photo.objects.get(id=pid)
+    return render(request, 'show_photo.html', {'photo': cur_photo})
+
+
 def post(request):
     if request.method == 'POST':
-        if request.POST.get('post_type') == 'post_photo':
+        post_type = request.POST.get('post_type')
+        if post_type == 'post_photo':
             new_photo = Photo.objects.create(
                 name=request.POST.get('name'),
                 link=request.POST.get('link'),
@@ -39,5 +52,14 @@ def post(request):
                     new_photo.tags.add(new_tag)#add tag to new_photo
             new_photo.save()
             return HttpResponseRedirect('/gallery/')
+        elif post_type == 'photo_comment':
+            photo_id = request.POST.get('photo_id')
+            new_comment = Comment.objects.create(
+                content=request.POST.get('content'),
+                author=request.user,
+                photo=Photo.objects.get(id=photo_id)
+            )
+            new_comment.save()
+            return HttpResponseRedirect('/gallery/p/%s/' % photo_id)
     else:
         raise Http404

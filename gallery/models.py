@@ -13,14 +13,6 @@ class Tag(models.Model):
         return u'%s' % self.name
 
 
-class Comment(models.Model):
-    content = models.TextField()
-    author = models.ForeignKey(User, related_name='has_comments')
-
-    def __unicode__(self):
-        return u'%s' % self.content
-
-
 class Photo(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     link = models.URLField(unique=True, blank=False,null=False)
@@ -32,6 +24,15 @@ class Photo(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.name
+
+
+class Comment(models.Model):
+    content = models.TextField()
+    author = models.ForeignKey(User, related_name='use_has_comments')
+    photo = models.ForeignKey(Photo, null=True, related_name='photo_has_comments')
+    time = models.DateTimeField(auto_now_add=True, null=True)
+    def __unicode__(self):
+        return u'%s' % self.content
 
 
 admin.site.register(Tag)
