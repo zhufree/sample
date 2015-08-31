@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'blog',
     'forum',
     'gallery',
+    'chatroom',
 )
 
 MIDDLEWARE_CLASSES = (

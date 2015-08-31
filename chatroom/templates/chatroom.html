@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}聊天室{% endblock %}
+{% block content %}
+<div class="list-group col-md-10 col-md-offset-1 well">
+    <div class="list-group-item">
+    	{% for chat in chats %}
+        <h4 class="list-group-item-heading">{{chat.sender}}:{{chat.content}}</h4>
+        <p class="list-group-item-text">{{chat.time}}</p>
+        <input type="hidden" class="chat_id" value="{{chat.id}}"/>
+        <br>
+        {% endfor %}
+    </div>
+</div>
+
+<form id="chatForm" class="form-horizontal panel container" method="POST" action=".">{% csrf_token %}
+    <div class="form-group col-md-10">
+        <textarea type="text" name="content" id="content" value="" class="form-control" id="exampleMessage" placeholder=""></textarea>
+    </div>
+    <div class="form-group col-md-4">
+        <input type="hidden" name="post_type" value="send_chat"/>
+        <input type="submit" class="btn btn-lg btn-primary" value="发送"/>
+    </div>
+</form>
+{% endblock %}
+{% block script %}
+<script>
+ $(function() {  
+    updateMsg();    //更细信息  
+            //表单 submit 事件  
+    $("#chatForm").submit(function() {  
+        //ajax 提交表单  
+        $.post("./post/",  
+        	$('#chatForm').serialize(),
+        	function(xml) {  
+            $("#content").val("");  //消息发送成功后清空内容框  
+            //addMsg(xml);    //处理 xml  
+        });  
+        return false;       //阻止表单提交  
+    });  
+});  
+          
+/*       //解析 xml  
+function addMsg(xml) {  
+    $("#msgWindow").html("");   //清空消息框  
+    $("message", xml).each(function() {  
+        //遍历 <message> 元素，组装 HTML 后插入消息框  
+        var author = $("author", this).text();  
+        var timestamp = $("timestamp", this).text();  
+        var content = $("text", this).text();  
+        var html = "<strong>" + author + "</strong> " + timestamp + "<br />" + content + "<br />";  
+        $("#msgWindow").append(html);  
+    });  
+}  
+  */        
+//更新消息  
+function updateMsg() {  
+    $.post(
+    	"./post/", 
+    	{
+    		post_type: "get_chat",
+			last_chat_id: $(".chat_id").last().val()
+		}, 
+		function(data) {  
+        	$('.list-group-item').append(data);    //解析返回的 xml  
+    });  
+    setTimeout("updateMsg()", 1000);        //每秒更新一次  
+}  
+</script>
+{% endblock %}
