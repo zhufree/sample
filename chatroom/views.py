@@ -27,4 +27,3 @@ def post(request):
             return render(request, 'chat_list.html', {'chats': chats})
     else:
         raise Http404
-        # chats = Chat.objects.filter(time)

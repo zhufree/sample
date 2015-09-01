@@ -31,27 +31,14 @@
         //ajax 提交表单  
         $.post("./post/",  
         	$('#chatForm').serialize(),
-        	function(xml) {  
+        	function(data) {  
             $("#content").val("");  //消息发送成功后清空内容框  
             //addMsg(xml);    //处理 xml  
         });  
         return false;       //阻止表单提交  
     });  
 });  
-          
-/*       //解析 xml  
-function addMsg(xml) {  
-    $("#msgWindow").html("");   //清空消息框  
-    $("message", xml).each(function() {  
-        //遍历 <message> 元素，组装 HTML 后插入消息框  
-        var author = $("author", this).text();  
-        var timestamp = $("timestamp", this).text();  
-        var content = $("text", this).text();  
-        var html = "<strong>" + author + "</strong> " + timestamp + "<br />" + content + "<br />";  
-        $("#msgWindow").append(html);  
-    });  
-}  
-  */        
+              
 //更新消息  
 function updateMsg() {  
     $.post(
