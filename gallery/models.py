@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Create your models here.
 
 
@@ -18,7 +19,7 @@ class Photo(models.Model):
     link = models.URLField(unique=True, blank=False,null=False)
     description = models.TextField(null=True)
     up_loader = models.ForeignKey(User, related_name='user_has_photos')
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True, default=timezone.now)
     tags = models.ManyToManyField(Tag, related_name='tag_has_photos')
     like_count = models.IntegerField(default=0)
 

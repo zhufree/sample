@@ -1,8 +1,9 @@
 from django.shortcuts import render_to_response, get_object_or_404, Http404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 from blog.models import *
+import json
 # import markdown
 # Create your views here.
 
@@ -11,7 +12,7 @@ def index(request):
     articles = Article.objects.all().order_by('-id')
     # for article in articles:
     #    article.content = markdown.markdown(article.content, extensions=['markdown.extensions.fenced_code'])
-    return render_to_response('blogindex.html', RequestContext(request, {'articles': articles}))
+    return render_to_response('blog_index.html', RequestContext(request, {'articles': articles}))
 
 
 def single_blog(request, id):
@@ -43,6 +44,11 @@ def post(request):
                 article=Article.objects.get(id=request.POST.get('article_id'))
             )
             new_comment.save()
-            return HttpResponseRedirect('/blog/article/%s' % request.POST.get('article_id'))
+            data = {
+                'content': new_comment.content,
+                'author': new_comment.name,
+                'time': str(new_comment.time)[:-7]
+            }
+            return HttpResponse(json.dumps(data), content_type="application/json")
     else:
         raise Http404

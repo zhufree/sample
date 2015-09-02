@@ -63,3 +63,5 @@ target/
 .idea/
 migrations/
 private_settings.py
+plupload/
+Respond-1.4.2/

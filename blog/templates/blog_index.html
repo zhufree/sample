@@ -8,14 +8,16 @@
         {% for tag in article.tags.all %}
         <a href="/blog/tag/{{tag.id}}" ><span class="label label-default">{{tag}}</span></a>
         {% endfor %}
+        <cite title="Source Title">发表于 {{article.time}}</cite>
         </h3>
+
     </div>
     <div class="panel-body">
         {{ article.content|safe|truncatewords_html:20 }}
         <br>
         <a href="/blog/article/{{article.id}}/">查看更多</a>
     </div>
-    <footer>at <cite title="Source Title">{{article.time|date:"H:i:s"}}</cite></footer>
+    
 </div>
 {% endfor %}
 {% endblock %}

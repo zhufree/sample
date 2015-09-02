@@ -21,11 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '5^x0bu-og1x%*6e8rpj$kjk3der@9*&9d@efno-(6zl7la+wq#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['dj.zhufree.info']
+ALLOWED_HOSTS = []
 
 
 # Application definition

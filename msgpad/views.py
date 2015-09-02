@@ -1,4 +1,5 @@
-from django.shortcuts import render, Http404, HttpResponse
+from django.shortcuts import render, Http404
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from msgpad.models import *

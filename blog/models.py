@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 from django.contrib import admin
+from django.utils import timezone
 # Create your models here.
 
 
@@ -14,7 +15,7 @@ class Tag(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=30, null=True)
     content = models.TextField()
-    time = models.DateTimeField(auto_now=True)
+    time = models.DateTimeField(auto_now_add=True, default=timezone.now)
     tags = models.ManyToManyField(Tag, related_name='has_articles')
 
     def __unicode__(self):
@@ -26,7 +27,7 @@ class Comment(models.Model):
     name = models.CharField(max_length=20, null=False, blank=False, default='无名氏')
     content = models.TextField()
     article = models.ForeignKey(Article, related_name='has_comments', null=True)
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True, default=timezone.now)
 
     def __unicode__(self):
         return u'%s' % self.content
