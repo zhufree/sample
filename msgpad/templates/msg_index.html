@@ -12,7 +12,7 @@
 {% endfor %}
 </div>
 <!-- post messages -->
-<form id="msgForm" class="form-horizontal panel col-md-10 col-md-offset-1 container" method="POST" action=".">{% csrf_token %}
+<form id="msgForm" class="form-horizontal panel col-md-10 col-md-offset-1 container" method="POST" >{% csrf_token %}
     <div class="form-group col-md-10">
         <label  class="control-label" for="exampleMessage">留言：</label>
         <textarea wrap="physical" type="text" name="content" value="" class="form-control" id="exampleMessage" placeholder=""></textarea>
@@ -30,8 +30,10 @@
 	        $.post("./post/",  
 	        $('#msgForm').serialize(),
 	        function(data) {  
+	        	// alert(data);
             	$("textarea").val("");  //消息发送成功后清空内容框  
-            	$(".list-group").append(data); //add new message
+            	htmlstr = "<div class='list-group-item'><pre class='list-group-item-heading'>"+data['content']+"</pre><p class='list-group-item-text' align='right'>——"+data['author']+"</p><p class='list-group-item-text' align='right'>at "+data['time']+"</p></div>"
+            	$(".list-group").append(htmlstr); //add new message
         	});  
         	return false;       //阻止表单提交  
     	}); 

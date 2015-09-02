@@ -1,8 +1,8 @@
-from django.shortcuts import render, Http404
+from django.shortcuts import render, Http404, HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from msgpad.models import *
-
+import json
 # Create your views here.
 
 
@@ -20,7 +20,11 @@ def post(request):
             author=request.user
         )
         new_msg.save()
-        # return HttpResponseRedirect('/msg/')
-        return render(request, 'ajax_result.html', {'msg': new_msg})
+        data = {
+            'content': new_msg.content,
+            'author': new_msg.author.username,
+            'time': str(new_msg.time)[:-7]
+        }
+        return HttpResponse(json.dumps(data), content_type="application/json")
     else:
         raise Http404
