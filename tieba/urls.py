@@ -7,6 +7,7 @@ urlpatterns = patterns(
     # Examples:
     # url(r'^$', 'sample.views.home', name='home'),
     url(r'^$', index),
+    url(r'^bind/$', bind),
     # url(r'^post/$', post),
 
 )

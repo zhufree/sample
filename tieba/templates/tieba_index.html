@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}贴吧工具{% endblock %}
+{% block content %}
+<div class="panel panel-default col-md-10 col-md-offset-1">
+    <div class="panel-body">
+    <!-- input info to bind baidu account -->
+        <form id="binForm" action="./bind/" method="POST">{% csrf_token %}
+	        <div class="form-group input-group">
+	             <span class="input-group-addon" id="basic-addon1">百度ID</span>
+	             <input type="text" name="uid" class="form-control" placeholder="" aria-describedby="basic-addon1">
+	        </div>
+	        <div class="form-group input-group">
+	             <span class="input-group-addon" id="basic-addon1">密码</span>
+	             <input type="password" name="pwd" class="form-control" aria-describedby="basic-addon1">
+	        </div>
+	        <div class="btn-group btn-group-lg">
+	             <button class="btn btn-default" type="submit">绑定账号</button>
+	        </div>
+     	</form>
+	</div>
+	<div class="page-header">
+  		<h1>已绑定账号:<small></small></h1>
+	</div>
+	<form action="./sign/" method="POST">{% csrf_token %}
+	        <div class="btn-group btn-group-lg">
+	             <button class="btn btn-default" type="submit">一键签到</button>
+	        </div>
+     </form>
+	<div class="panel-body">
+		{% for account in accounts %}
+		<div class="list-group col-md-4">
+			<a href="#" class="list-group-item active">
+			    {{account.uid}}
+			  </a>
+			{% for bar in account.bars.all %}
+			<a href="{{bar.link}}" class="list-group-item">{{bar.name}}</a>
+			{% endfor %}
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}
