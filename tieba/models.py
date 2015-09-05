@@ -7,6 +7,9 @@ from django.contrib import admin
 class Bar(models.Model):
     name = models.CharField(max_length=20, unique=True)
     link = models.URLField(unique=True)
+    signed = models.BooleanField(default=False)
+    fid = models.BigIntegerField(null=True, unique=True)
+    tbs = models.CharField(max_length=30, null=True)
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -20,6 +23,9 @@ class Account(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.uid
+
+    #def login(self):
+
 
 admin.site.register(Bar)
 admin.site.register(Account)

@@ -8,7 +8,18 @@ from models import Account,Bar
 
 def index(request):
     accounts = request.user.user_has_accounts.all()
-
+    '''
+    for account in accounts:
+        account_ = Account_(account.uid, account.pwd)
+        tieba_infos = account_.fetch_tieba_info(account_.get_bars())
+        for tieba_info in tieba_infos:
+            cur_bar = Bar.objects.get(name=tieba_info['name'])
+            #cur_bar.fid = tieba_info['fid']
+            #cur_bar.tbs = tieba_info['tbs']
+            cur_bar.signed = bool(tieba_info['sign_status'])
+            print cur_bar.signed
+            cur_bar.save()
+            '''
     return render(request, 'tieba_index.html', {'accounts': accounts})
 
 
@@ -31,3 +42,6 @@ def bind(request):
             new_acc.bars.add(new_bar)
         new_acc.save()
         return HttpResponseRedirect("/tieba/")
+
+def sign(request):
+    pass

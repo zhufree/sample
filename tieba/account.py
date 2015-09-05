@@ -6,6 +6,8 @@ import urllib
 import urllib2
 import re
 import gzip
+import hashlib
+import json
 from bs4 import BeautifulSoup
 from StringIO import StringIO
 from tieba_settings import *
@@ -153,7 +155,7 @@ class Account(object):
             vcodeRequest = urllib2.Request(vcodeUrl)
             vcodeResponse = urllib2.urlopen(vcodeRequest)
             # down the vcode img
-            with open('vcode.jpg','wb') as out:
+            with open('vcode.jpg', 'wb') as out:
                 out.write(vcodeResponse.read())
                 out.flush()
             # input vcode
@@ -199,8 +201,86 @@ class Account(object):
             page_count += 1
         return like_tieba
 
+    def fetch_tieba_info(self, tieba_list):
+        '''get info about each tieba and sign'''
+        #infos = []
+        for tieba_info in tieba_list:
+            tieba_wap_url = "http://tieba.baidu.com/mo/m?kw=" + tieba_info['name']
+            wap_resp = urllib2.urlopen(tieba_wap_url).read()
+            if not wap_resp:
+                pass
+            re_already_sign = '<td style="text-align:right;"><span[ ]>(.*?)<\/span><\/td><\/tr>'
+            tieba_info['sign_status'] = re.findall(re_already_sign, wap_resp)
+            re_fid = '<input type="hidden" name="fid" value="(.+?)"\/>'
+            _fid = re.findall(re_fid, wap_resp)
+            tieba_info['fid'] = _fid and _fid[0] or None
+            re_tbs = '<input type="hidden" name="tbs" value="(.+?)"\/>'
+            _tbs = re.findall(re_tbs, wap_resp)
+            tieba_info['tbs'] = _tbs and _tbs[0] or None
+            #print tieba_info
+            #if tieba_info['sign_status']:
+                # print tieba_info['kw']+u'吧 之前已签到'
+                #infos.append((True, tieba_info['kw']+u'吧 之前已签到'))
+            #else:
+                #infos.append(False)
+        return tieba_list
 
-#if __name__ == '__main__':
+    def _decode_uri_post(self, postData):
+        '''decode post data'''
+        SIGN_KEY = "tiebaclient!!!"
+        s = ""
+        keys = postData.keys()
+        keys.sort()
+        for i in keys:
+            s += i + '=' + postData[i]
+        sign = hashlib.md5(s + SIGN_KEY).hexdigest().upper()
+        postData.update({'sign': str(sign)})
+        return postData
+
+    def sign(self,tieba_info):
+        if tieba_info['sign_status']:
+            # print tieba_info['kw']+u'吧 之前已签到'
+            return True, tieba_info['kw']+u'吧 之前已签到'
+        else:
+            sign_post_data = {
+                "_client_id": "03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36",
+                "_client_type": "4",
+                "_client_version": "1.2.1.17",
+                "_phone_imei": "540b43b59d21b7a4824e1fd31b08e9a6",
+                "fid": tieba_info['fid'],
+                "kw": tieba_info['kw'],
+                "net_type": "3",
+                'tbs': tieba_info['tbs']
+            }
+
+            sign_post_data = self._decode_uri_post(sign_post_data)
+            postData = urllib.urlencode(sign_post_data)
+
+            signRequest = urllib2.Request(SIGN_URL, postData)
+            signResponse = urllib2.urlopen(signRequest, timeout=5)
+            signResponse = json.load(signResponse)
+            # print signResponse
+            error_code = signResponse['error_code']
+            sign_bonus_point = 0
+            try:
+            # Don't know why but sometimes this will trigger key error.
+                sign_bonus_point = int(signResponse['user_info']['sign_bonus_point'])
+            except KeyError:
+                pass
+            if error_code == '0':
+                # print tieba_info['kw']+u"吧 签到成功,经验+%d" % sign_bonus_point
+                return True, tieba_info['kw'] + u"吧 签到成功,经验+%d" % sign_bonus_point
+            else:
+                error_msg = signResponse['error_msg']
+                if error_msg == u'亲，你之前已经签过了':
+                    # print u'之前已签到'
+                    return True, u'之前已签到'
+                else:
+                    # print u'签到失败'
+                    # print "Error:" + unicode(error_code) + " " + unicode(error_msg)
+                    return False, "签到失败,Error:" + unicode(error_code) + " " + unicode(error_msg)
+
+# if __name__ == '__main__':
     # user=USER_LIST[0]
     # account = Account(user['username'],user['password'])
     # bars = account.get_bars()
