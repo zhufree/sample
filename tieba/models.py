@@ -7,7 +7,6 @@ from django.contrib import admin
 class Bar(models.Model):
     name = models.CharField(max_length=20, unique=True)
     link = models.URLField(unique=True)
-    signed = models.BooleanField(default=False)
     fid = models.BigIntegerField(null=True, unique=True)
     tbs = models.CharField(max_length=30, null=True)
 
@@ -27,5 +26,14 @@ class Account(models.Model):
     #def login(self):
 
 
+class Sign_status(models.Model):
+    signed = models.BooleanField(default=False)
+    bar = models.ForeignKey(Bar, related_name='bar_sign_status')
+    account = models.ForeignKey(Account, related_name='account_sign_status')
+
+    def __unicode__(self):
+        return u'%s in %s' % (self.account.uid, self.bar.name)
+
 admin.site.register(Bar)
 admin.site.register(Account)
+admin.site.register(Sign_status)

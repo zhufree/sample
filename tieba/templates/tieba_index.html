@@ -32,10 +32,12 @@
 			<a href="#" class="list-group-item active">
 			    {{account.uid}}
 			</a>
-			{% for bar in account.bars.all %}
-				<a href="{{bar.link}}" class="list-group-item">{{bar.name}}</a>
-				{% if bar.signed %}
+			{% for sign in account.account_sign_status.all %}
+				{% if sign.bar in account.bars.all %}
+				<a href="{{bar.link}}" class="list-group-item">{{sign.bar.name}}</a>
+					{% if sign.signed %}
 					<span class="badge">Already signed</span>
+					{% endif %}
 				{% endif %}
 			{% endfor %}
 		</div>
