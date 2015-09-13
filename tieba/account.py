@@ -7,9 +7,9 @@ import re
 import gzip
 import json
 import hashlib
+from StringIO import StringIO
 
 from bs4 import BeautifulSoup
-from StringIO import StringIO
 
 from tieba_settings import *
 
@@ -20,9 +20,13 @@ if sys.getdefaultencoding() != default_encoding:
     sys.setdefaultencoding(default_encoding)
 
 
+def has_title_but_no_class(tag):
+        return tag.has_attr('title') and not tag.has_attr('class')
+
+
 class Account(object):
 
-    """Login Baidu Account And Collect Info"""
+    """Login Baidu Account, Collect Info And Sign. """
 
     def __init__(self, username, password):
 
@@ -30,19 +34,30 @@ class Account(object):
 
         self.username = username
         self.password = password
-        self.login_baidu()
+        self.like_tiebas = [] 
+        # self.login_baidu()
+        try:
+            cookie_jar = cookielib.LWPCookieJar()
+            cookie_jar.load('tieba/cookies/'+self.username + '.txt', ignore_discard=True, ignore_expires=True)
+        except IOError:
+            self.login_baidu()
+        finally:
+            if self.visit_page():
+                pass
+            else:
+                self.login_baidu()
 
     def login_baidu(self):
 
         """
         use username and password to login
-        :param username: baidu ID, not phonenumber or email
-        :param password: pasword
+        :param self.username: baidu ID, not phonenumber or email
+        :param self.password: pasword
         :return: True or False
         """
 
         # prepare:load cookiejar to save cookies
-        cookie_jar = cookielib.LWPCookieJar()
+        cookie_jar = cookielib.LWPCookieJar(self.username + '.txt')
         cookie_support = urllib2.HTTPCookieProcessor(cookie_jar)
         opener = urllib2.build_opener(cookie_support, urllib2.HTTPHandler)
         urllib2.install_opener(opener)
@@ -90,9 +105,9 @@ class Account(object):
             'callback': "parent.bd__pcbs__ra48vi"
         }
 
-        self.post_data(rawData)
+        self.post_data(rawData, cookie_jar)
 
-    def post_data(self, rawData):
+    def post_data(self, rawData, cookie_jar):
         """ 
         post data to login
         :param rawData: raw data dict.
@@ -117,16 +132,16 @@ class Account(object):
 
         # "error=0",that means login successful.
         if 'error=0' in redirectURL:
+            cookie_jar.save('tieba/cookies/' + self.username + '.txt', ignore_discard=True, ignore_expires=True)
             # print rawData['username']+u' logged in!'
             return True
         #'error=257'，need to input verifycode
         elif 'error=257' in redirectURL:
-            # print redirectURL
             # match verify code
             vcodeMatch = re.search(r'codestring=\S+&username', redirectURL)
+            
             # cut the string
             vcodeNum = vcodeMatch.group(0)[11:-9]
-            print vcodeNum
             # add into the post data
             rawData['codestring'] = vcodeNum
             # get vcode img url
@@ -143,10 +158,10 @@ class Account(object):
             vcode = raw_input(u'input vcode:')
             rawData['verifycode'] = vcode
             # post data again
-            self.post_data(rawData)
+            self.post_data(rawData, cookie_jar)
         else:
             # print u'登录失败'
-            return False
+            return False  
 
     def get_bars(self):
         """
@@ -158,31 +173,37 @@ class Account(object):
             'link': 'http://tieba.baidu.com/?f=xxxxxx'
         }
         """
-
-        def has_title_but_no_class(tag):
-            return tag.has_attr('title') and not tag.has_attr('class')
         page_count = 1
-        self.like_tiebas = []    
         while True:
-            like_tieba_url = 'http://tieba.baidu.com/f/like/mylike?&pn=%d' % page_count
-            fetchRequest = urllib2.Request(like_tieba_url)
-            fetchResponse = urllib2.urlopen(fetchRequest).read()
-            fetchPage = BeautifulSoup(fetchResponse, "lxml")
-            bar_boxs = fetchPage.find_all(has_title_but_no_class)
-            # print bar_boxs
+            if self.visit_page(page_count):
+                pass
+            else:
+                break
+            page_count += 1
+        return self.like_tiebas
+
+    def visit_page(self, page_id=1):
+        like_tieba_url = 'http://tieba.baidu.com/f/like/mylike?&pn=%d' % page_id
+        fetchRequest = urllib2.Request(like_tieba_url)
+        fetchResponse = urllib2.urlopen(fetchRequest).read()
+        fetchPage = BeautifulSoup(fetchResponse, "lxml")
+        bar_boxs = fetchPage.find_all(has_title_but_no_class)
+        if bar_boxs:
             temp_like_tieba = [{
                 'name': bar['title'].encode('utf-8'),
                 'link':'http://tieba.baidu.com'+bar['href']
             } for bar in bar_boxs]
             # each bar is a tuple with name and link
-            if not temp_like_tieba:
-                break
-            if not self.like_tiebas:
-                self.like_tiebas = temp_like_tieba
+            if temp_like_tieba:
+                if not self.like_tiebas:
+                    self.like_tiebas = temp_like_tieba
+                else:
+                    self.like_tiebas += temp_like_tieba
+                return True
             else:
-                self.like_tiebas += temp_like_tieba
-            page_count += 1
-        return self.like_tiebas
+                return False
+        else:
+            return False
 
     def fetch_tieba_info(self):
         """
@@ -191,8 +212,6 @@ class Account(object):
         :param self.like_tiebas:
         :return: list contains info of a bar, each format like:
         {
-            'name': 'XXXXXX',
-            'link': 'http://tieba.baidu.com/?f=xxxxxx'
             'sign_status':[] or ['xxxx'],
             'tbs': 'xxxxxx',
             'fid': 'xxxxxx'
@@ -255,12 +274,8 @@ class Account(object):
         # print signResponse
         error_code = signResponse['error_code']
         sign_bonus_point = 0
-        try:
             # Don't know why but sometimes this will trigger key error.
-            sign_bonus_point = int(
-                signResponse['user_info']['sign_bonus_point'])
-        except KeyError:
-            pass
+        sign_bonus_point = int(signResponse['user_info']['sign_bonus_point'])
         if error_code == '0':
             return True
             # print tieba_info['kw']+u"吧 签到成功,经验+%d" % sign_bonus_point
@@ -268,8 +283,7 @@ class Account(object):
             # print u'签到失败'
             # print "Error:" + unicode(error_code) + " " +
             # unicode(error_msg)
-            return "Error:" + unicode(error_code)
-
+            return False
 
     def _decode_uri_post(self, postData):
         """
@@ -288,14 +302,3 @@ class Account(object):
         sign = hashlib.md5(s + SIGN_KEY).hexdigest().upper()
         postData.update({'sign': str(sign)})
         return postData
-
-
-if __name__ == '__main__':
-    def auto(user):
-        account = Account(user['username'], user['password'])
-        account.get_bars()
-        account.fetch_tieba_info()
-        account.auto_sign()
-        for tieba_info in account.like_tiebas_info:
-            print tieba_info['name'],tieba_info['sign_status']
-        print 'end a user:'+user['username']

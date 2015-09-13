@@ -1,0 +1,15 @@
+#LWP-Cookies-2.0
+Set-Cookie3: BAIDUID="FE0E7E5DED4E94A64F01A0352D3D12B7:FG=1"; path="/"; domain=".baidu.com"; path_spec; domain_dot; expires="2083-09-30 12:23:50Z"; version=0
+Set-Cookie3: BDUSS="ByRjlpTn41MEI0QUMySGFtMGpxWDlNTTdYZC1EUW5BdFRCaHpGeEt6N1llQnRXQUFBQUFBJCQAAAAAAAAAAAEAAACshA9k16rM-7v6xvfIyzG6xQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANjr81XY6~NVRF"; path="/"; domain=".baidu.com"; path_spec; discard; httponly=None; version=0
+Set-Cookie3: BIDUPSID=FE0E7E5DED4E94A64F01A0352D3D12B7; path="/"; domain=".baidu.com"; path_spec; domain_dot; expires="2083-09-30 12:23:50Z"; version=0
+Set-Cookie3: H_PS_PSSID=16475_16716_1444_14603_17156_14430_12868_17104_17001_17004_17072_15675_11803_13932_17051; path="/"; domain=".baidu.com"; path_spec; domain_dot; discard; version=0
+Set-Cookie3: PSTM=1442048983; path="/"; domain=".baidu.com"; path_spec; domain_dot; expires="2083-09-30 12:23:50Z"; version=0
+Set-Cookie3: HISTORY=3f2994e40a8944b6f99f41ef13cbe0c8e123cf6469b55a451bce3ef3f8442c99d809206e7db2c519ad1c144748; path="/"; domain=".passport.baidu.com"; path_spec; expires="2023-11-29 09:09:44Z"; version=0
+Set-Cookie3: HOSUPPORT=1; path="/"; domain=".passport.baidu.com"; path_spec; expires="2023-11-29 09:09:44Z"; httponly=None; version=0
+Set-Cookie3: PTOKEN=79852e6a4a8c9cd1ff284fbb8e15c1e2; path="/"; domain=".passport.baidu.com"; path_spec; discard; httponly=None; version=0
+Set-Cookie3: SAVEUSERID=2575be10becb7cbffc542b632b98be0b7bc9a44c95160f; path="/"; domain=".passport.baidu.com"; path_spec; discard; httponly=None; version=0
+Set-Cookie3: STOKEN=828b10b6980e0dc84059cea4fc26f6ebc16e399a557e4313d38d5295919ee085; path="/"; domain=".passport.baidu.com"; path_spec; discard; httponly=None; version=0
+Set-Cookie3: UBI="fi_PncwhpxZ%7ETaJc6eeEZW2K5zafP1sNopUG4QA6OdUY7ySe1uyZAhJTXVBCdIxaOnUPzrD9CbDCjRvP%7ENFrmQOcHe3zCeCOF%7E4Re3HNeYlJpOnqkra6epoybW3SYSEdvlbTxvs77KfPSVGatI58iWSOYdhtZo_"; path="/"; domain=".passport.baidu.com"; path_spec; expires="2023-11-29 09:09:44Z"; httponly=None; version=0
+Set-Cookie3: USERNAMETYPE=1; path="/"; domain=".passport.baidu.com"; path_spec; discard; httponly=None; version=0
+Set-Cookie3: BDSVRTM=0; path="/"; domain="www.baidu.com"; path_spec; discard; version=0
+Set-Cookie3: BD_HOME=0; path="/"; domain="www.baidu.com"; path_spec; discard; version=0

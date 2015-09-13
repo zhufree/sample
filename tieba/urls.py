@@ -8,6 +8,7 @@ urlpatterns = patterns(
     # url(r'^$', 'sample.views.home', name='home'),
     url(r'^$', index),
     url(r'^bind/$', bind),
+    url(r'^getsignstatus/$',get_sign_status),
     # url(r'^post/$', post),
 
 )

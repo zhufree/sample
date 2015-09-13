@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
+from account import Account as _Account
 # Create your models here.
 
 
@@ -23,10 +24,34 @@ class Account(models.Model):
     def __unicode__(self):
         return u'%s' % self.uid
 
-    #def login(self):
+    def auto_get_bars(self):
+        """
+        get bars and create sign_status
+        :return:
+        """
+        _account = _Account(self.uid, self.pwd)
+        _account.get_bars()
+        print _account.like_tiebas
+        for bar in _account.like_tiebas:
+            cur_bar, dummy = Bar.objects.get_or_create(
+                name = bar['name'],
+                link = bar['link']
+            )
+            new_sign_status = SignStatus.objects.create(
+                 account = self,
+                 bar = cur_bar,
+                 signed = False,
+            )
+            new_sign_status.save()
+            cur_bar.bar_sign_status.add(new_sign_status)
+            cur_bar.save()
+            self.account_sign_status.add(new_sign_status)
+            self.bars.add(cur_bar)
+        self.save()
 
 
-class Sign_status(models.Model):
+
+class SignStatus(models.Model):
     signed = models.BooleanField(default=False)
     bar = models.ForeignKey(Bar, related_name='bar_sign_status')
     account = models.ForeignKey(Account, related_name='account_sign_status')
@@ -36,4 +61,4 @@ class Sign_status(models.Model):
 
 admin.site.register(Bar)
 admin.site.register(Account)
-admin.site.register(Sign_status)
+admin.site.register(SignStatus)
