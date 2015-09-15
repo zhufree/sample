@@ -191,18 +191,25 @@ FileProgress.prototype.setComplete = function(up, info) {
 
     var res = $.parseJSON(info);
     var url;
+    var endWith=function(endStr){
+      var d=this.length-endStr.length;
+      return (d>=0&&this.lastIndexOf(endStr)==d)
+    }
     if (res.url) {
-        $('#exampleLink').val(res.url);
-        url = res.url;
-        str = "<div><strong>Link:</strong><a href=" + res.url + " target='_blank' > " + res.url + "</a></div>" +
+        if (res.url.endWith('jpg')||res.url.endWith('jpeg')||res.url.endWith('png')) {
+            $('#exampleLink').val(res.url);
+            str = "<div><strong>Link:</strong><a href=" + res.url + " target='_blank' > " + res.url + "</a></div>" +
             "<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
+        }
     } else {
         var domain = up.getOption('domain');
         url = domain + encodeURI(res.key);
         var link = domain + res.key;
-        $('#exampleLink').val(url);
-        str = "<div><strong>Link:</strong><a href=" + url + " target='_blank' > " + link + "</a></div>" +
+        if (url.endWith('jpg')||res.url.endWith('jpeg')||res.url.endWith('png')) {
+            $('#exampleLink').val(url);
+            str = "<div><strong>Link:</strong><a href=" + url + " target='_blank' > " + res.url + "</a></div>" +
             "<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
+        }
     }
 
     td.html(str).removeClass().next().next('.status').hide();

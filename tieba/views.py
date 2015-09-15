@@ -16,9 +16,7 @@ def index(request):
             pass
         else:
             account_ = Account_(account.uid, account.pwd)
-            print 'login'
             account_.get_bars()
-            print 'getbar'
             request.session[account.uid] = account_.fetch_tieba_info()
             print request.session[account.uid]
     return render(request, 'tieba_index.html', {
