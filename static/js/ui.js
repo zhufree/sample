@@ -200,6 +200,8 @@ FileProgress.prototype.setComplete = function(up, info) {
             $('#exampleLink').val(res.url);
             str = "<div><strong>Link:</strong><a href=" + res.url + " target='_blank' > " + res.url + "</a></div>" +
             "<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
+        }else{
+            alert('wrong!');
         }
     } else {
         var domain = up.getOption('domain');
@@ -209,6 +211,8 @@ FileProgress.prototype.setComplete = function(up, info) {
             $('#exampleLink').val(url);
             str = "<div><strong>Link:</strong><a href=" + url + " target='_blank' > " + res.url + "</a></div>" +
             "<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
+        }else{
+            alert('wrong!');
         }
     }
 

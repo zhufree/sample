@@ -31,7 +31,6 @@ class Account(models.Model):
         """
         _account = _Account(self.uid, self.pwd)
         _account.get_bars()
-        print _account.like_tiebas
         for bar in _account.like_tiebas:
             cur_bar, dummy = Bar.objects.get_or_create(
                 name = bar['name'],

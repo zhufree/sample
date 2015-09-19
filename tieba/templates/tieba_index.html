@@ -36,7 +36,7 @@
 				{% if sign.bar in account.bars.all %}
 				<a href="{{sign.bar.link}}" id="{{sign.bar.id}}" class="list-group-item">{{sign.bar.name}}
 					{% if sign.signed %}
-						<span class="badge">签</span>
+						<span class='badge'>签</span>
 					{% endif %}
 				</a>
 				{% endif %}
@@ -50,18 +50,26 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.list-group-item').not('.active').each(function() {
+		var $this = $(this);
 		// alert($(this).parent().children('.active').attr('id'));
 		$.post("./getsignstatus/",  
 	        {
-	        	bar_id:$(this).attr('id'),
-	        	account_id:$(this).parent().children('.active').attr('id'),
+	        	bar_id:$this.attr('id'),
+	        	account_id:$this.parent().children('.active').attr('id'),
 	        },
 	        function(data) {  
-	        	var htmlstr = $(this).html();
+	        	var htmlstr = $this.html();
+	        	var badgestr = '<span class="badge">签</span>';
 	        	if (data['sign_status']) {
-	        		//alert('here');
-	        		$(this).html(htmlstr+'<span class="badge">签</span>');
-	        	};
+	        		if (htmlstr.indexOf(badgestr) < 0){
+		        		$this.append(badgestr);
+	        		}
+	        	}else{
+	        		if (htmlstr.indexOf(badgestr) > 0){
+	        			$this.find('span').remove();
+	        		}
+
+	        	}
         	});  
 	});
 });

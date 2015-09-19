@@ -14,11 +14,12 @@ def index(request):
     for account in accounts:
         if account.uid in request.session:
             pass
+            # print request.session[account.uid]
         else:
             account_ = Account_(account.uid, account.pwd)
             account_.get_bars()
-            request.session[account.uid] = account_.fetch_tieba_info()
-            print request.session[account.uid]
+            request.session[account.uid] = str(account_.fetch_tieba_info())
+            # print request.session[account.uid]
     return render(request, 'tieba_index.html', {
         'accounts': accounts,
     })
@@ -33,11 +34,11 @@ def get_sign_status(request):
                  account = cur_account,
                  bar = cur_bar,
              )
-        for tieba_info in request.session[cur_account.uid]:
+        for tieba_info in eval(request.session[cur_account.uid]):
             if tieba_info['name'] == cur_bar.name:
                 cur_sign_status.signed = tieba_info['sign_status']
-                if tieba_info['sign_status'] != True:
-                    print tieba_info['name']
+                # if tieba_info['sign_status'] != True:
+                #     print tieba_info['name']
         cur_sign_status.save()
         data = {'sign_status': cur_sign_status.signed}
         return HttpResponse(json.dumps(data), content_type="application/json")
