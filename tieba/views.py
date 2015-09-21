@@ -3,17 +3,24 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.contrib.auth.decorators import login_required
 import json
+from datetime import datetime
 from account import Account as Account_
 from models import Account, Bar, SignStatus
 # Create your views here.
+
+now = datetime.now()
 
 
 @login_required
 def index(request):
     accounts = request.user.user_has_accounts.all()
+    expiry_time = now.replace(hour=23, minute=59, second=59)
+    request.session.set_expiry(expiry_time)
     for account in accounts:
         if account.uid in request.session:
-            pass
+            account_ = Account_(account.uid, account.pwd)
+            account_.get_bars()
+            request.session[account.uid] = str(account_.fetch_tieba_info())
             # print request.session[account.uid]
         else:
             account_ = Account_(account.uid, account.pwd)
@@ -60,4 +67,12 @@ def bind(request):
         return HttpResponseRedirect("/tieba/")
 
 def sign(request):
-    pass
+    accounts = request.user.user_has_accounts.all()
+    for account in accounts:
+        account_ = Account_(account.uid, account.pwd)
+        account_.like_tiebas_info = eval(request.session[account.uid])
+        account_.auto_sign()
+        # print request.session[account.uid]
+    return render(request, 'tieba_index.html', {
+        'accounts': accounts,
+    })
