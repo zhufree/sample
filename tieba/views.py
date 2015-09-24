@@ -2,24 +2,31 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.contrib.sessions.serializers import PickleSerializer
 import json
+import time
 from account import Account as Account_
 from models import Account, Bar, SignStatus
 # Create your views here.
 
+# now = datetime.now()
 
 @login_required
 def index(request):
     accounts = request.user.user_has_accounts.all()
+    request.session.set_expiry(0)
     for account in accounts:
         if account.uid in request.session:
             pass
-            # print request.session[account.uid]
+        #     account_ = Account_(account.uid, account.pwd)
+        #     account_.get_bars()
+        #     request.session[account.uid] = str(account_.fetch_tieba_info())
+        #     print request.session[account.uid]
         else:
             account_ = Account_(account.uid, account.pwd)
             account_.get_bars()
             request.session[account.uid] = str(account_.fetch_tieba_info())
-            # print request.session[account.uid]
+            print request.session[account.uid]
     return render(request, 'tieba_index.html', {
         'accounts': accounts,
     })
@@ -60,4 +67,15 @@ def bind(request):
         return HttpResponseRedirect("/tieba/")
 
 def sign(request):
-    pass
+    accounts = request.user.user_has_accounts.all()
+    for account in accounts:
+        account_ = Account_(account.uid, account.pwd)
+        account_.get_bars()
+        account_.like_tiebas_info = account_.fetch_tieba_info()
+        account_.auto_sign()
+        # print 'end' + account.uid
+        request.session[account.uid] = str(account_.fetch_tieba_info())
+        # print request.session[account.uid]
+        time.sleep(5)
+        # print request.session[account.uid]
+    return HttpResponseRedirect('/tieba/')
