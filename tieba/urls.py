@@ -9,6 +9,6 @@ urlpatterns = patterns(
     url(r'^$', index),
     url(r'^bind/$', bind),
     url(r'^getsignstatus/$',get_sign_status),
-    # url(r'^post/$', post),
+    url(r'^sign/$', sign),
 
 )

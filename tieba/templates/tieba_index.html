@@ -52,7 +52,7 @@ $(document).ready(function() {
 	$('.list-group-item').not('.active').each(function() {
 		var $this = $(this);
 		// alert($(this).parent().children('.active').attr('id'));
-		$.post("./getsignstatus/",  
+		$.post("/tieba/getsignstatus/",  
 	        {
 	        	bar_id:$this.attr('id'),
 	        	account_id:$this.parent().children('.active').attr('id'),
