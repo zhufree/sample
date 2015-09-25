@@ -141,31 +141,31 @@ class Account(object):
             # print rawData['username']+' logged in!'
             return True
         #'error=257'，need to input verifycode
-        elif 'error=257' in redirectURL:
-            # print redirectURL
-            # match verify code
-            vcodeMatch = re.search(r'codestring=\S+&username', redirectURL)
-            
-            # cut the string
-            vcodeNum = vcodeMatch.group(0)[11:-9]
-            # print vcodeNum
-            # add into the post data
-            rawData['codestring'] = vcodeNum
-            # get vcode img url
-            vcodeUrl = 'https://passport.baidu.com/cgi-bin/genimage?' + \
-                vcodeNum
-            # print vcodeUrl
-            vcodeRequest = urllib2.Request(vcodeUrl)
-            vcodeResponse = urllib2.urlopen(vcodeRequest)
-            # download the vcode img
-            with open('vcode.jpg', 'wb') as out:
-                out.write(vcodeResponse.read())
-                out.flush()
-            # input vcode
-            vcode = raw_input(u'input vcode:')
-            rawData['verifycode'] = vcode
-            # post data again
-            self.post_data(rawData, cookie_jar)
+        # elif 'error=257' in redirectURL:
+        #     # print redirectURL
+        #     # match verify code
+        #     vcodeMatch = re.search(r'codestring=\S+&username', redirectURL)
+        #
+        #     # cut the string
+        #     vcodeNum = vcodeMatch.group(0)[11:-9]
+        #     # print vcodeNum
+        #     # add into the post data
+        #     rawData['codestring'] = vcodeNum
+        #     # get vcode img url
+        #     vcodeUrl = 'https://passport.baidu.com/cgi-bin/genimage?' + \
+        #         vcodeNum
+        #     # print vcodeUrl
+        #     vcodeRequest = urllib2.Request(vcodeUrl)
+        #     vcodeResponse = urllib2.urlopen(vcodeRequest)
+        #     # download the vcode img
+        #     with open('vcode.jpg', 'wb') as out:
+        #         out.write(vcodeResponse.read())
+        #         out.flush()
+        #     # input vcode
+        #     vcode = raw_input(u'input vcode:')
+        #     rawData['verifycode'] = vcode
+        #     # post data again
+        #     self.post_data(rawData, cookie_jar)
         else:
             # print u'登录失败'
             return False  
