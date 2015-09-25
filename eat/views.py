@@ -1,11 +1,43 @@
-from django.shortcuts import render
+from django.shortcuts import render, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Restaurant
+
+import json
+import random
 # Create your views here.
 
 def index(request):
-    rest = request.user.like_restaurant.all()
-    return render(request, 'index.html', {'rest': rest})
+    rests = request.user.like_restaurant.all()
+    return render(request, 'eat_index.html', {'rests': rests})
 
 
 def add_rest(request):
-    pass
+    if request.method == 'POST':
+        new_rest = Restaurant.objects.create(
+            name=request.POST.get('restname'),
+            count=0,
+            user=request.user
+        )
+        new_rest.save()
+        request.user.like_restaurant.add(new_rest)
+        data = {
+            'name': new_rest.name,
+            'count': 0,
+        }
+        return HttpResponse(json.dumps(data), content_type="application/json")
+    else:
+        raise Http404
+
+
+def roll(request):
+    if request.method == 'POST':
+        rests = request.user.like_restaurant.all()
+        print rests
+        result = random.choice(rests)
+        print result
+        data = {
+            'result': result.name,
+        }
+        return HttpResponse(json.dumps(data), content_type="application/json")
+    else:
+        raise Http404

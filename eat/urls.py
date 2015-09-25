@@ -6,5 +6,7 @@ urlpatterns = patterns(
     '',
     # Examples:
     url(r'^$', index),
+    url(r'^add_rest/$', add_rest),
+    url(r'^roll/$', roll),
 
 )

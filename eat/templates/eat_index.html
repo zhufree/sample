@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}论坛{% endblock %}
+{% block content %}
+<div class="panel panel-default col-md-10 col-md-offset-1">
+    <div class='panel-body' id='restbox'>
+    {% for rest in rests %}
+        <span class='label label-info'>{{rest.name}}</span>
+        <span class='badge'>{{rest.count}}</span>
+    {% endfor %}
+    </div>
+</div>
+<div class='panel panel-default col-md-10 col-md-offset-1' id="mainbox">
+    <div class='panel-body' >
+        <form id='addRestForm' method='POST'>{% csrf_token %}
+            <div class='form-group input-group'>
+                 <span class='input-group-addon' id='basic-addon1'>name</span>
+                 <input type='text' name='restname' class='form-control' placeholder='' aria-describedby='basic-addon1'>
+            </div>
+            <div class='form-group input-group'>
+                <input type='submit' class='btn btn-default' value='添加饭店'/>
+            </div>
+        </form>
+        <form id='rollForm' method='POST'>{% csrf_token %}
+            <div class="btn-group">
+                 <button class="btn btn-primary" type="submit">Roll</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+$(document).ready(function() {  
+    //表单 submit 事件  
+    $('#addRestForm').submit(function() {  
+        //ajax 提交表单  
+        $.post('./add_rest/',  
+            $('#addRestForm').serialize(),
+            function(data) {  
+                var htmlstr="<span class='label label-info'>"+data['name']+"</span><span class='badge'>"+data['count']+"</span>";
+                $('#restbox').append(htmlstr);
+        });  
+        return false;       //阻止表单提交  
+    });  
+    $('#rollForm').submit(function() {  
+        //ajax 提交表单  
+        $.post('./roll/',  
+            $('#addRestForm').serialize(),
+            function(data) {  
+                var htmlstr='<div class="alert alert-success" role="alert">'+data['result']+'</div>';
+                $('#mainbox').append(htmlstr);
+        });  
+        return false;       //阻止表单提交  
+    });
+});  
+</script>
+{% endblock %}
