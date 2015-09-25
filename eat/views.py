@@ -7,8 +7,11 @@ import random
 # Create your views here.
 
 def index(request):
-    rests = request.user.like_restaurant.all()
-    return render(request, 'eat_index.html', {'rests': rests})
+    if request.user.is_authenticated():
+        rests = request.user.like_restaurant.all()
+        return render(request, 'eat_index.html', {'rests': rests})
+    else:
+        return HttpResponseRedirect('/accounts/login/')
 
 
 def add_rest(request):
@@ -32,9 +35,7 @@ def add_rest(request):
 def roll(request):
     if request.method == 'POST':
         rests = request.user.like_restaurant.all()
-        print rests
         result = random.choice(rests)
-        print result
         data = {
             'result': result.name,
         }

@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}论坛{% endblock %}
+{% block title %}吃什么？{% endblock %}
 {% block content %}
 <div class="panel panel-default col-md-10 col-md-offset-1">
     <div class='panel-body' id='restbox'>
     {% for rest in rests %}
-        <span class='label label-info'>{{rest.name}}</span>
+        <button type="button" class="btn btn-default">{{rest.name}}
         <span class='badge'>{{rest.count}}</span>
+        </button>
     {% endfor %}
     </div>
 </div>
@@ -37,7 +38,7 @@ $(document).ready(function() {
         $.post('./add_rest/',  
             $('#addRestForm').serialize(),
             function(data) {  
-                var htmlstr="<span class='label label-info'>"+data['name']+"</span><span class='badge'>"+data['count']+"</span>";
+                var htmlstr='<button type="button" class="btn btn-default">'+data['name']+'<span class="badge">'+data['count']+'</span></button>';
                 $('#restbox').append(htmlstr);
         });  
         return false;       //阻止表单提交  
