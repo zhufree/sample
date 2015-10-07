@@ -36,6 +36,7 @@ def roll(request):
     if request.method == 'POST':
         rests = request.user.like_restaurant.all()
         result = random.choice(rests)
+        print result
         data = {
             'result': result.name,
         }

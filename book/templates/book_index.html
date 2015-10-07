@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+        <title>WHU-图书借阅系统</title>
+    </head>
+    <body>
+        <style type="text/css">
+          *{
+            margin: 5px;
+            padding: 5px;
+            width: auto;
+          }
+        </style>
+        <div>
+            <fieldset>
+                <!-- Text input-->
+                <form action="./login/" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">学号</span>
+                        <input type="text" name="sid" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                    </div>
+                    <!-- Text input-->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">密码</span>
+                        <input type="password" name="pwd" class="form-control" placeholder="默认身份证后六位" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="btn-group btn-group-lg">
+                        <button class="btn btn-default" type="submit">登陆</button>
+                    </div>
+                </form>
+                <!-- 查询操作 -->
+                <div class="btn-group" role="group" aria-label="...">
+                  <form action="./historybook/" method="POST">
+                      <button class="btn btn-default">查询历史借阅</button>
+                  </form>
+                  <form action="./nowbook/" method="POST">
+                      <button class="btn btn-default">查询借阅信息</button>
+                  </form>
+                </div>
+                <!-- 续借操作-->
+                <form action="./renewall/" method="POST">
+                    <button class="btn btn-default">全部续借</button>
+                </form>
+                <!-- Text input-->
+                <form action="./renew/" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon">编号</span>
+                        <input type="text" name="number" class="form-control" placeholder="从查询结果获取">
+                        
+                    </div>
+                          <button class="btn btn-default" type="submit">单本续借</button>
+                </form>
+                  
+
+                <form action="./search/" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon">关键字</span>
+                        <input type="text" name="keyword" class="form-control" placeholder="">
+                        
+                    </div>
+                          <button class="btn btn-default" type="submit">搜索书籍</button>
+                </form>
+
+                <form action="./order/" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon">编号</span>
+                        <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
+                        
+                    </div>
+                          <button class="btn btn-default" type="submit">预约书籍</button>
+                </form>
+
+                <!-- Button -->
+                <div class="btn-group" role="group" aria-label="...">
+                  <form action="./queryorder/" method="POST">
+                      <button class="btn btn-default">查询预约书籍</button>
+                  </form>
+                </div>
+
+                <form action="./deleteorder/" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon">编号</span>
+                        <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
+                    </div>
+                          <button class="btn btn-default" type="submit">删除预约</button>
+                </form>
+            </fieldset>
+        </div>
+    </body>
+            <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+</html>
+
