@@ -49,7 +49,6 @@ class Account(models.Model):
         self.save()
 
 
-
 class SignStatus(models.Model):
     signed = models.BooleanField(default=False)
     bar = models.ForeignKey(Bar, related_name='bar_sign_status')

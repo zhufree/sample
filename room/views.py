@@ -1,7 +1,6 @@
 # -*-coding:utf-8-*-
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.template import RequestContext 
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 import json
 from reserv import *
@@ -13,22 +12,22 @@ def index(request):
 
 @csrf_exempt 
 def check(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         year = request.POST.get('year')  
         month = request.POST.get('month')  
-        day=request.POST.get('day')
+        day = request.POST.get('day')
         region=request.POST.get('region')
-        request.session['year']=year
-        request.session['month']=month
-        request.session['day']=day
-        roominfo=test.getroominfo(year,month,day,region)
+        request.session['year'] = year
+        request.session['month'] = month
+        request.session['day'] = day
+        roominfo = test.getroominfo(year, month, day, region)
         if roominfo.has_key("error_code"):
-            data={"success":"false","info":roominfo}     
+            data={"success":"false", "info":roominfo}
         else:
-            data={"success":"true","info":roominfo} 
+            data={"success":"true", "info":roominfo}
     else:
         errorinfo="method error"
-        data={"success":"false","info":errorinfo} 
+        data={"success":"false", "info":errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False),content_type='application/json')
 
 @csrf_exempt 

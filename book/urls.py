@@ -6,7 +6,8 @@ from book.views import *
 
 urlpatterns = patterns('',
     url(r'^$', index, name='index'),
-    url(r'^login/$', login, name='login'),
+    url(r'^bind/$', bind, name='绑定'),
+    url(r'^login/$', login, name='登陆'),
     url(r'^historybook/$', historybook, name='历史记录'),
     url(r'^nowbook/$', nowbook, name='目前记录'),
     url(r'^renewall/$', renewall_, name='全部续借'),

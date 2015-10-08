@@ -9,4 +9,7 @@ class Restaurant(models.Model):
     count = models.BigIntegerField(default=0)
     user = models.ForeignKey(User, related_name='like_restaurant')
 
+    def __unicode__(self):
+        return u'%s' % self.name
+
 admin.site.register(Restaurant)

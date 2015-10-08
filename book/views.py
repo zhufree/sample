@@ -1,31 +1,48 @@
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse,Http404
 import json
 from django.shortcuts import render
-from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from library import *
-
+from usersys.models import StudentAcc
 
 def index(request):
     return render(request, "book_index.html")
 
 @csrf_exempt
-def login(request):
+def bind(request):
     if request.method == 'POST':
-        sid = request.POST.get('sid','')
-        pwd = request.POST.get('pwd','')
+        sid = request.POST.get('sid')
+        pwd = request.POST.get('pwd')
+        new_account = StudentAcc.objects.create(
+            sid=sid,
+            pwd=pwd,
+            user=request.user
+        )
+        new_account.save()
         cookie = getcookie(sid, pwd)
         request.session['cookie_'] = cookie
-        #request.session['sid'] = sid
-        #request.session['pwd'] = pwd
         if "PDS_HANDLE" in cookie:
             data = {"success": "true"}
         else:
             data = {"success": "false", "info": cookie}
     else:
-        errorinfo = "method error"
-        data = {"success": "false", "info": errorinfo}
+        raise Http404
+    return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        stu_id = request.POST.get('stu_id')
+        cur_stuacc = StudentAcc.objects.get(id = stu_id)
+        cookie = getcookie(cur_stuacc.sid, cur_stuacc.pwd)
+        request.session['cookie_'] = cookie
+        if "PDS_HANDLE" in cookie:
+            data = {"success": "true"}
+        else:
+            data = {"success": "false", "info": cookie}
+    else:
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
