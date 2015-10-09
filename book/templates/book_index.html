@@ -41,19 +41,19 @@
           </form>
         </div>
         <!-- 续借操作-->
-        <form action="./renewall/" method="POST">{% csrf_token %}
+        <form id="renewallForm" method="POST">{% csrf_token %}
             <button class="btn btn-default">全部续借</button>
         </form>
         <!-- Text input-->
-        <form action="./renew/" method="POST">{% csrf_token %}
+        <form id="renewForm" method="POST">{% csrf_token %}
             <div class="form-group input-group">
                 <span class="input-group-addon">编号</span>
                 <input type="text" name="number" class="form-control" placeholder="从查询结果获取">
-                
             </div>
                 <button class="form-group btn btn-default" type="submit">单本续借</button>
         </form>
-          
+        <div class='panel-body' id='resultBox'>
+        </div>
 
         <form action="./search/" method="POST">{% csrf_token %}
             <div class="form-group input-group">
@@ -145,7 +145,6 @@ $(document).ready(function() {
                     htmlstr += '</div>';
                     $('#infoBox').html(htmlstr);;
                 }else{
-                    btn.addClass('alert alert-danger');
                     var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
                     $('#infoBox').html(htmlstr);
                 }
@@ -169,9 +168,48 @@ $(document).ready(function() {
                     htmlstr += '</div>';
                     $('#infoBox').html(htmlstr);;
                 }else{
-                    btn.addClass('alert alert-danger');
                     var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
                     $('#infoBox').html(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#renewallForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/renewall/',  
+            $this.serialize(),
+            function(data) { 
+                var htmlstr='<div class="alert alert-info" role="alert"><h3>续借结果</h3></br>';
+                if(data['success']) {
+                    console.log(data['info']['reason']);
+                    htmlstr += data['info']['reason'];
+                    htmlstr += '</div>';
+                    $('#resultBox').html(htmlstr);;
+                }else{
+                    console.log(data['info']['reason']);
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']['reason']+'</div>';
+                    $('#resultBox').html(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#renewForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/renew/',  
+            $this.serialize(),
+            function(data) { 
+                var htmlstr='<div class="alert alert-info" role="alert"><h3>续借结果</h3></br>';
+                if(data['success']) {
+                    console.log(data['info']['reason']);
+                    htmlstr += data['info']['reason'];
+                    htmlstr += '</div>';
+                    $('#resultBox').html(htmlstr);;
+                }else{
+                    console.log(data['info']['reason']);
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']['reason']+'</div>';
+                    $('#resultBox').html(htmlstr);
                 }
             });  
         return false;       //阻止表单提交  

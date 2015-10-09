@@ -16,5 +16,4 @@ urlpatterns = patterns('',
     url(r'^order/$', order, name='预约书籍'),
     url(r'^queryorder/$', queryorder_, name='查询预约书籍'),
     url(r'^deleteorder/$', deleteorder_, name='删除预约'),
-
 )

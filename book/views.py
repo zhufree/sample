@@ -58,8 +58,7 @@ def historybook(request):
             data = {"success": False, "info": info}
 
     else:
-        errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
@@ -77,8 +76,7 @@ def nowbook(request):
         print json.dumps(data)
 
     else:
-        errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -90,9 +88,9 @@ def renewall_(request):
             data = {"success": True, "info": info}
         else:
             data = {"success": False, "info": info}
+        print data
     else:
-        errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -106,8 +104,7 @@ def renew_(request):
         else:
             data = {"success": False, "info": info}
     else:
-        errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -123,8 +120,7 @@ def search(request):
         else:
             data={"success": False, "info": info}
     else:
-        errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -149,8 +145,7 @@ def order(request):
             data= {"success": False, "info": 'no such book'}
         
     else:
-        errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -164,7 +159,7 @@ def queryorder_(request):
         else:
             data={"success": False, "info": info}
     else:
-        data = {"success": False, "info": "method error"}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -186,6 +181,6 @@ def deleteorder_(request):
         else:
             data= {"success": False, "info": 'no such order'}
     else:
-        data = {"success": False, "info": "method error"}
+        raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
