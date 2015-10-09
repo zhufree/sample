@@ -7,7 +7,8 @@ from library import *
 from usersys.models import StudentAcc
 
 def index(request):
-    return render(request, "book_index.html")
+    accounts = StudentAcc.objects.all()
+    return render(request, "book_index.html", {'accounts': accounts})
 
 @csrf_exempt
 def bind(request):
@@ -23,9 +24,10 @@ def bind(request):
         cookie = getcookie(sid, pwd)
         request.session['cookie_'] = cookie
         if "PDS_HANDLE" in cookie:
-            data = {"success": "true"}
+            data = {"success": True, "sid": sid}
         else:
-            data = {"success": "false", "info": cookie}
+            data = {"success": False, "info": cookie}
+        print json.dumps(data)
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -34,13 +36,13 @@ def bind(request):
 def login(request):
     if request.method == 'POST':
         stu_id = request.POST.get('stu_id')
-        cur_stuacc = StudentAcc.objects.get(id = stu_id)
+        cur_stuacc = StudentAcc.objects.get(sid = stu_id)
         cookie = getcookie(cur_stuacc.sid, cur_stuacc.pwd)
         request.session['cookie_'] = cookie
         if "PDS_HANDLE" in cookie:
-            data = {"success": "true"}
+            data = {"success": True}
         else:
-            data = {"success": "false", "info": cookie}
+            data = {"success": False, "info": cookie}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -52,12 +54,12 @@ def historybook(request):
         cookie = request.session.get('cookie_')
         info = queryhistory(cookie)
         if type(info) == list:
-            data = {"success": "true", "info": info}
+            data = {"success": True, "info": info}
         else:
-            data = {"success": "false", "info": info}
+            data = {"success": False, "info": info}
     else:
         errorinfo = "method error"
-        data = {"success": "false", "info": errorinfo}
+        data = {"success": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
@@ -67,14 +69,14 @@ def nowbook(request):
         cookie = request.session.get('cookie_')
         info = queryloan(cookie)
         if type(info) == list:
-            data = {"success": "true", "info": info}
+            data = {"success": True, "info": info}
         elif type(info) == dict:
-            data = {"success": "false", "info": info}
+            data = {"success": False, "info": info}
         else:
-            data = {"success": "false", "info": info}
+            data = {"success": False, "info": info}
     else:
         errorinfo = "method error"
-        data = {"success": "false", "info": errorinfo}
+        data = {"success": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -83,12 +85,12 @@ def renewall_(request):
         cookie = request.session.get('cookie_')
         info = renewall(cookie)
         if type(info) == str:
-            data = {"success": "true", "info": info}
+            data = {"success": True, "info": info}
         else:
-            data = {"success": "false", "info": info}
+            data = {"success": False, "info": info}
     else:
         errorinfo = "method error"
-        data = {"success": "false", "info": errorinfo}
+        data = {"success": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -98,12 +100,12 @@ def renew_(request):
         number=int(request.POST.get('number'))
         info = renew(cookie,number)
         if type(info) == str:
-            data = {"success": "true", "info": info}
+            data = {"success": True, "info": info}
         else:
-            data = {"success": "false", "info": info}
+            data = {"success": False, "info": info}
     else:
         errorinfo = "method error"
-        data = {"success": "false", "info": errorinfo}
+        data = {"success": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -115,12 +117,12 @@ def search(request):
         info=searchbook(cookie,keyword)
         if type(info)==list:
             request.session['booksinfo']=info
-            data= {"success": "true", "info": info}
+            data= {"success": True, "info": info}
         else:
-            data={"success": "false", "info": info}
+            data={"success": False, "info": info}
     else:
         errorinfo = "method error"
-        data = {"success": "false", "info": errorinfo}
+        data = {"success": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -138,15 +140,15 @@ def order(request):
             info=orderbook(cookie,book_to_order)
             #print info
             if info=='order succeed':
-                data= {"success": "true", "info": info}
+                data= {"success": True, "info": info}
             else:
-                data={"success": "false", "info": info}
+                data={"success": False, "info": info}
         else:
-            data= {"success": "false", "info": 'no such book'}
+            data= {"success": False, "info": 'no such book'}
         
     else:
         errorinfo = "method error"
-        data = {"success": "false", "info": errorinfo}
+        data = {"success": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -156,11 +158,11 @@ def queryorder_(request):
         info=queryorder(cookie)
         if type(info)==list:
             request.session['orders']=info
-            data= {"success": "true", "info": info}
+            data= {"success": True, "info": info}
         else:
-            data={"success": "false", "info": info}
+            data={"success": False, "info": info}
     else:
-        data = {"success": "false", "info": "method error"}
+        data = {"success": False, "info": "method error"}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 @csrf_exempt
@@ -176,12 +178,12 @@ def deleteorder_(request):
         if order_to_delete:
             info=deleteorder(cookie,order_to_delete)
             if info=='cancel succeed':
-                data= {"success": "true", "info": info}
+                data= {"success": True, "info": info}
             else:
-                data={"success": "false", "info": info}
+                data={"success": False, "info": info}
         else:
-            data= {"success": "false", "info": 'no such order'}
+            data= {"success": False, "info": 'no such order'}
     else:
-        data = {"success": "false", "info": "method error"}
+        data = {"success": False, "info": "method error"}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 

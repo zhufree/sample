@@ -29,7 +29,7 @@ def getcookie(sid, pwd):  # 登录获得cookie字符串
         #data = data.encode('utf-8')
         #处理请求
         try:
-            resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=LOGIN_URL, data=data) , timeout=4))  # 处理返回链接
+            resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=LOGIN_URL, data=data), timeout=4), 'lxml')  # 处理返回链接
         except Exception, e:
             error["error_code"] = 10003
             error["reason"] =u"网络连接错误"
@@ -82,7 +82,7 @@ def queryhistory(cookie):
 
     handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-history-loan&amp;adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie  # 历史借阅
     try:
-        redirectSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=handpage),timeout=10))
+        redirectSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=handpage),timeout=10), 'lxml')
     except Exception, e:
         error["error_code"] = 10003
         error["reason"] =u"网络连接错误"
@@ -95,7 +95,7 @@ def queryhistory(cookie):
         # 抓取登陆后要访问的网址
         redirectUrl = p.findall(js)[0]
         try:
-            resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=redirectUrl), timeout=10))  # 抓取信息界面
+            resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=redirectUrl), timeout=10), 'lxml')  # 抓取信息界面
         except Exception, e:
             error["error_code"] = 10003
             error["reason"] =u"网络连接错误"
@@ -136,7 +136,7 @@ def queryloan(cookie):
     handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-loan&amp;adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie  # 历史借阅
     req = urllib2.Request(url=handpage)
     try:
-        soup = BeautifulSoup(urllib2.urlopen(req, timeout=4))
+        soup = BeautifulSoup(urllib2.urlopen(req, timeout=4), 'lxml')
     except Exception, e:
         error["error_code"] = 10003
         error["reason"] = u"网络连接错误"
@@ -149,7 +149,7 @@ def queryloan(cookie):
         url_ = p.findall(js)[0]
         req2 = urllib2.Request(url=url_)  # 抓取登陆后要访问的网址
         try:
-            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4))  # 抓取信息界面
+            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except Exception, e:
             error["error_code"] = 10003
             error["reason"] = u"网络连接错误"
@@ -199,7 +199,7 @@ def renewall(cookie):
     req1 = urllib2.Request(url=handpage)
     req1.add_header('Cookie', cookie)
     try:
-        soup1 = BeautifulSoup(urllib2.urlopen(req1, timeout=4))
+        soup1 = BeautifulSoup(urllib2.urlopen(req1, timeout=4), 'lxml')
     except Exception, e:
         error["error_code"] = 10003
         error["reason"] = u"网络连接错误"
@@ -212,7 +212,7 @@ def renewall(cookie):
         url1 = p.findall(js)[0]
         req2 = urllib2.Request(url=url1)  # 抓取登陆后要访问的网址
         try:
-            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4))  # 抓取信息界面
+            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except Exception, e:
             error["error_code"] = 10003
             error["reason"] = u"网络连接错误"
@@ -224,7 +224,7 @@ def renewall(cookie):
             url2=p.findall(link["href"])[0]
             req3 = urllib2.Request(url=url2) 
             try:
-                soup3 = BeautifulSoup(urllib2.urlopen(req3, timeout=4))  # 访问链接抓取页面
+                soup3 = BeautifulSoup(urllib2.urlopen(req3, timeout=4), 'lxml')  # 访问链接抓取页面
             except Exception, e:
                 error["error_code"] = 10003
                 error["reason"] = u"网络连接错误"
@@ -253,7 +253,7 @@ def renew(cookie,number):#需要续借的图书编号，在查询时有提供
     req1 = urllib2.Request(url=handpage)
     req1.add_header('Cookie', cookie)
     try:
-        soup1 = BeautifulSoup(urllib2.urlopen(req1, timeout=4))
+        soup1 = BeautifulSoup(urllib2.urlopen(req1, timeout=4), 'lxml')
     except Exception, e:
         error["error_code"] = 10003
         error["reason"] = u"网络连接错误"
@@ -266,7 +266,7 @@ def renew(cookie,number):#需要续借的图书编号，在查询时有提供
         url1 = p.findall(js1)[0]
         req2 = urllib2.Request(url=url1)  # 抓取登陆后要访问的网址
         try:
-            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4))  # 抓取信息界面
+            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except Exception, e:
             error["error_code"] = 10003
             error["reason"] = u"网络连接错误"
@@ -280,7 +280,7 @@ def renew(cookie,number):#需要续借的图书编号，在查询时有提供
             url2 = p.findall(js2)[0]+"&"+bookid+"=Y"
             req3 = urllib2.Request(url=url2) 
             try:
-                soup3 = BeautifulSoup(urllib2.urlopen(req3, timeout=4))  # 访问链接抓取页面
+                soup3 = BeautifulSoup(urllib2.urlopen(req3, timeout=4), 'lxml')  # 访问链接抓取页面
             except Exception, e:
                 error["error_code"] = 10003
                 error["reason"] = u"网络连接错误"
@@ -306,7 +306,7 @@ def renew(cookie,number):#需要续借的图书编号，在查询时有提供
 def searchbook(cookie,searchword):
     searchRequest=urllib2.Request(SEARCH_URL)
     try:
-        redirectSoup = BeautifulSoup(urllib2.urlopen(searchRequest, timeout=10))
+        redirectSoup = BeautifulSoup(urllib2.urlopen(searchRequest, timeout=10), 'lxml')
     except Exception, e:
         error["error_code"] = 10003
         error["reason"] = u"网络连接错误"
@@ -327,7 +327,7 @@ def searchbook(cookie,searchword):
             error["result"] = []
             return error
         else:
-            resultSoup = BeautifulSoup(resultResponse)  # 抓取信息界面
+            resultSoup = BeautifulSoup(resultResponse, 'lxml')  # 抓取信息界面
             #print resultSoup
             divs_1=resultSoup.find_all('div',{'class':'itemtitle'})
             conditions_1=resultSoup.find_all('u')
@@ -345,7 +345,7 @@ def searchbook(cookie,searchword):
             nextpageUrl=redirectUrl+"func=short-jump&jump=11"
             nextpageRequest=urllib2.Request(nextpageUrl)#抓取头两页
             try:
-                nextpageSoup=BeautifulSoup(urllib2.urlopen(nextpageRequest,timeout=10))
+                nextpageSoup=BeautifulSoup(urllib2.urlopen(nextpageRequest,timeout=10), 'lxml')
             except Exception, e:
                 error["error_code"] = 10003
                 error["reason"] = u"网络连接错误"
@@ -378,12 +378,12 @@ def searchbook(cookie,searchword):
 def orderbook(cookie,book_to_order):
     check_orderUrl=book_to_order['cond_link']
     checkorderRequest=urllib2.Request(check_orderUrl+'&%s' % cookie)
-    checkorderSoup=BeautifulSoup(urllib2.urlopen(checkorderRequest,timeout=10))
+    checkorderSoup=BeautifulSoup(urllib2.urlopen(checkorderRequest,timeout=10), 'lxml')
     #print checkorderSoup
     order=checkorderSoup.find('a',{'href':re.compile('func=item-hold-request')})
     if order:
         orderUrl=order['href']
-        orderSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(orderUrl),timeout=10))
+        orderSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(orderUrl),timeout=10), 'lxml')
         orderForm=orderSoup.find('form')
         rootUrl_1=orderForm['action']
         input_data_1=orderSoup.find_all('input')
@@ -407,7 +407,7 @@ def queryorder(cookie):
     orders=[]
     singleOrder={}
     try:
-        RedirectSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(orderPage)))
+        RedirectSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(orderPage)), 'lxml')
     except Exception, e:
         error["error_code"] = 10003
         error["reason"] =u"网络连接错误"
@@ -420,7 +420,7 @@ def queryorder(cookie):
         url_ = p.findall(js)[0]
         req2 = urllib2.Request(url=url_)  # 抓取登陆后要访问的网址
         try:
-            querySoup = BeautifulSoup(urllib2.urlopen(req2, timeout=4))  # 抓取信息界面
+            querySoup = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except Exception, e:
             error["error_code"] = 10003
             error["reason"] =u"网络连接错误"
@@ -447,7 +447,7 @@ def queryorder(cookie):
 def deleteorder(cookie,order_to_delete):
     infoUrl=order_to_delete['cancel_link']
     try:
-        infoSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(infoUrl), timeout=10))
+        infoSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(infoUrl), timeout=10), 'lxml')
     except Exception, e:
         error["error_code"] = 10003
         error["reason"] =u"网络连接错误"
@@ -458,7 +458,7 @@ def deleteorder(cookie,order_to_delete):
         delete_link=infoSoup.find('a',{'href':re.compile(r'DELETE')})['href']
         #print delete_link
         try:
-            resultSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(delete_link), timeout=10))
+            resultSoup=BeautifulSoup(urllib2.urlopen(urllib2.Request(delete_link), timeout=10), 'lxml')
         except Exception, e:
             error["error_code"] = 10003
             error["reason"] =u"网络连接错误"
@@ -478,23 +478,23 @@ if __name__ == '__main__':
     cookie=getcookie('2013302480033','114028')
 
     booksinfo= searchbook(cookie,'编程珠玑')
-    print booksinfo
-    '''print booksinfo[0]['condition']+booksinfo[0]['cond_link']
-                book_to_order=None
-                for book in booksinfo:
-                    if book['Num']=='2':
-                        book_to_order=book
-                    else:
-                        pass
-                #print book_to_order
-                if book_to_order:
-                    print orderbook(cookie,book_to_order)
-                print  queryorder(cookie)
-                orders=queryorder(cookie)
-                order_to_delete=None
-                for order in orders:
-                    if order['Num']=='1':
-                        order_to_delete=order
-            
-                if order_to_delete:
-                    print deleteorder(cookie,order_to_delete)'''
+    # print booksinfo
+    # print booksinfo[0]['condition']+booksinfo[0]['cond_link']
+    #             book_to_order=None
+    #             for book in booksinfo:
+    #                 if book['Num']=='2':
+    #                     book_to_order=book
+    #                 else:
+    #                     pass
+    #             #print book_to_order
+    #             if book_to_order:
+    #                 print orderbook(cookie,book_to_order)
+    #             print  queryorder(cookie)
+    #             orders=queryorder(cookie)
+    #             order_to_delete=None
+    #             for order in orders:
+    #                 if order['Num']=='1':
+    #                     order_to_delete=order
+    #
+    #             if order_to_delete:
+    #                 print deleteorder(cookie,order_to_delete)

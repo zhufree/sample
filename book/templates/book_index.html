@@ -1,97 +1,154 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-        <title>WHU-图书借阅系统</title>
-    </head>
-    <body>
-        <style type="text/css">
-          *{
-            margin: 5px;
-            padding: 5px;
-            width: auto;
-          }
-        </style>
-        <div>
-            <fieldset>
-                <!-- Text input-->
-                <form action="/book/login/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon">学号</span>
-                        <input type="text" name="sid" class="form-control" placeholder="" aria-describedby="basic-addon1">
-                    </div>
-                    <!-- Text input-->
-                    <div class="input-group">
-                        <span class="input-group-addon">密码</span>
-                        <input type="password" name="pwd" class="form-control" placeholder="默认身份证后六位" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="btn-group btn-group-lg">
-                        <button class="btn btn-default" type="submit">绑定</button>
-                    </div>
-                </form>
-                <!-- 查询操作 -->
-                <div class="btn-group" role="group" aria-label="...">
-                  <form action="./historybook/" method="POST">
-                      <button class="btn btn-default">查询历史借阅</button>
-                  </form>
-                  <form action="./nowbook/" method="POST">
-                      <button class="btn btn-default">查询借阅信息</button>
-                  </form>
-                </div>
-                <!-- 续借操作-->
-                <form action="./renewall/" method="POST">
-                    <button class="btn btn-default">全部续借</button>
-                </form>
-                <!-- Text input-->
-                <form action="./renew/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon">编号</span>
-                        <input type="text" name="number" class="form-control" placeholder="从查询结果获取">
-                        
-                    </div>
-                          <button class="btn btn-default" type="submit">单本续借</button>
-                </form>
-                  
-
-                <form action="./search/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon">关键字</span>
-                        <input type="text" name="keyword" class="form-control" placeholder="">
-                        
-                    </div>
-                          <button class="btn btn-default" type="submit">搜索书籍</button>
-                </form>
-
-                <form action="./order/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon">编号</span>
-                        <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
-                        
-                    </div>
-                          <button class="btn btn-default" type="submit">预约书籍</button>
-                </form>
-
-                <!-- Button -->
-                <div class="btn-group" role="group" aria-label="...">
-                  <form action="./queryorder/" method="POST">
-                      <button class="btn btn-default">查询预约书籍</button>
-                  </form>
-                </div>
-
-                <form action="./deleteorder/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon">编号</span>
-                        <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
-                    </div>
-                          <button class="btn btn-default" type="submit">删除预约</button>
-                </form>
-            </fieldset>
+{% extends 'base.html' %}
+{% block title %}图书馆借阅{% endblock %}
+{% block content %}
+<div class="jumbotron col-md-10 col-md-offset-1">
+    <h4>这里是武汉大学图书馆的第三方接口，提供下面这些功能，绑定学号之后自动登陆，之后再需要登陆直接按下方学号按钮即可，登陆成功后按钮会变绿色，但刷新后就消失</h4>
+    </div>
+<div class='panel panel-default col-md-10 col-md-offset-1' id="mainbox">
+    <div class='panel-body'>
+        <!-- Text input-->
+        <form id="bindForm" method="POST">{% csrf_token %}
+            <div class="form-group input-group">
+                <span class="input-group-addon">学号</span>
+                <input type="text" name="sid" class="form-control" placeholder="" aria-describedby="basic-addon1">
+            </div>
+            <!-- Text input-->
+            <div class="form-group input-group">
+                <span class="input-group-addon">密码</span>
+                <input type="password" name="pwd" class="form-control" placeholder="默认身份证后六位" aria-describedby="basic-addon1">
+            </div>
+            <div class="form-group btn-group btn-group-lg">
+                <button class="btn btn-default" type="submit">绑定</button>
+            </div>
+        </form>
+        <div class='panel-body' id='accountBox'>
+            {% for account in accounts %}
+            <form class="loginForm" method="POST">
+                <input type="hidden" name="stu_id" value="{{account.sid}}">
+                <button type="submit" class="btn btn-default">{{account.sid}}</button>
+            </form>
+            {% endfor %}
         </div>
-    </body>
-            <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <!-- 查询操作 -->
+        <div class='panel-body' id='infoBox'>
+        </div>
+        <div class="form-group btn-group" role="group">
+              <form id="queryhistoryForm" method="POST">
+                  <button class="btn btn-default">查询历史借阅</button>
+              </form>
+          <form id="querynowForm" method="POST">
+              <button class="btn btn-default">查询借阅信息</button>
+          </form>
+        </div>
+        <!-- 续借操作-->
+        <form action="./renewall/" method="POST">
+            <button class="btn btn-default">全部续借</button>
+        </form>
+        <!-- Text input-->
+        <form action="./renew/" method="POST">
+            <div class="form-group input-group">
+                <span class="input-group-addon">编号</span>
+                <input type="text" name="number" class="form-control" placeholder="从查询结果获取">
+                
+            </div>
+                <button class="form-group btn btn-default" type="submit">单本续借</button>
+        </form>
+          
 
-</html>
+        <form action="./search/" method="POST">
+            <div class="form-group input-group">
+                <span class="input-group-addon">关键字</span>
+                <input type="text" name="keyword" class="form-control" placeholder="">
+                
+            </div>
+                  <button class="btn btn-default" type="submit">搜索书籍</button>
+        </form>
+
+        <form action="./order/" method="POST">
+            <div class="form-group input-group">
+                <span class="input-group-addon">编号</span>
+                <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
+                
+            </div>
+                <button class="form-group btn btn-default" type="submit">预约书籍</button>
+        </form>
+
+        <!-- Button -->
+        <div class="form-group btn-group" role="group" aria-label="...">
+          <form action="./queryorder/" method="POST">
+              <button class="form-group btn btn-default">查询预约书籍</button>
+          </form>
+        </div>
+
+        <form action="./deleteorder/" method="POST">
+            <div class="form-group input-group">
+                <span class="input-group-addon">编号</span>
+                <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
+            </div>
+                  <button class="btn btn-default" type="submit">删除预约</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+$(document).ready(function() {  
+    //表单 submit 事件  
+    $('#bindForm').submit(function() {  
+        //ajax 提交表单  
+        $.post('/book/bind/',  
+            $('#bindForm').serialize(),
+            function(data) { 
+                console.log(data);
+                if(data['success']) {
+                    var htmlstr='<button type="button" class="btn btn-default">'+data['sid']+'</button>';
+                    $('#accountBox').append(htmlstr);
+                }else{
+                    var htmlstr='<div class="alert alert-warning" role="alert">'+data['info']+'</div>';
+                    $('#accountBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });  
+    $('.loginForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/login/',  
+            $this.serialize(),
+            function(data) { 
+                console.log(data);
+                if(data['success']) {
+                    var btn = $this.children('button')
+                    btn.addClass('alert alert-success');
+                    btn.type('button');
+                }else{
+                    btn.addClass('alert alert-danger');
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
+                    $('#accountBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#queryhistoryForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/historybook/',  
+            $this.serialize(),
+            function(data) { 
+                console.log(data);
+                if(data['success']) {
+                    var btn = $this.children('button')
+                    btn.addClass('alert alert-success');
+                    btn.type('button');
+                }else{
+                    btn.addClass('alert alert-danger');
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
+                    $('#accountBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+});  
+</script>
+{% endblock %}
 
