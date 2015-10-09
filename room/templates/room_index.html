@@ -1,24 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-        <!-- 新 Bootstrap 核心 CSS 文件 -->
-        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-        <title>WHU-研修室预约系统</title>
-    </head>
-    <body>
-        <style type="text/css">
-          *{
-            margin: 5px;
-            padding: 5px;
-            width: auto;
-          }
-        </style>
-        <div>
-            <fieldset>
+{% extends 'base.html' %}
+{% block title %}图书馆借阅{% endblock %}
+{% block content %}
+        <div class='panel panel-default col-md-10 col-md-offset-1'>
+            <div class='panel-body'>
                 <!-- Text input-->
                 <form action="./login/" method="POST">
                     <div class="input-group">
@@ -90,8 +74,7 @@
                 <form action="./roomid/" method="POST">
                     <button class="btn btn-default">查询预约房间号</button>
                 </form>
-            </fieldset>
+            </div>
         </div>
-    </body>
-</html>
+{% endblock %}
 

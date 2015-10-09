@@ -122,9 +122,9 @@ def queryhistory(cookie):
                 while len(allinfo) >= 8:
                     onebook = allinfo[0:10]
                     #print onebook
-                    book["编号"] = onebook[0]
-                    book["书名"] = onebook[2]
-                    book["罚款数目"] = onebook[8]
+                    book["BookNum"] = onebook[0]
+                    book["BookName"] = onebook[2]
+                    book["Fines"] = onebook[8]
                     #print book
                     finalbooklist.append(book)
                     book={}
@@ -185,10 +185,10 @@ def queryloan(cookie):
                 del each[4]
                 del each[4]
                 del each[4]
-                book["编号"] = each[0]
-                book["书名"] = each[1]
-                book["应还日期"] = each[2]
-                book["罚款数目"] = each[3]
+                book["BookNum"] = each[0]
+                book["BookName"] = each[1]
+                book["DateToReturn"] = each[2]
+                book["Fines"] = each[3]
                 finalbooklist.append(book)
                 book = {}
         return finalbooklist

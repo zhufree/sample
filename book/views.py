@@ -27,7 +27,6 @@ def bind(request):
             data = {"success": True, "sid": sid}
         else:
             data = {"success": False, "info": cookie}
-        print json.dumps(data)
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -57,6 +56,7 @@ def historybook(request):
             data = {"success": True, "info": info}
         else:
             data = {"success": False, "info": info}
+
     else:
         errorinfo = "method error"
         data = {"success": False, "info": errorinfo}
@@ -74,6 +74,8 @@ def nowbook(request):
             data = {"success": False, "info": info}
         else:
             data = {"success": False, "info": info}
+        print json.dumps(data)
+
     else:
         errorinfo = "method error"
         data = {"success": False, "info": errorinfo}
