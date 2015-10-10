@@ -190,7 +190,7 @@ $(document).ready(function() {
                     $('#resultBox').html(htmlstr);;
                 }else{
                     console.log(data['info']['reason']);
-                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']['reason']+'</div>';
+                    var htmlstr='<div class="alert alert-danger" role="alert"><h3>续借结果</h3>'+data['info']['reason']+'</div>';
                     $('#resultBox').html(htmlstr);
                 }
             });  

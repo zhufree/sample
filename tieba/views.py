@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.views.decorators.csrf import csrf_protect,csrf_exempt
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.sessions.serializers import PickleSerializer
 import json
