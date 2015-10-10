@@ -73,8 +73,6 @@ def nowbook(request):
             data = {"success": False, "info": info}
         else:
             data = {"success": False, "info": info}
-        print json.dumps(data)
-
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -88,7 +86,6 @@ def renewall_(request):
             data = {"success": True, "info": info}
         else:
             data = {"success": False, "info": info}
-        print data
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -113,7 +110,7 @@ def search(request):
         keyword=request.POST.get('keyword','')
         cookie=request.session.get('cookie_')
         #print cookie
-        info=searchbook(cookie,keyword)
+        info=searchbook(cookie, keyword)
         if type(info)==list:
             request.session['booksinfo']=info
             data= {"success": True, "info": info}
@@ -131,19 +128,17 @@ def order(request):
         booksinfo=request.session.get('booksinfo')
         book_to_order=None
         for book in booksinfo:
-            if book['Num']==num:
+            if book['BookNum']==num:
                 book_to_order=book
         if book_to_order:
-
             info=orderbook(cookie,book_to_order)
-            #print info
-            if info=='order succeed':
-                data= {"success": True, "info": info}
+            print info
+            if info == 'order succeed':
+                data = {"success": True, "info": info}
             else:
-                data={"success": False, "info": info}
+                data = {"success": False, "info": info}
         else:
-            data= {"success": False, "info": 'no such book'}
-        
+            data = {"success": False, "info": 'no such book'}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -170,7 +165,7 @@ def deleteorder_(request):
         orders=request.session['orders']
         order_to_delete=None
         for order in orders:
-            if order['Num']==num:
+            if order['BookNum']==num:
                 order_to_delete=order
         if order_to_delete:
             info=deleteorder(cookie,order_to_delete)

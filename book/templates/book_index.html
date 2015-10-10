@@ -2,7 +2,8 @@
 {% block title %}图书馆借阅{% endblock %}
 {% block content %}
 <div class="jumbotron col-md-10 col-md-offset-1">
-    <h4>这里是武汉大学图书馆的第三方接口，提供下面这些功能，绑定学号之后自动登陆，之后再需要登陆直接按下方学号按钮即可，登陆成功后按钮会变绿色，但刷新后就消失</h4>
+    <h4>这里是武汉大学图书馆的第三方接口，提供下面这些功能，绑定学号之后自动登陆，之后再需要登陆直接按下方学号按钮即可，登陆成功后按钮会变绿色，在此页面查询时请不要刷新,刷新后所有显示信息都会清除.
+    </br>预约说明：</br>只有已被借出的书才可以预约，在架上的书直接去图书馆借就可以</h4>
     </div>
 <div class='panel panel-default col-md-10 col-md-offset-1' id="mainbox">
     <div class='panel-body'>
@@ -36,15 +37,14 @@
               <form id="queryhistoryForm" method="POST">{% csrf_token %}
                   <button class="btn btn-default">查询历史借阅</button>
               </form>
-          <form id="querynowForm" method="POST">{% csrf_token %}
-              <button class="btn btn-default">查询借阅信息</button>
-          </form>
+              <form id="querynowForm" method="POST">{% csrf_token %}
+                  <button class="btn btn-default">查询借阅信息</button>
+              </form>
         </div>
         <!-- 续借操作-->
         <form id="renewallForm" method="POST">{% csrf_token %}
             <button class="btn btn-default">全部续借</button>
         </form>
-        <!-- Text input-->
         <form id="renewForm" method="POST">{% csrf_token %}
             <div class="form-group input-group">
                 <span class="input-group-addon">编号</span>
@@ -54,8 +54,8 @@
         </form>
         <div class='panel-body' id='resultBox'>
         </div>
-
-        <form action="./search/" method="POST">{% csrf_token %}
+        <!--search book-->
+        <form id="searchForm" method="POST">{% csrf_token %}
             <div class="form-group input-group">
                 <span class="input-group-addon">关键字</span>
                 <input type="text" name="keyword" class="form-control" placeholder="">
@@ -63,8 +63,9 @@
             </div>
                   <button class="btn btn-default" type="submit">搜索书籍</button>
         </form>
-
-        <form action="./order/" method="POST">{% csrf_token %}
+        <div class='panel-body' id='searchBox'>
+        </div>
+        <form id="orderForm" method="POST">{% csrf_token %}
             <div class="form-group input-group">
                 <span class="input-group-addon">编号</span>
                 <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
@@ -75,12 +76,13 @@
 
         <!-- Button -->
         <div class="form-group btn-group" role="group" aria-label="...">
-          <form action="./queryorder/" method="POST">{% csrf_token %}
-              <button class="form-group btn btn-default">查询预约书籍</button>
+          <form id="queryorderForm" method="POST">{% csrf_token %}
+              <button class="form-group btn btn-default" type="submit">查询预约书籍</button>
           </form>
         </div>
-
-        <form action="./deleteorder/" method="POST">
+        <div class='panel-body' id='orderBox'>
+        </div>
+        <form id="deleteorderForm" method="POST">
             <div class="form-group input-group">
                 <span class="input-group-addon">编号</span>
                 <input type="text" name="num" class="form-control" placeholder="从查询结果获取">
@@ -120,7 +122,7 @@ $(document).ready(function() {
                 if(data['success']) {
                     var btn = $this.children('button')
                     btn.addClass('alert alert-success');
-                    btn.type('button');
+                    btn.attr('type', 'button');
                 }else{
                     btn.addClass('alert alert-danger');
                     var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
@@ -145,7 +147,7 @@ $(document).ready(function() {
                     htmlstr += '</div>';
                     $('#infoBox').html(htmlstr);;
                 }else{
-                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']['reason']+'</div>';
                     $('#infoBox').html(htmlstr);
                 }
             });  
@@ -168,7 +170,7 @@ $(document).ready(function() {
                     htmlstr += '</div>';
                     $('#infoBox').html(htmlstr);;
                 }else{
-                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']['reason']+'</div>';
                     $('#infoBox').html(htmlstr);
                 }
             });  
@@ -200,16 +202,98 @@ $(document).ready(function() {
         $.post('/book/renew/',  
             $this.serialize(),
             function(data) { 
-                var htmlstr='<div class="alert alert-info" role="alert"><h3>续借结果</h3></br>';
                 if(data['success']) {
-                    console.log(data['info']['reason']);
+                    var htmlstr='<div class="alert alert-info" role="alert"><h3>续借结果</h3></br>';
                     htmlstr += data['info']['reason'];
                     htmlstr += '</div>';
                     $('#resultBox').html(htmlstr);;
                 }else{
-                    console.log(data['info']['reason']);
-                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']['reason']+'</div>';
+                    var htmlstr='<div class="alert alert-danger" role="alert"><h3>续借结果</h3></br>'+data['info']['reason']+'</div>';
                     $('#resultBox').html(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#searchForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/search/',  
+            $this.serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="alert alert-info" role="alert"><h3>搜索结果(前十条)</h3></br>';
+                    for(var book in data['info']){
+                        htmlstr += '编号: ' + data['info'][book]['BookNum'] + '</br>';
+                        htmlstr += '书名: ' + data['info'][book]['BookName'] + '</br>';
+                        htmlstr += '借阅情况: ' + data['info'][book]['Condition'] + '</br>';
+                        htmlstr += '<img class="media-object" src="' + data['info'][book]['BookCover'] + '"></br></br>';
+                    }
+                    htmlstr += '</div>';
+                    $('#searchBox').html(htmlstr);;
+                }else{
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
+                    $('#searchBox').html(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#orderForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/order/',  
+            $this.serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="alert alert-info" role="alert"><h3>预约结果</h3></br>';
+                    htmlstr += data['info'];
+                    htmlstr += '</div>';
+                    $('#orderBox').html(htmlstr);;
+                }else{
+                    var htmlstr='<div class="alert alert-danger" role="alert"><h3>预约结果</h3></br>'+data['info']+'</div>';
+                    $('#orderBox').html(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#queryorderForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/queryorder/',  
+            $this.serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="alert alert-info" role="alert"><h3>预约结果</h3></br>';
+                    for(var book in data['info']){
+                        htmlstr += '编号: ' + data['info'][book]['BookNum'] + '</br>';
+                        htmlstr += '书名: ' + data['info'][book]['BookName'] + '</br>';
+                        htmlstr += '起始日期: ' + data['info'][book]['From'] + '</br>';
+                        htmlstr += '预约到期日期: ' + data['info'][book]['To'] + '</br>';
+                        htmlstr += '归还日期: ' + data['info'][book]['ReturnTime'] + '</br>';
+                        htmlstr += '藏书地点: ' + data['info'][book]['Location'] + '</br>';
+                    }
+                    htmlstr += '</div>';
+                    $('#orderBox').html(htmlstr);;
+                }else{
+                    var htmlstr='<div class="alert alert-danger" role="alert"><h3>预约结果</h3></br>'+data['info']+'</div>';
+                    $('#orderBox').html(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#deleteorderForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/book/deleteorder/',  
+            $this.serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="alert alert-info" role="alert"><h3>删除预约结果</h3></br>';
+                    htmlstr += data['info'];
+                    htmlstr += '</div>';
+                    $('#orderBox').html(htmlstr);;
+                }else{
+                    var htmlstr='<div class="alert alert-danger" role="alert"><h3>删除预约结果</h3></br>'+data['info']+'</div>';
+                    $('#orderBox').html(htmlstr);
                 }
             });  
         return false;       //阻止表单提交  

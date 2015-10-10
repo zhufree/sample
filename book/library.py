@@ -336,11 +336,11 @@ def searchbook(cookie,searchword):
             covers_1=[c for c in cover_all_1 if c not in cover_extra_1]#封面
             #for c in covers:
                 #print c.next.nextSibling.nextSibling.next['src']
-            books_1=[{'Num':str(i),
-                    'name':divs_1[i].next.string,
-                    'condition':conditions_1[i].string,
-                    'cond_link':conditions_1[i].parent['href'],
-                    'book_cover':covers_1[i].next.nextSibling.nextSibling.next['src']
+            books_1=[{'BookNum':str(i),
+                    'BookName':divs_1[i].next.string,
+                    'Condition':conditions_1[i].string,
+                    'Cond_link':conditions_1[i].parent['href'],
+                    'BookCover':covers_1[i].next.nextSibling.nextSibling.next['src']
                     } for i in range(len(divs_1))]
             nextpageUrl=redirectUrl+"func=short-jump&jump=11"
             nextpageRequest=urllib2.Request(nextpageUrl)#抓取头两页
@@ -359,11 +359,11 @@ def searchbook(cookie,searchword):
                 cover_all_2=resultSoup.find_all('td',{'class':'cover'})
                 cover_extra_2=resultSoup.find_all('td',{'class':'cover','id':'opac_qr'})
                 covers_2=[c for c in cover_all_2 if c not in cover_extra_2]
-                books_2=[{'Num':str(i),
-                        'name':divs_2[i].next.string.encode('utf-8'),
-                        'condition':conditions_2[i].string,
-                        'cond_link':conditions_2[i].parent['href'],
-                        'book_cover':covers_2[i].next.nextSibling.nextSibling.next['src']
+                books_2=[{'BookNum':str(i),
+                        'BookName':divs_2[i].next.string.encode('utf-8'),
+                        'Condition':conditions_2[i].string,
+                        'Cond_link':conditions_2[i].parent['href'],
+                        'BookCover':covers_2[i].next.nextSibling.nextSibling.next['src']
                         } for i in range(len(divs_2))]
                 for book in books_2:
                     if book not in books_1:
@@ -376,7 +376,7 @@ def searchbook(cookie,searchword):
                 
 #按编号预约书籍
 def orderbook(cookie,book_to_order):
-    check_orderUrl=book_to_order['cond_link']
+    check_orderUrl=book_to_order['Cond_link']
     checkorderRequest=urllib2.Request(check_orderUrl+'&%s' % cookie)
     checkorderSoup=BeautifulSoup(urllib2.urlopen(checkorderRequest,timeout=10), 'lxml')
     #print checkorderSoup
@@ -428,19 +428,20 @@ def queryorder(cookie):
             return error
         else:
             #print querySoup
-            rawInfo=querySoup.find_all('td',{'class':'td1'})#抓取所有预约相关信息
-            allorderInfo=rawInfo[1:]#去掉开头的无关信息
-            #print allorderInfo
-            while len(allorderInfo)>=13:#每13条为一条预约信息
-                singleOrderL=allorderInfo[:13]
-                singleOrder={'Num':singleOrderL[0].next.string.rstrip(),
-                            'cancel_link':singleOrderL[0].next['href'],
-                            'name':singleOrderL[2].string,
-                            'from':singleOrderL[3].string,
-                            'to':singleOrderL[4].string,
-                            'location':singleOrderL[6].string,
-                            'return_time':singleOrderL[7].string}#列表中重要信息对应存储在字典中
-                orders.append(singleOrder)#单个预约信息加入列表中
+            rawInfo=querySoup.find_all('td',{'class':'td1'})  # 抓取所有预约相关信息
+            allorderInfo=rawInfo[1:]  # 去掉开头的无关信息
+            # print allorderInfo
+            while len(allorderInfo) >= 13:  # 每13条为一条预约信息
+                singleOrderL = allorderInfo[:13]
+                singleOrder = {
+                    'BookNum': singleOrderL[0].next.string.rstrip(),
+                    'cancel_link': singleOrderL[0].next['href'],
+                    'BookName': singleOrderL[2].string,
+                    'From': singleOrderL[3].string,
+                    'To': singleOrderL[4].string,
+                    'Location': singleOrderL[6].string,
+                    'ReturnTime': singleOrderL[7].string}  # 列表中重要信息对应存储在字典中
+                orders.append(singleOrder)  # 单个预约信息加入列表中
                 allorderInfo=allorderInfo[13:]
             return orders
 #删除预约请求
