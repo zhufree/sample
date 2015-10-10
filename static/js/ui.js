@@ -191,12 +191,13 @@ FileProgress.prototype.setComplete = function(up, info) {
 
     var res = $.parseJSON(info);
     var url;
-    var endWith=function(endStr){
-      var d=this.length-endStr.length;
-      return (d>=0&&this.lastIndexOf(endStr)==d)
+    var endWith = function(wholeStr, endStr){
+      var d = wholeStr.length - endStr.length;
+      return (d >= 0 && wholeStr.lastIndexOf(endStr) == d)
     }
     if (res.url) {
-        if (res.url.endWith('jpg')||res.url.endWith('jpeg')||res.url.endWith('png')) {
+        console.log('here');
+        if (endWith(res.url, 'jpg')||endWith(res.url, 'jpeg')||endWith(res.url, 'png')) {
             $('#exampleLink').val(res.url);
             str = "<div><strong>Link:</strong><a href=" + res.url + " target='_blank' > " + res.url + "</a></div>" +
             "<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
@@ -207,9 +208,9 @@ FileProgress.prototype.setComplete = function(up, info) {
         var domain = up.getOption('domain');
         url = domain + encodeURI(res.key);
         var link = domain + res.key;
-        if (url.endWith('jpg')||res.url.endWith('jpeg')||res.url.endWith('png')) {
+        if (endWith(url, 'jpg')||endWith(url, 'jpeg')||endWith(url, 'png')) {
             $('#exampleLink').val(url);
-            str = "<div><strong>Link:</strong><a href=" + url + " target='_blank' > " + res.url + "</a></div>" +
+            str = "<div><strong>Link:</strong><a href=" + url + " target='_blank' > " + url + "</a></div>" +
             "<div class=hash><strong>Hash:</strong>" + res.hash + "</div>";
         }else{
             alert('wrong!');
