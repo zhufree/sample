@@ -37,6 +37,7 @@
               <form id="queryhistoryForm" method="POST">{% csrf_token %}
                   <button class="btn btn-default">查询历史借阅</button>
               </form>
+              </br>
               <form id="querynowForm" method="POST">{% csrf_token %}
                   <button class="btn btn-default">查询借阅信息</button>
               </form>
@@ -45,6 +46,7 @@
         <form id="renewallForm" method="POST">{% csrf_token %}
             <button class="btn btn-default">全部续借</button>
         </form>
+        </br>
         <form id="renewForm" method="POST">{% csrf_token %}
             <div class="form-group input-group">
                 <span class="input-group-addon">编号</span>
@@ -73,7 +75,7 @@
             </div>
                 <button class="form-group btn btn-default" type="submit">预约书籍</button>
         </form>
-
+        </br>
         <!-- Button -->
         <div class="form-group btn-group" role="group" aria-label="...">
           <form id="queryorderForm" method="POST">{% csrf_token %}

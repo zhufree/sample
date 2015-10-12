@@ -331,9 +331,9 @@ def searchbook(cookie, searchword):
             resultSoup = BeautifulSoup(resultResponse, 'lxml')  # 抓取信息界面
             divs_1 = resultSoup.find_all('div',{'class':'itemtitle'})
             conditions_1 = resultSoup.find_all('u')
-            cover_all_1 = resultSoup.find_all('td',{'class':'cover'})#封面图片+二维码
-            cover_extra_1 = resultSoup.find_all('td',{'class':'cover','id':'opac_qr'})#二维码
-            covers_1 = [c for c in cover_all_1 if c not in cover_extra_1]#封面
+            cover_all_1 = resultSoup.find_all('td',{'class':'cover'})  # 封面图片+二维码
+            cover_extra_1 = resultSoup.find_all('td',{'class':'cover','id':'opac_qr'})  # 二维码
+            covers_1 = [c for c in cover_all_1 if c not in cover_extra_1]  # 封面
             books_1 = [
                 {
                     'BookNum': str(i),
@@ -343,7 +343,7 @@ def searchbook(cookie, searchword):
                     'BookCover': covers_1[i].next.nextSibling.nextSibling.next['src']
                 } for i in range(len(divs_1))]
             nextpageUrl = redirectUrl+"func=short-jump&jump=11"
-            nextpageRequest = urllib2.Request(nextpageUrl)#抓取头两页
+            nextpageRequest = urllib2.Request(nextpageUrl)  # 抓取头两页
             try:
                 nextpageSoup = BeautifulSoup(urllib2.urlopen(nextpageRequest,timeout=10), 'lxml')
             except urllib2.URLError, e:
@@ -352,18 +352,19 @@ def searchbook(cookie, searchword):
                 error["result"] = []
                 return error
             else:
-                #print nextPageSoup
-                divs_2 = nextpageSoup.find_all('div',{'class':'itemtitle'})
+                divs_2 = nextpageSoup.find_all('div', {'class': 'itemtitle'})
 
                 conditions_2 = resultSoup.find_all('u')
-                cover_all_2 = resultSoup.find_all('td',{'class':'cover'})
-                cover_extra_2 = resultSoup.find_all('td',{'class':'cover','id':'opac_qr'})
+                cover_all_2 = resultSoup.find_all('td', {'class': 'cover'})
+                cover_extra_2 = resultSoup.find_all('td', {'class': 'cover', 'id': 'opac_qr'})
                 covers_2 = [c for c in cover_all_2 if c not in cover_extra_2]
-                books_2 = [{'BookNum':str(i),
-                        'BookName':divs_2[i].next.string.encode('utf-8'),
-                        'Condition':conditions_2[i].string,
-                        'Cond_link':conditions_2[i].parent['href'],
-                        'BookCover':covers_2[i].next.nextSibling.nextSibling.next['src']
+                books_2 = [
+                    {
+                        'BookNum': str(i),
+                        'BookName': divs_2[i].next.string.encode('utf-8'),
+                        'Condition': conditions_2[i].string,
+                        'Cond_link': conditions_2[i].parent['href'],
+                        'BookCover': covers_2[i].next.nextSibling.nextSibling.next['src']
                         } for i in range(len(divs_2))]
                 for book in books_2:
                     if book not in books_1:
@@ -375,7 +376,7 @@ def searchbook(cookie, searchword):
                     
                 
 #按编号预约书籍
-def orderbook(cookie,book_to_order):
+def orderbook(cookie, book_to_order):
     check_orderUrl = book_to_order['Cond_link']
     checkorderRequest = urllib2.Request(check_orderUrl + '&%s' % cookie)
     checkorderSoup = BeautifulSoup(urllib2.urlopen(checkorderRequest, timeout=10), 'lxml')
@@ -404,9 +405,9 @@ def orderbook(cookie,book_to_order):
 
 # 查询已预约书籍
 def queryorder(cookie):
-    orderPage = 'http://opac.lib.whu.edu.cn/F/?func=bor-hold&adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie
+    orderPage = 'http://opac.lib.whu.edu.cn/F/?func=bor-hold&adm_library=WHU50&' \
+                '%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie
     orders = []
-    singleOrder = {}
     try:
         RedirectSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(orderPage)), 'lxml')
     except urllib2.URLError, e:
@@ -415,7 +416,6 @@ def queryorder(cookie):
         error["result"] = []
         return error
     else:
-        #page = str(RedirectSoup)  # 获取自动登录后的信息界面
         js = RedirectSoup.find(text=re.compile(r"url\S"))
         p = re.compile(r"http://opac\S+\'")
         url_ = p.findall(js)[0]
@@ -456,9 +456,7 @@ def deleteorder(cookie, order_to_delete):
         error["result"] = []
         return error
     else:
-        #print infoSoup
         delete_link = infoSoup.find('a', {'href': re.compile(r'DELETE')})['href']
-        #print delete_link
         try:
             resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(delete_link), timeout=10), 'lxml')
         except urllib2.URLError, e:
@@ -467,7 +465,6 @@ def deleteorder(cookie, order_to_delete):
             error["result"] = []
             return error
         else:
-            #print resultSoup
             if u'管理库' in str(resultSoup):
                 return 'cancel succeed'
             else:
@@ -477,9 +474,9 @@ def deleteorder(cookie, order_to_delete):
 
 if __name__ == '__main__':
 
-    cookie = getcookie('2013302480033','114028')
+    cookie = getcookie('2013302480033', '114028')
 
-    booksinfo =  searchbook(cookie,'编程珠玑')
+    booksinfo =  searchbook(cookie, '编程珠玑')
     # print booksinfo
     # print booksinfo[0]['condition']+booksinfo[0]['cond_link']
     #             book_to_order=None

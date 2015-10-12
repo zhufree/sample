@@ -1,80 +1,177 @@
 {% extends 'base.html' %}
 {% block title %}图书馆借阅{% endblock %}
 {% block content %}
-        <div class='panel panel-default col-md-10 col-md-offset-1'>
-            <div class='panel-body'>
-                <!-- Text input-->
-                <form action="./login/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">学号</span>
-                        <input type="text" name="sid" class="form-control" placeholder="" aria-describedby="basic-addon1">
-                    </div>
-                    <!-- Text input-->
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">密码</span>
-                        <input type="password" name="pwd" class="form-control" placeholder="默认身份证后六位" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="btn-group btn-group-lg">
-                        <button class="btn btn-default" type="submit">登陆</button>
-                    </div>
-                </form>
-                <!-- 查询操作 -->
-                <form action="./check/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">年</span>
-                        <input type="text" name="year" class="form-control" placeholder="留空为当年" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">月</span>
-                        <input type="text" name="month" class="form-control" placeholder="留空为当月" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">日</span>
-                        <input type="text" name="day" class="form-control" placeholder="留空为当天" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">区</span>
-                        <input type="text" name="region" class="form-control" placeholder="1为文理学部，2为医学部" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="btn-group btn-group-lg">
-                        <button class="btn btn-default" type="submit">查询空闲研修室</button>
-                    </div>
-                </form>
-                <!-- 预约操作 -->
-                <form action="./reserve/" method="POST">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">房间号</span>
-                        <input type="text" name="room" class="form-control" placeholder="从查询结果获得" aria-describedby="basic-addon1">
-                    </div>
-                    <!-- Text input-->
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">时间段</span>
-                        <input type="text" name="time" class="form-control" placeholder="8:00~11:30——1   11:30~15:00——2    15:00~18:30——3   18:30~22:00——4" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">电话</span>
-                        <input type="text" name="tel" class="form-control" placeholder="可不填" aria-describedby="basic-addon1">
-                    </div>
-                    <!-- Text input-->
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">预约描述</span>
-                        <input type="text" name="description" class="form-control" placeholder="可不填" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">邮箱</span>
-                        <input type="text" name="email" class="form-control" placeholder="随便填" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="btn-group btn-group-lg">
-                        <button class="btn btn-default" type="submit">预约</button>
-                    </div>
-                </form>
-                <form action="./cancel/" method="POST">
-                    <button class="btn btn-default">取消预约</button>
-                </form>
-                <form action="./roomid/" method="POST">
-                    <button class="btn btn-default">查询预约房间号</button>
-                </form>
+<div class='panel panel-default col-md-10 col-md-offset-1'>
+    <div class='panel-body'>
+        <!-- Text input-->
+        <form id="bindForm" method="POST">
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">学号</span>
+                <input type="text" name="sid" class="form-control" placeholder="" aria-describedby="basic-addon1">
             </div>
+            <!-- Text input-->
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">密码</span>
+                <input type="password" name="pwd" class="form-control" placeholder="默认身份证后六位" aria-describedby="basic-addon1">
+            </div>
+            <div class="btn-group btn-group-lg">
+                <button class="btn btn-default" type="submit">绑定</button>
+            </div>
+        </form>
+        <div class='panel-body' id='accountBox'>
+            {% for account in accounts %}
+            <form class="loginForm" method="POST">{% csrf_token %}
+                <input type="hidden" name="stu_id" value="{{account.sid}}">
+                <button type="submit" class="btn btn-default">{{account.sid}}</button>
+            </form>
+            {% endfor %}
         </div>
+        <!-- 查询操作 -->
+        
+        <form id="checkForm" method="POST">
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">年</span>
+                <input type="text" name="year" class="form-control" placeholder="留空为当年" aria-describedby="basic-addon1">
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">月</span>
+                <input type="text" name="month" class="form-control" placeholder="留空为当月,超过12会查询当天" aria-describedby="basic-addon1">
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">日</span>
+                <input type="text" name="day" class="form-control" placeholder="留空为当天,超过当月最大日期会显示当月最后一点的查询结果" aria-describedby="basic-addon1">
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">区</span>
+                <input type="text" name="region" class="form-control" placeholder="必填,1为文理学部,2为医学部" aria-describedby="basic-addon1">
+            </div>
+            <div class="btn-group btn-group-lg">
+                <button class="btn btn-default" type="submit">查询空闲研修室</button>
+            </div>
+        </form>
+        </br>
+        <div class='panel-body' id='infoBox'>
+        </div>
+        <!-- 预约操作 -->
+        <form id="reserveForm" method="POST">
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">房间号</span>
+                <input type="text" name="room" class="form-control" placeholder="从查询结果获得" aria-describedby="basic-addon1">
+            </div>
+            <!-- Text input-->
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">时间段</span>
+                <input type="text" name="time" class="form-control" placeholder="8:00~11:30——1   11:30~15:00——2    15:00~18:30——3   18:30~22:00——4" aria-describedby="basic-addon1">
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">电话</span>
+                <input type="text" name="tel" class="form-control" placeholder="可不填" aria-describedby="basic-addon1">
+            </div>
+            <!-- Text input-->
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">预约描述</span>
+                <input type="text" name="description" class="form-control" placeholder="可不填" aria-describedby="basic-addon1">
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon" id="basic-addon1">邮箱</span>
+                <input type="text" name="email" class="form-control" placeholder="随便填" aria-describedby="basic-addon1">
+            </div>
+            <div class="btn-group btn-group-lg">
+                <button class="btn btn-default" type="submit">预约</button>
+            </div>
+        </form>
+        <div class='panel-body' id='roomBox'>
+        </div>
+        <form id="cancelForm" method="POST">
+            <button class="btn btn-default" type="submit">取消预约</button>
+        </form>
+        </br>
+        <form id="roomidForm" method="POST">
+            <button class="btn btn-default" type="submit">查询预约房间号</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
-
+{% block script %}
+<script>
+$(document).ready(function() {
+    $('#bindForm').submit(function() {  
+        //ajax 提交表单  
+        $.post('/room/bind/',  
+            $('#bindForm').serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<button type="button" class="btn btn-default">'+data['sid']+'</button>';
+                    $('#accountBox').append(htmlstr);
+                }else{
+                    var htmlstr='<div class="alert alert-warning" role="alert">'+data['info']+'</div>';
+                    $('#accountBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });  
+    $('.loginForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/room/login/',  
+            $this.serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var btn = $this.children('button')
+                    btn.addClass('alert alert-success');
+                    btn.attr('type', 'button');
+                }else{
+                    btn.addClass('alert alert-danger');
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']+'</div>';
+                    $('#accountBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#checkForm').submit(function() {  
+        //ajax 提交表单  
+        var $this = $(this);
+        $.post('/room/check/',  
+            $this.serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="table-responsive"><table class="table alert alert-info" role="alert">';
+                    htmlstr += '<thead><tr><th>Time</th>';
+                    for(var region in data['info']){
+                        htmlstr += '<th>' + region + '</th>';
+                    }
+                    for(var i = 1; i < 5; i ++){
+                        htmlstr += '</tr></thead><tbody><tr><th scope="row">' + i + '</th>';
+                        for(var region in data['info']){
+                            htmlstr += '<td>' + data['info'][region][i] + '</td>';
+                        }
+                        htmlstr += '</tr>';
+                    }
+                    htmlstr += '</tbody></table></div>';
+                    $('#infoBox').html(htmlstr);;
+                }else{
+                    var htmlstr='<div class="alert alert-danger" role="alert">'+data['info']['reason']+'</div>';
+                    $('#infoBox').html(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
+    $('#reserveForm').submit(function() {  
+        //ajax 提交表单  
+        $.post('/room/reserve/',  
+            $('#reserveForm').serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="alert alert-info" role="alert"><h3>预约结果</h3></br>成功,房间id为';
+                    htmlstr += data['info']['roomid'] + '</div>';
+                    $('#roomBox').append(htmlstr);
+                }else{
+                    var htmlstr='<div class="alert alert-warning" role="alert">'+data['info']+'</div>';
+                    $('#roomBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    }); 
+});
+</script>
+{% endblock %}
