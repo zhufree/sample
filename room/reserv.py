@@ -363,7 +363,6 @@ class Reservelib(SGMLParser):
                 'rep_id': '0',
                 'edit_type': 'series'
             }
-            print postdata
             req = urllib2.Request(url=handpage, data=urllib.urlencode(postdata))
             req.add_header('Cookie',  self.cookie)
             try:

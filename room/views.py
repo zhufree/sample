@@ -103,9 +103,7 @@ def reserv(request):
         test.day = request.session.get('day')
         test.sid = request.session.get('sid')
         test.cookie = request.session.get('_lib_cookie')
-        print test.month,test.day,test.sid
         resultinfo = test.reservbyroom(room, time)
-        print resultinfo
         if type(resultinfo) == int:
             test.roomid = resultinfo
             request.session['roomid'] = test.roomid
