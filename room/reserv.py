@@ -4,6 +4,7 @@ from sgmllib import SGMLParser
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
+import xml.etree.ElementTree as ET
 import re
 import datetime
 
@@ -233,48 +234,52 @@ class Reservelib(SGMLParser):
                     pds_handle = pattern[1]   # 匹配并截取pds_handle的数字部分内容
                     cookie = "PDS_HANDLE=" + pds_handle + '''; path="/"; domain=".lib.whu.edu.cn"; path_spec; domain_dot; expires="2015-08-21 04:24:11Z"; version=0'''   # 形成cookie字符串
                     self.cookie = cookie
+                    self.getuserinfo(cookie)
                     return cookie
                 else:
                     error["error_code"] = 10000
                     error["reason"] = u"验证错误"
                     error["result"] = [{
-                    "field": "sid", 
-                    "error_code": 10001, 
-                    "reason": u"不合法的数据"
-                    }, {
-                    "field": "pwd", 
-                    "error_code": 10001, 
-                    "reason": u"不合法的数据"}]
+                        "field": "sid", 
+                        "error_code": 10001, 
+                        "reason": u"不合法的数据"
+                        }, {
+                        "field": "pwd", 
+                        "error_code": 10001, 
+                        "reason": u"不合法的数据"
+                        }]
                     return error
         else:
             error["error_code"] = 10000
             error["reason"] = u"验证错误"
             error["result"] = [{
-            "field": "sid", 
-            "error_code": 10002, 
-            "reason": u"数据不完整"
-        }, {
-            "field": "pwd", 
-            "error_code": 10002, 
-            "reason": u"数据不完整"
-        }]
+                "field": "sid", 
+                "error_code": 10002, 
+                "reason": u"数据不完整"
+            }, {
+                "field": "pwd", 
+                "error_code": 10002, 
+                "reason": u"数据不完整"
+            }]
             return error
-    def getuserinfo(self):# 获取用户信息（主要是name和ID）, 需要cookie
+
+
+    def getuserinfo(self, cookie):# 获取用户信息（主要是name和ID）, 需要cookie
         req = urllib2.Request("http://metalib.lib.whu.edu.cn/pds?func=Bor-info")
-        if hasattr(self, 'cookie'):
-            req.add_header('Cookie',  self.cookie)
+        if cookie:
+            req.add_header('Cookie',  cookie)
             try:
-                soup = BeautifulSoup(urllib2.urlopen(req, timeout=4), 'lxml')
+                root = ET.parse(urllib2.urlopen(req, timeout=4)).getroot()  # 获取根节点
             except Exception, e:
                 error["error_code"] = 10003
                 error["reason"] = e
                 error["result"] = []
                 return error
             else:
-                name = soup.find('name').string.encode('gb2312')
-                ID = soup.find('id').string.encode('gb2312')
-                self.name=name
-                self.ID=ID    
+                name = root.getiterator("name")[0].text.encode('utf-8')
+                ID = root.getiterator("id")[0].text.encode('utf-8')
+                self.name = name
+                self.ID = ID    
                 return name, ID
         else:
             error["error_code"] = 10001
@@ -285,9 +290,9 @@ class Reservelib(SGMLParser):
             "reason": u"数据不完整"
         }]
             return error
-         # 获取name和id, id用于预订时的表单数据, 原来就为unicode字符，
-         # 在后面编码数据中会出错，这里转换为gb2312         
-    def reservbyroom(self, room, time, tel, email, description):  # 需要cookie
+
+
+    def reservbyroom(self, room, time):  # 需要cookie
         if str(room).isdigit() and str(time).isdigit():
             if int(room) not in range(16, 41) and int(room) not in range(70, 106):
                 error["error_code"] = 10001
@@ -333,7 +338,7 @@ class Reservelib(SGMLParser):
         if hasattr(self, "name") and hasattr(self, "sid") and hasattr(self, "ID"):
             postdata={
                 'name': self.name,
-                'description': description,
+                'description': 'description',
                 'start_day': self.day,
                 'start_month': self.month,
                 'start_year': now.year,
@@ -348,8 +353,8 @@ class Reservelib(SGMLParser):
                 'type': 'I',
                 'confirmed': '1',
                 'f_bor_id': self.sid,
-                'f_entry_tel': tel,
-                'f_entry_email': email,
+                'f_entry_tel': 'tel',
+                'f_entry_email': 'email',
                 'f_entry_person1': '',
                 'f_entry_person2': '',
                 'f_entry_person3': '',
@@ -358,6 +363,7 @@ class Reservelib(SGMLParser):
                 'rep_id': '0',
                 'edit_type': 'series'
             }
+            print postdata
             req = urllib2.Request(url=handpage, data=urllib.urlencode(postdata))
             req.add_header('Cookie',  self.cookie)
             try:
@@ -386,11 +392,9 @@ class Reservelib(SGMLParser):
                     return error
                 else:
                     links=soup.find_all('a', attrs={'href':re.compile('view_entry')})# 抓取已预订的房间链接
-                    # print links
                     for link in links:   # str                 # 将gb2312编码为utf-8
-                        # print link.renderContents().encode('gb2312')
-                        if link.renderContents() == self.name.decode('gb2312'):
-                            linkofid=link['href']# 获得链接中的网址部分（id包含在其中）
+                        if link.renderContents() == self.name:
+                            linkofid=link['href']  # 获得链接中的网址部分（id包含在其中）
                             linkstr=str(linkofid)
                             numid=re.compile("id=\d+")
                             roomid=numid.findall(linkstr)[0][3:]# 正则匹配出id
@@ -433,15 +437,22 @@ class Reservelib(SGMLParser):
                         error["error_code"] = 10001
                         error["reason"] = u"不合法的数据"
                         error["result"] = [{
-                        "field": "name", 
-                        "error_code": 14000, 
-                        "reason": u"没有可以取消的研修室"
+                            "field": "name", 
+                            "error_code": 14000, 
+                            "reason": u"没有可以取消的研修室"
                         }]
                         return error
                     elif 'Go To Today' in pageinfo:
                         return int(self.roomid)  # 取消预约成功，返回房间ID
                     else:
-                        return 'unknow error'
+                        error["error_code"] = 10001
+                        error["reason"] = u"unknow error"
+                        error["result"] = [{
+                            "field": "name", 
+                            "error_code": 14001, 
+                            "reason": u"'unknow error'"
+                        }]
+                        return error
             else:
                 error["error_code"] = 10001
                 error["reason"] = u"不合法的数据"
@@ -451,3 +462,10 @@ class Reservelib(SGMLParser):
                     "reason": u"数据不完整"
                 }]
                 return error
+
+if __name__ == '__main__':
+    test = Reservelib()
+    print test.getcookie('2013302480033', '114028')
+    print test.getroominfo(2015, 10, 13, 1)
+    print test.reservbyroom('30', '1')
+    print test.cancel()

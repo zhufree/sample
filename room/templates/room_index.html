@@ -53,7 +53,7 @@
         <div class='panel-body' id='infoBox'>
         </div>
         <!-- 预约操作 -->
-        <form id="reserveForm" method="POST">
+        <form id="reserveForm" method="POST">{% csrf_token %}
             <div class="form-group input-group">
                 <span class="input-group-addon" id="basic-addon1">房间号</span>
                 <input type="text" name="room" class="form-control" placeholder="从查询结果获得" aria-describedby="basic-addon1">
@@ -63,11 +63,10 @@
                 <span class="input-group-addon" id="basic-addon1">时间段</span>
                 <input type="text" name="time" class="form-control" placeholder="8:00~11:30——1   11:30~15:00——2    15:00~18:30——3   18:30~22:00——4" aria-describedby="basic-addon1">
             </div>
-            <div class="form-group input-group">
+            <!-- <div class="form-group input-group">
                 <span class="input-group-addon" id="basic-addon1">电话</span>
                 <input type="text" name="tel" class="form-control" placeholder="可不填" aria-describedby="basic-addon1">
             </div>
-            <!-- Text input-->
             <div class="form-group input-group">
                 <span class="input-group-addon" id="basic-addon1">预约描述</span>
                 <input type="text" name="description" class="form-control" placeholder="可不填" aria-describedby="basic-addon1">
@@ -75,18 +74,18 @@
             <div class="form-group input-group">
                 <span class="input-group-addon" id="basic-addon1">邮箱</span>
                 <input type="text" name="email" class="form-control" placeholder="随便填" aria-describedby="basic-addon1">
-            </div>
+            </div> -->
             <div class="btn-group btn-group-lg">
                 <button class="btn btn-default" type="submit">预约</button>
             </div>
         </form>
         <div class='panel-body' id='roomBox'>
         </div>
-        <form id="cancelForm" method="POST">
+        <form id="cancelForm" method="POST">{% csrf_token %}
             <button class="btn btn-default" type="submit">取消预约</button>
         </form>
         </br>
-        <form id="roomidForm" method="POST">
+        <form id="roomidForm">{% csrf_token %}
             <button class="btn btn-default" type="submit">查询预约房间号</button>
         </form>
     </div>
@@ -162,8 +161,24 @@ $(document).ready(function() {
             $('#reserveForm').serialize(),
             function(data) { 
                 if(data['success']) {
-                    var htmlstr='<div class="alert alert-info" role="alert"><h3>预约结果</h3></br>成功,房间id为';
-                    htmlstr += data['info']['roomid'] + '</div>';
+                    var htmlstr='<div class="alert alert-info" role="alert"><h4>预约结果</h4></br>成功,房间id为';
+                    htmlstr += data['info'] + '</div>';
+                    $('#roomBox').append(htmlstr);
+                }else{
+                    var htmlstr='<div class="alert alert-warning" role="alert">'+data['info']['reason']+'</div>';
+                    $('#roomBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    }); 
+    $('#cancelForm').submit(function() {  
+        //ajax 提交表单  
+        $.post('/room/cancel/',  
+            $('#cancelForm').serialize(),
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="alert alert-info" role="alert"><h4>取消结果</h4></br>成功取消已预约研修室，房间id为';
+                    htmlstr += data['info'] + '</div>';
                     $('#roomBox').append(htmlstr);
                 }else{
                     var htmlstr='<div class="alert alert-warning" role="alert">'+data['info']+'</div>';
@@ -172,6 +187,21 @@ $(document).ready(function() {
             });  
         return false;       //阻止表单提交  
     }); 
+    $('#roomidForm').submit(function() {  
+        //ajax 提交表单  
+        $.get('/room/roomid/', {} ,
+            function(data) { 
+                if(data['success']) {
+                    var htmlstr='<div class="alert alert-info" role="alert"><h4>查询结果</h4></br>已预约研修室，房间id为';
+                    htmlstr += data['info'] + '</div>';
+                    $('#roomBox').append(htmlstr);
+                }else{
+                    var htmlstr='<div class="alert alert-warning" role="alert">'+data['info']+'</div>';
+                    $('#roomBox').append(htmlstr);
+                }
+            });  
+        return false;       //阻止表单提交  
+    });
 });
 </script>
 {% endblock %}

@@ -56,6 +56,10 @@ def check(request):
         else:
             month =now.month
         day = request.POST.get('day')
+        if day:
+            pass
+        else:
+            day = now.day
         region = request.POST.get('region')
         request.session['year'] = year
         request.session['month'] = month
@@ -79,6 +83,7 @@ def login(request):
         cur_stuacc = StudentAcc.objects.get(sid=stu_id)
         lib_cookie = test.getcookie(cur_stuacc.sid, cur_stuacc.pwd)
         request.session['_lib_cookie'] = lib_cookie
+        request.session['sid'] = stu_id
         if "PDS_HANDLE" in lib_cookie:
             data = {"success": True}
         else:
@@ -93,18 +98,13 @@ def reserv(request):
     if request.method == 'POST':
         room = request.POST.get('room')
         time = request.POST.get('time')
-        tel = request.POST.get('tel', "")
-        email = request.POST.get('email', "aaa")
-        description = request.POST.get('description', "")
         test.year = request.session.get('year')
         test.month = request.session.get('month')
         test.day = request.session.get('day')
-        test.cookie = request.session.get('cookie')
         test.sid = request.session.get('sid')
-        test.pwd = request.session.get('pwd')
         test.cookie = request.session.get('_lib_cookie')
-        test.getuserinfo()   
-        resultinfo = test.reservbyroom(room, time, tel, email, description)
+        print test.month,test.day,test.sid
+        resultinfo = test.reservbyroom(room, time)
         print resultinfo
         if type(resultinfo) == int:
             test.roomid = resultinfo
@@ -118,10 +118,10 @@ def reserv(request):
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
-@csrf_exempt
+@csrf_protect
 def cancel(request):
     if request.method == 'POST':
-        test.cookie = request.session.get('cookie')
+        test.cookie = request.session.get('_lib_cookie')
         test.roomid = request.session.get('roomid')
         cancelinfo = test.cancel()
         if type(cancelinfo) == int:
@@ -135,7 +135,7 @@ def cancel(request):
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
-@csrf_exempt
+@csrf_protect
 def roomid(request):
     if request.session.get('roomid'):
         test.roomid = request.session.get('roomid')
