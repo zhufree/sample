@@ -399,7 +399,6 @@ class Reservelib(SGMLParser):
                             roomid=numid.findall(linkstr)[0][3:]# 正则匹配出id
                             self.roomid= roomid
                             return int(roomid)
-                    print 'here'
         else:
             error["error_code"] = 10001
             error["reason"] = u"不合法的数据"
@@ -464,7 +463,7 @@ class Reservelib(SGMLParser):
 
 if __name__ == '__main__':
     test = Reservelib()
-    print test.getcookie('2013302480033', '114028')
+    print test.getcookie('', '')
     print test.getroominfo(2015, 10, 13, 1)
     print test.reservbyroom('30', '1')
     print test.cancel()

@@ -69,7 +69,6 @@ def check(request):
             data = {"success": False, "info": roominfo}
         else:
             data = {"success": True, "info": roominfo}
-        print json.dumps(data)
     else:
         errorinfo = "method error"
         data = {"success": False, "info": errorinfo}

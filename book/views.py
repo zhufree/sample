@@ -140,7 +140,6 @@ def order(request):
                 book_to_order = book
         if book_to_order:
             info = orderbook(lib_cookie, book_to_order)
-            print info
             if info == 'order succeed':
                 data = {"success": True, "info": info}
             else:
