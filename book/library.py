@@ -18,25 +18,27 @@ def getcookie(sid, pwd):  # 登录获得cookie字符串
     if sid and pwd:
         postdata = {
             'func': 'login',
-            'calling_system': 'mrbs', 
-            'term1': 'short', 
-            'selfreg': '', 
+            'calling_system': 'mrbs',
+            'term1': 'short',
+            'selfreg': '',
             'bor_id': sid,
-            'bor_verification': pwd, 
+            'bor_verification': pwd,
             'institute': 'WHU',
             'url': 'http://metalib.lib.whu.edu.cn:80/pds?'}  # POST数据
         data = urllib.urlencode(postdata)  # 编码
         # data = data.encode('utf-8')
         # 处理请求
         try:
-            resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=LOGIN_URL, data=data), timeout=4), 'lxml')  # 处理返回链接
+            resultSoup = BeautifulSoup(urllib2.urlopen(
+                urllib2.Request(url=LOGIN_URL, data=data), timeout=4), 'lxml')  # 处理返回链接
         except urllib2.URLError, e:
             error["error_code"] = 10003
             error["reason"] = e
             error["result"] = []
             return error
         else:
-            rawLink = resultSoup.find_all("a", attrs={"href": re.compile("pds_handle")})  # 抓取含有pds_handle的链接
+            rawLink = resultSoup.find_all(
+                "a", attrs={"href": re.compile("pds_handle")})  # 抓取含有pds_handle的链接
             if rawLink:
                 href = rawLink[0]["href"]  # 获取链接
                 p = re.compile("=(.*)&(.*)&")
@@ -84,7 +86,8 @@ def queryhistory(cookie):
     handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-history-loan&amp;' \
                'adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie  # 历史借阅
     try:
-        redirectSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=handpage),timeout=10), 'lxml')
+        redirectSoup = BeautifulSoup(
+            urllib2.urlopen(urllib2.Request(url=handpage), timeout=10), 'lxml')
     except urllib2.URLError, e:
         error["error_code"] = 10003
         error["reason"] = e
@@ -97,7 +100,8 @@ def queryhistory(cookie):
         # 抓取登陆后要访问的网址
         redirectUrl = p.findall(js)[0]
         try:
-            resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(url=redirectUrl), timeout=10), 'lxml')  # 抓取信息界面
+            resultSoup = BeautifulSoup(
+                urllib2.urlopen(urllib2.Request(url=redirectUrl), timeout=10), 'lxml')  # 抓取信息界面
         except urllib2.URLError, e:
             error["error_code"] = 10003
             error["reason"] = e
@@ -137,7 +141,9 @@ def queryhistory(cookie):
 # 查询当前借阅信息
 def queryloan(cookie):
     # 带cookie访问网址，转到登陆界面
-    handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-loan&amp;adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie  # 历史借阅
+    # 历史借阅
+    handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-loan&amp;'\
+                'adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie
     req = urllib2.Request(url=handpage)
     try:
         soup = BeautifulSoup(urllib2.urlopen(req, timeout=4), 'lxml')
@@ -153,7 +159,8 @@ def queryloan(cookie):
         url_ = p.findall(js)[0]
         req2 = urllib2.Request(url=url_)  # 抓取登陆后要访问的网址
         try:
-            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
+            soup2 = BeautifulSoup(
+                urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except urllib2.URLError, e:
             error["error_code"] = 10003
             error["reason"] = e
@@ -198,10 +205,11 @@ def queryloan(cookie):
         return finalbooklist
 
 
-#全部续借
+# 全部续借
 def renewall(cookie):
     # 带cookie访问网址，转到登陆界面
-    handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-loan&amp;adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie  # 历史借阅
+    # 历史借阅
+    handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-loan&amp;adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie
     req1 = urllib2.Request(url=handpage)
     req1.add_header('Cookie', cookie)
     try:
@@ -217,25 +225,28 @@ def renewall(cookie):
         url1 = p.findall(js)[0]
         req2 = urllib2.Request(url=url1)  # 抓取登陆后要访问的网址
         try:
-            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
+            soup2 = BeautifulSoup(
+                urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except urllib2.URLError, e:
             error["error_code"] = 10003
             error["reason"] = e
             error["result"] = []
             return error
         else:
-            link = soup2.find("a", attrs={"href": re.compile("javascript:replacePage")})#抓取全部续借的链接
+            link = soup2.find(
+                "a", attrs={"href": re.compile("javascript:replacePage")})  # 抓取全部续借的链接
             url2 = p.findall(link["href"])[0]
-            req3 = urllib2.Request(url=url2) 
+            req3 = urllib2.Request(url=url2)
             try:
-                soup3 = BeautifulSoup(urllib2.urlopen(req3, timeout=4), 'lxml')  # 访问链接抓取页面
+                soup3 = BeautifulSoup(
+                    urllib2.urlopen(req3, timeout=4), 'lxml')  # 访问链接抓取页面
             except urllib2.URLError, e:
                 error["error_code"] = 10003
                 error["reason"] = e
                 error["result"] = []
                 return error
             else:
-                info=soup3.find("div", attrs={"class":"title"}).string
+                info = soup3.find("div", attrs={"class": "title"}).string
                 if "续借不成功" in info:
                     error["error_code"] = 10005
                     error["reason"] = u"已达到续借限制"
@@ -249,10 +260,12 @@ def renewall(cookie):
                     error["result"] = []
                     return error
 
-def renew(cookie,number):
+
+def renew(cookie, number):
     # 需要续借的图书编号，在查询时有提供
     # 带cookie访问网址，转到登陆界面
-    handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-loan&amp;adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie  # 历史借阅
+    # 历史借阅
+    handpage = 'http://opac.lib.whu.edu.cn:80/F/?func=bor-loan&amp;adm_library=WHU50&%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie
     req1 = urllib2.Request(url=handpage)
     req1.add_header('Cookie', cookie)
     try:
@@ -268,28 +281,30 @@ def renew(cookie,number):
         url1 = p.findall(js1)[0]
         req2 = urllib2.Request(url=url1)  # 抓取登陆后要访问的网址
         try:
-            soup2 = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
+            soup2 = BeautifulSoup(
+                urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except urllib2.URLError, e:
             error["error_code"] = 10003
             error["reason"] = e
             error["result"] = []
             return error
         else:
-            js2 = soup2.find(text=re.compile(r"strData\S"))#抓取续借的链接
-            books = soup2.find_all("input", attrs={"type":"checkbox"})
+            js2 = soup2.find(text=re.compile(r"strData\S"))  # 抓取续借的链接
+            books = soup2.find_all("input", attrs={"type": "checkbox"})
             bookid = books[number-1]["name"]
             p = re.compile(r"http://opac\S+50")
             url2 = p.findall(js2)[0] + "&" + bookid + "=Y"
-            req3 = urllib2.Request(url=url2) 
+            req3 = urllib2.Request(url=url2)
             try:
-                soup3 = BeautifulSoup(urllib2.urlopen(req3, timeout=4), 'lxml')  # 访问链接抓取页面
+                soup3 = BeautifulSoup(
+                    urllib2.urlopen(req3, timeout=4), 'lxml')  # 访问链接抓取页面
             except urllib2.URLError, e:
                 error["error_code"] = 10003
                 error["reason"] = e
                 error["result"] = []
                 return error
             else:
-                info=soup3.find("div",attrs={"class":"title"}).string
+                info = soup3.find("div", attrs={"class": "title"}).string
                 if "续借不成功" in info:
                     error["error_code"] = 10005
                     error["reason"] = u"已达到续借限制"
@@ -308,7 +323,8 @@ def renew(cookie,number):
 def searchbook(cookie, searchword):
     searchRequest = urllib2.Request(SEARCH_URL)
     try:
-        redirectSoup = BeautifulSoup(urllib2.urlopen(searchRequest, timeout=10), 'lxml')
+        redirectSoup = BeautifulSoup(
+            urllib2.urlopen(searchRequest, timeout=10), 'lxml')
     except urllib2.URLError, e:
         error["error_code"] = 10003
         error["reason"] = e
@@ -318,7 +334,8 @@ def searchbook(cookie, searchword):
         redirectJs = redirectSoup.find(text=re.compile(r"url\S"))
         p = re.compile(r"http://opac\S+\?")
         redirectUrl = p.findall(redirectJs)[0]
-        resultUrl = redirectUrl + "func=find-b&%s&request=%s" % (cookie,searchword)
+        resultUrl = redirectUrl + \
+            "func=find-b&%s&request=%s" % (cookie, searchword)
         resultRequest = urllib2.Request(url=resultUrl)  # 抓取登陆后要访问的网址
         try:
             resultResponse = urllib2.urlopen(resultRequest, timeout=10)
@@ -329,10 +346,12 @@ def searchbook(cookie, searchword):
             return error
         else:
             resultSoup = BeautifulSoup(resultResponse, 'lxml')  # 抓取信息界面
-            divs_1 = resultSoup.find_all('div',{'class':'itemtitle'})
+            divs_1 = resultSoup.find_all('div', {'class': 'itemtitle'})
             conditions_1 = resultSoup.find_all('u')
-            cover_all_1 = resultSoup.find_all('td',{'class':'cover'})  # 封面图片+二维码
-            cover_extra_1 = resultSoup.find_all('td',{'class':'cover','id':'opac_qr'})  # 二维码
+            cover_all_1 = resultSoup.find_all(
+                'td', {'class': 'cover'})  # 封面图片+二维码
+            cover_extra_1 = resultSoup.find_all(
+                'td', {'class': 'cover', 'id': 'opac_qr'})  # 二维码
             covers_1 = [c for c in cover_all_1 if c not in cover_extra_1]  # 封面
             books_1 = [
                 {
@@ -345,7 +364,8 @@ def searchbook(cookie, searchword):
             nextpageUrl = redirectUrl+"func=short-jump&jump=11"
             nextpageRequest = urllib2.Request(nextpageUrl)  # 抓取头两页
             try:
-                nextpageSoup = BeautifulSoup(urllib2.urlopen(nextpageRequest,timeout=10), 'lxml')
+                nextpageSoup = BeautifulSoup(
+                    urllib2.urlopen(nextpageRequest, timeout=10), 'lxml')
             except urllib2.URLError, e:
                 error["error_code"] = 10003
                 error["reason"] = e
@@ -356,7 +376,8 @@ def searchbook(cookie, searchword):
 
                 conditions_2 = resultSoup.find_all('u')
                 cover_all_2 = resultSoup.find_all('td', {'class': 'cover'})
-                cover_extra_2 = resultSoup.find_all('td', {'class': 'cover', 'id': 'opac_qr'})
+                cover_extra_2 = resultSoup.find_all(
+                    'td', {'class': 'cover', 'id': 'opac_qr'})
                 covers_2 = [c for c in cover_all_2 if c not in cover_extra_2]
                 books_2 = [
                     {
@@ -365,32 +386,36 @@ def searchbook(cookie, searchword):
                         'Condition': conditions_2[i].string,
                         'Cond_link': conditions_2[i].parent['href'],
                         'BookCover': covers_2[i].next.nextSibling.nextSibling.next['src']
-                        } for i in range(len(divs_2))]
+                    } for i in range(len(divs_2))]
                 for book in books_2:
                     if book not in books_1:
                         books_1.append(book)
-                if len(books_1)>0:
+                if len(books_1) > 0:
                     return books_1
                 else:
                     return "no result"
-                    
-                
-#按编号预约书籍
+
+
+# 按编号预约书籍
 def orderbook(cookie, book_to_order):
     check_orderUrl = book_to_order['Cond_link']
     checkorderRequest = urllib2.Request(check_orderUrl + '&%s' % cookie)
-    checkorderSoup = BeautifulSoup(urllib2.urlopen(checkorderRequest, timeout=10), 'lxml')
-    order = checkorderSoup.find('a', {'href': re.compile('func=item-hold-request')})
+    checkorderSoup = BeautifulSoup(
+        urllib2.urlopen(checkorderRequest, timeout=10), 'lxml')
+    order = checkorderSoup.find(
+        'a', {'href': re.compile('func=item-hold-request')})
     if order:
         orderUrl = order['href']
-        orderSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(orderUrl), timeout=10), 'lxml')
+        orderSoup = BeautifulSoup(
+            urllib2.urlopen(urllib2.Request(orderUrl), timeout=10), 'lxml')
         orderForm = orderSoup.find('form')
         rootUrl_1 = orderForm['action']
         input_data_1 = orderSoup.find_all('input')
         orderData = {inp['name']: inp['value'] for inp in input_data_1[:-1]}
         orderData['PICKUP'] = orderSoup.find('option')['value']
         orderData = urllib.urlencode(orderData)
-        orderRequest = urllib2.Request(rootUrl_1 + '&%s' % cookie, data=orderData)
+        orderRequest = urllib2.Request(
+            rootUrl_1 + '&%s' % cookie, data=orderData)
         resultSoup = BeautifulSoup(urllib2.urlopen(orderRequest, timeout=10))
         if u'预约请求细节' in str(resultSoup):
             return 'order succeed'
@@ -398,7 +423,7 @@ def orderbook(cookie, book_to_order):
             return 'order failed'
     else:
         error["error_code"] = 10007
-        error["reason"] =u"no aviliable order"
+        error["reason"] = u"no aviliable order"
         error["result"] = []
         return error
 
@@ -409,7 +434,8 @@ def queryorder(cookie):
                 '%s&afedog-flow-item=A8EA28FAD1EB4BECBD4E42B29AF605ED' % cookie
     orders = []
     try:
-        RedirectSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(orderPage)), 'lxml')
+        RedirectSoup = BeautifulSoup(
+            urllib2.urlopen(urllib2.Request(orderPage)), 'lxml')
     except urllib2.URLError, e:
         error["error_code"] = 10003
         error["reason"] = e
@@ -421,7 +447,8 @@ def queryorder(cookie):
         url_ = p.findall(js)[0]
         req2 = urllib2.Request(url=url_)  # 抓取登陆后要访问的网址
         try:
-            querySoup = BeautifulSoup(urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
+            querySoup = BeautifulSoup(
+                urllib2.urlopen(req2, timeout=4), 'lxml')  # 抓取信息界面
         except urllib2.URLError, e:
             error["error_code"] = 10003
             error["reason"] = e
@@ -449,16 +476,19 @@ def queryorder(cookie):
 def deleteorder(cookie, order_to_delete):
     infoUrl = order_to_delete['cancel_link']
     try:
-        infoSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(infoUrl), timeout=10), 'lxml')
+        infoSoup = BeautifulSoup(
+            urllib2.urlopen(urllib2.Request(infoUrl), timeout=10), 'lxml')
     except urllib2.URLError, e:
         error["error_code"] = 10003
         error["reason"] = e
         error["result"] = []
         return error
     else:
-        delete_link = infoSoup.find('a', {'href': re.compile(r'DELETE')})['href']
+        delete_link = infoSoup.find(
+            'a', {'href': re.compile(r'DELETE')})['href']
         try:
-            resultSoup = BeautifulSoup(urllib2.urlopen(urllib2.Request(delete_link), timeout=10), 'lxml')
+            resultSoup = BeautifulSoup(
+                urllib2.urlopen(urllib2.Request(delete_link), timeout=10), 'lxml')
         except urllib2.URLError, e:
             error["error_code"] = 10003
             error["reason"] = e
@@ -471,12 +501,11 @@ def deleteorder(cookie, order_to_delete):
                 return 'cancel failed'
 
 
-
 if __name__ == '__main__':
 
     cookie = getcookie('2013302480033', '114028')
 
-    booksinfo =  searchbook(cookie, '编程珠玑')
+    booksinfo = searchbook(cookie, '编程珠玑')
     # print booksinfo
     # print booksinfo[0]['condition']+booksinfo[0]['cond_link']
     #             book_to_order=None
