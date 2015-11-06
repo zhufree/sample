@@ -34,9 +34,9 @@ def bind(request):
         lib_cookie = test.getcookie(sid, pwd)
         request.session['_lib_cookie'] = lib_cookie
         if "PDS_HANDLE" in lib_cookie:
-            data = {"success": True, "sid": sid}
+            data = {"status": True, "sid": sid}
         else:
-            data = {"success": False, "info": lib_cookie}
+            data = {"status": False, "info": lib_cookie}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -66,12 +66,12 @@ def check(request):
         request.session['day'] = day
         roominfo = test.getroominfo(year, month, day, region)
         if "error_code" in roominfo:
-            data = {"success": False, "info": roominfo}
+            data = {"status": False, "info": roominfo}
         else:
-            data = {"success": True, "info": roominfo}
+            data = {"status": True, "info": roominfo}
     else:
         errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        data = {"status": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
@@ -84,9 +84,9 @@ def login(request):
         request.session['_lib_cookie'] = lib_cookie
         request.session['sid'] = stu_id
         if "PDS_HANDLE" in lib_cookie:
-            data = {"success": True}
+            data = {"status": True}
         else:
-            data = {"success": False, "info": lib_cookie}
+            data = {"status": False, "info": lib_cookie}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -106,12 +106,12 @@ def reserv(request):
         if type(resultinfo) == int:
             test.roomid = resultinfo
             request.session['roomid'] = test.roomid
-            data = {"success": True,"info": resultinfo}
+            data = {"status": True,"info": resultinfo}
         else:
-            data = {"success": False,"info": resultinfo}
+            data = {"status": False,"info": resultinfo}
     else:
         errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        data = {"status": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
@@ -123,12 +123,12 @@ def cancel(request):
         cancelinfo = test.cancel()
         if type(cancelinfo) == int:
             request.session['roomid'] = None
-            data = {"success": True, "info": cancelinfo}
+            data = {"status": True, "info": cancelinfo}
         else:
-            data = {"success": False, "info": cancelinfo}
+            data = {"status": False, "info": cancelinfo}
     else:
         errorinfo = "method error"
-        data = {"success": False, "info": errorinfo}
+        data = {"status": False, "info": errorinfo}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
@@ -136,7 +136,7 @@ def cancel(request):
 def roomid(request):
     if request.session.get('roomid'):
         test.roomid = request.session.get('roomid')
-        data = {"success": True, "info": test.roomid}
+        data = {"status": True, "info": test.roomid}
     else:
-        data = {"success": False, "info": "no room"}
+        data = {"status": False, "info": "no room"}
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')

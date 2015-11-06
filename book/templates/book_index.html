@@ -104,7 +104,7 @@ $(document).ready(function() {
             $('#bindForm').serialize(),
             function(data) { 
                 console.log(data);
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<button type="button" class="btn btn-default">'+data['sid']+'</button>';
                     $('#accountBox').append(htmlstr);
                 }else{
@@ -121,7 +121,7 @@ $(document).ready(function() {
             $this.serialize(),
             function(data) { 
                 console.log(data);
-                if(data['success']) {
+                if(data['status']) {
                     var btn = $this.children('button')
                     btn.addClass('alert alert-success');
                     btn.attr('type', 'button');
@@ -139,7 +139,7 @@ $(document).ready(function() {
         $.post('/book/historybook/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h3>按借书倒序</h3></br>';
                     for(var book in data['info']){
                         htmlstr += '编号: ' + data['info'][book]['BookNum'] + '</br>';
@@ -161,7 +161,7 @@ $(document).ready(function() {
         $.post('/book/nowbook/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h3>按借书倒序</h3></br>';
                     for(var book in data['info']){
                         htmlstr += '编号: ' + data['info'][book]['BookNum'] + '</br>';
@@ -185,7 +185,7 @@ $(document).ready(function() {
             $this.serialize(),
             function(data) { 
                 var htmlstr='<div class="alert alert-info" role="alert"><h3>续借结果</h3></br>';
-                if(data['success']) {
+                if(data['status']) {
                     console.log(data['info']['reason']);
                     htmlstr += data['info']['reason'];
                     htmlstr += '</div>';
@@ -204,7 +204,7 @@ $(document).ready(function() {
         $.post('/book/renew/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h3>续借结果</h3></br>';
                     htmlstr += data['info']['reason'];
                     htmlstr += '</div>';
@@ -222,7 +222,7 @@ $(document).ready(function() {
         $.post('/book/search/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h3>搜索结果(前十条)</h3></br>';
                     for(var book in data['info']){
                         htmlstr += '编号: ' + data['info'][book]['BookNum'] + '</br>';
@@ -245,7 +245,7 @@ $(document).ready(function() {
         $.post('/book/order/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h3>预约结果</h3></br>';
                     htmlstr += data['info'];
                     htmlstr += '</div>';
@@ -263,7 +263,7 @@ $(document).ready(function() {
         $.post('/book/queryorder/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h3>预约结果</h3></br>';
                     for(var book in data['info']){
                         htmlstr += '编号: ' + data['info'][book]['BookNum'] + '</br>';
@@ -288,7 +288,7 @@ $(document).ready(function() {
         $.post('/book/deleteorder/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h3>删除预约结果</h3></br>';
                     htmlstr += data['info'];
                     htmlstr += '</div>';

@@ -28,9 +28,9 @@ def bind(request):
         lib_cookie = getcookie(sid, pwd)
         request.session['_lib_cookie'] = lib_cookie
         if "PDS_HANDLE" in lib_cookie:
-            data = {"success": True, "sid": sid}
+            data = {"status": True, "sid": sid}
         else:
-            data = {"success": False, "info": lib_cookie}
+            data = {"status": False, "info": lib_cookie}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -44,9 +44,9 @@ def login(request):
         lib_cookie = getcookie(cur_stuacc.sid, cur_stuacc.pwd)
         request.session['_lib_cookie'] = lib_cookie
         if "PDS_HANDLE" in lib_cookie:
-            data = {"success": True}
+            data = {"status": True}
         else:
-            data = {"success": False, "info": lib_cookie}
+            data = {"status": False, "info": lib_cookie}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -58,9 +58,9 @@ def historybook(request):
         lib_cookie = request.session.get('_lib_cookie')
         info = queryhistory(lib_cookie)
         if type(info) == list:
-            data = {"success": True, "info": info}
+            data = {"status": True, "info": info}
         else:
-            data = {"success": False, "info": info}
+            data = {"status": False, "info": info}
 
     else:
         raise Http404
@@ -73,11 +73,11 @@ def nowbook(request):
         lib_cookie = request.session.get('_lib_cookie')
         info = queryloan(lib_cookie)
         if type(info) == list:
-            data = {"success": True, "info": info}
+            data = {"status": True, "info": info}
         elif type(info) == dict:
-            data = {"success": False, "info": info}
+            data = {"status": False, "info": info}
         else:
-            data = {"success": False, "info": info}
+            data = {"status": False, "info": info}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -89,9 +89,9 @@ def renewall_(request):
         lib_cookie = request.session.get('_lib_cookie')
         info = renewall(lib_cookie)
         if type(info) == str:
-            data = {"success": True, "info": info}
+            data = {"status": True, "info": info}
         else:
-            data = {"success": False, "info": info}
+            data = {"status": False, "info": info}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -104,9 +104,9 @@ def renew_(request):
         number = int(request.POST.get('number'))
         info = renew(lib_cookie, number)
         if type(info) == str:
-            data = {"success": True, "info": info}
+            data = {"status": True, "info": info}
         else:
-            data = {"success": False, "info": info}
+            data = {"status": False, "info": info}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -120,9 +120,9 @@ def search(request):
         info = searchbook(lib_cookie, keyword)
         if type(info) == list:
             request.session['_books_info'] = info
-            data = {"success": True, "info": info}
+            data = {"status": True, "info": info}
         else:
-            data = {"success": False, "info": info}
+            data = {"status": False, "info": info}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -141,11 +141,11 @@ def order(request):
         if book_to_order:
             info = orderbook(lib_cookie, book_to_order)
             if info == 'order succeed':
-                data = {"success": True, "info": info}
+                data = {"status": True, "info": info}
             else:
-                data = {"success": False, "info": info}
+                data = {"status": False, "info": info}
         else:
-            data = {"success": False, "info": 'no such book'}
+            data = {"status": False, "info": 'no such book'}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -158,9 +158,9 @@ def queryorder_(request):
         info = queryorder(lib_cookie)
         if type(info) == list:
             request.session['orders'] = info
-            data = {"success": True, "info": info}
+            data = {"status": True, "info": info}
         else:
-            data = {"success": False, "info": info}
+            data = {"status": False, "info": info}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
@@ -179,11 +179,11 @@ def deleteorder_(request):
         if order_to_delete:
             info = deleteorder(lib_cookie, order_to_delete)
             if info == 'cancel succeed':
-                data = {"success": True, "info": info}
+                data = {"status": True, "info": info}
             else:
-                data = {"success": False, "info": info}
+                data = {"status": False, "info": info}
         else:
-            data = {"success": False, "info": 'no such order'}
+            data = {"status": False, "info": 'no such order'}
     else:
         raise Http404
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')

@@ -34,16 +34,16 @@
                 <input type="text" name="year" class="form-control" placeholder="留空为当年" aria-describedby="basic-addon1">
             </div>
             <div class="form-group input-group">
-                <span class="input-group-addon" id="basic-addon1">月</span>
-                <input type="text" name="month" class="form-control" placeholder="留空为当月,超过12会查询当天" aria-describedby="basic-addon1">
+                <span class="input-group-addon" id="basic-addon2">月</span>
+                <input type="text" name="month" class="form-control" placeholder="留空为当月,超过12会查询当天" aria-describedby="basic-addon2">
             </div>
             <div class="form-group input-group">
-                <span class="input-group-addon" id="basic-addon1">日</span>
-                <input type="text" name="day" class="form-control" placeholder="留空为当天,超过当月最大日期会显示当月最后一点的查询结果" aria-describedby="basic-addon1">
+                <span class="input-group-addon" id="basic-addon3">日</span>
+                <input type="text" name="day" class="form-control" placeholder="留空为当天,超过当月最大日期会显示当月最后一点的查询结果" aria-describedby="basic-addon3">
             </div>
             <div class="form-group input-group">
-                <span class="input-group-addon" id="basic-addon1">区</span>
-                <input type="text" name="region" class="form-control" placeholder="必填,1为文理学部,2为医学部" aria-describedby="basic-addon1">
+                <span class="input-group-addon" id="basic-addon4">区</span>
+                <input type="text" name="region" class="form-control" placeholder="必填,1为文理学部,2为医学部" aria-describedby="basic-addon4">
             </div>
             <div class="btn-group btn-group-lg">
                 <button class="btn btn-default" type="submit">查询空闲研修室</button>
@@ -99,7 +99,7 @@ $(document).ready(function() {
         $.post('/room/bind/',  
             $('#bindForm').serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<button type="button" class="btn btn-default">'+data['sid']+'</button>';
                     $('#accountBox').append(htmlstr);
                 }else{
@@ -115,7 +115,7 @@ $(document).ready(function() {
         $.post('/room/login/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var btn = $this.children('button')
                     btn.addClass('alert alert-success');
                     btn.attr('type', 'button');
@@ -133,7 +133,7 @@ $(document).ready(function() {
         $.post('/room/check/',  
             $this.serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="table-responsive"><table class="table alert alert-info" role="alert">';
                     htmlstr += '<thead><tr><th>Time</th>';
                     for(var region in data['info']){
@@ -160,7 +160,7 @@ $(document).ready(function() {
         $.post('/room/reserve/',  
             $('#reserveForm').serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h4>预约结果</h4></br>成功,房间id为';
                     htmlstr += data['info'] + '</div>';
                     $('#roomBox').append(htmlstr);
@@ -176,7 +176,7 @@ $(document).ready(function() {
         $.post('/room/cancel/',  
             $('#cancelForm').serialize(),
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h4>取消结果</h4></br>成功取消已预约研修室，房间id为';
                     htmlstr += data['info'] + '</div>';
                     $('#roomBox').append(htmlstr);
@@ -191,7 +191,7 @@ $(document).ready(function() {
         //ajax 提交表单  
         $.get('/room/roomid/', {} ,
             function(data) { 
-                if(data['success']) {
+                if(data['status']) {
                     var htmlstr='<div class="alert alert-info" role="alert"><h4>查询结果</h4></br>已预约研修室，房间id为';
                     htmlstr += data['info'] + '</div>';
                     $('#roomBox').append(htmlstr);

@@ -66,12 +66,10 @@ def api_login_(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print username,password
         user = authenticate(
             username=username,
             password=password
         )
-        print user
         if user is not None:
             if user.is_active:
                 login(request, user)
