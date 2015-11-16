@@ -121,8 +121,8 @@ $(document).ready(function() {
             $this.serialize(),
             function(data) { 
                 console.log(data);
+                var btn = $this.children('button');
                 if(data['status']) {
-                    var btn = $this.children('button')
                     btn.addClass('alert alert-success');
                     btn.attr('type', 'button');
                 }else{
