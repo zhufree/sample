@@ -10,7 +10,7 @@ import json
 
 
 def index(request):
-    return render_to_response('base.html', RequestContext(request))
+    return render_to_response('index.html', RequestContext(request))
 
 
 @csrf_protect

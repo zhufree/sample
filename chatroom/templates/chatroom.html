@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block title %}聊天室{% endblock %}
 {% block content %}
+<div class="jumbotron  col-md-10 col-md-offset-1">
+  <h3>一个在线聊天室～</h3>
+    <p>使用ajax轮循请求</p>
+</div>
 <div class="list-group col-md-10 col-md-offset-1 well">
     <div class="list-group-item">
     	{% for chat in chats %}
@@ -12,11 +16,11 @@
     </div>
 </div>
 
-<form id="chatForm" class="form-horizontal panel container" method="POST" action=".">{% csrf_token %}
-    <div class="form-group col-md-10">
+<form id="chatForm" class="form-horizontal panel col-md-offset-1" method="POST" action=".">{% csrf_token %}
+    <div class="form-group col-md-11">
         <textarea type="text" name="content" id="content" value="" class="form-control" id="exampleMessage" placeholder=""></textarea>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-4 ">
         <input type="hidden" name="post_type" value="send_chat"/>
         <input type="submit" class="btn btn-lg btn-primary" value="发送"/>
     </div>

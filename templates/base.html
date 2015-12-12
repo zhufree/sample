@@ -14,14 +14,13 @@
             <ul class="nav nav-pills panel-body">
                 <li role="presentation" ><a href="/">首页</a></li>
                 <li role="presentation" ><a href="/msg/">留言板</a></li>
-                <li role="presentation" ><a href="/blog/">博客</a></li>
+                <li role="presentation" ><a href="/blog/">个人博客</a></li>
                 <li role="presentation" ><a href="/forum/">论坛</a></li>
                 <li role="presentation" ><a href="/gallery/">画廊</a></li>
                 <li role="presentation" ><a href="/chatroom/">聊天室</a></li>
                 <!--<li role="presentation" ><a href="/tieba/">贴吧工具</a></li>-->
                 <li role="presentation" ><a href="/eat/">吃什么？</a></li>
-                <li role="presentation" ><a href="/book/">图书馆借阅</a></li>
-                <li role="presentation" ><a href="/room/">图书馆研修室</a></li>
+                <li role="presentation" ><a href="/novel/">阅读馆</a></li>
                 {% if user.is_authenticated %}
                 <li role="presentation" class="dropdown">
     		    <a class="dropdown-toggle" data-toggle="dropdown" href="/accounts/login/" role="button" aria-expanded="false">{{user.username}}
@@ -43,6 +42,7 @@
     {% endblock %}
     </div>
 </body>
+<!--with internet connected-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -51,6 +51,10 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!--no internet-->
+<!--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">-->
+<!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
+<!--<script src="/static/bootstrap/js/bootstrap.min.js"></script>-->
 {% block script %}
 {% endblock %}
 </html>

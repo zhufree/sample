@@ -66,4 +66,5 @@ private_settings.py
 plupload/
 Respond-1.4.2/
 highlight/
+bootstrap/
 *.txt

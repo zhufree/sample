@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}吃什么？{% endblock %}
 {% block content %}
+<div class="jumbotron col-md-10 col-md-offset-1">
+  <h3>这个是给选择恐惧症的吃货女朋友做的东西（后来发现吃乎公众号好像完美解决了这个问题and现在也没时间出去吃吃吃了难过）</h3>
+    <p>使用方法就是把饭店添加进来然后roll一下→_→</p>
+</div>
 <div class="panel panel-default col-md-10 col-md-offset-1">
     <div class='panel-body' id='restbox'>
     {% for rest in rests %}

@@ -44,6 +44,9 @@
 </style>
 {% endblock %}
 {% block content %}
+<div class="jumbotron  col-md-10 col-md-offset-1">
+  <h3>在这里上传共享你的照片</h3>
+</div>
 {% if user.is_authenticated %}
     <form class="form-horizontal container" method="POST" action="post/">{% csrf_token %}
         <div class="form-group">

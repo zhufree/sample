@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}画廊{% endblock %}
+{% block content %}
+{% if novels %}
+    <ul class="list-group col-md-10 col-md-offset-1">
+      {% for n in novels %}
+        <li class="list-group-item"><a href="n-{{n.id}}/">{{n.name}}</a></li>
+      {% endfor %}
+    </ul>
+{% else %}
+<div class="jumbotron  col-md-10 col-md-offset-1">
+  <h3>空空～</h3>
+</div>
+{% endif %}
+{% endblock %}

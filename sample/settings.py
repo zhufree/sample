@@ -45,8 +45,7 @@ INSTALLED_APPS = (
     'chatroom',
     'tieba',
     'eat',
-    'book',
-    'room',
+    'novel',
 )
 
 MIDDLEWARE_CLASSES = (

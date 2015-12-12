@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}阅读馆-{{chapter.novel.name}}-{{chapter.title}}{% endblock %}
+{% block style %}
+<style type="text/css">
+	body{
+		margin: 0;
+		padding: 0;
+		background-color: #78C2C4;
+	}
+    .char_title{
+        text-align: center;
+    }
+	#main{
+		width: 80%;
+		background-color: #FCFAF2;
+		margin: auto 10%;
+		/**text-align: center;**/
+	}
+	#text{
+		text-align: left;
+		display:inline-block;
+		margin: 10px 40px;
+	}
+	h3{
+		margin: 0px;
+	}
+	p{
+		margin: 0;
+		padding: 0;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<div id="main">
+    <h3 class="char_title" id="title_1">{{chapter.title}}</h3>
+    <div id="text">
+    {{chapter.content|safe|linebreaks}}
+    </div>
+</div>
+{% endblock %}
