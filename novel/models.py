@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class Novel(models.Model):
     name = models.CharField(max_length=30)
-    author = models.ManyToManyField(User)
+    authors = models.ManyToManyField(User, related_name='has_novels',)
     char_count = models.IntegerField()
     publish_time = models.DateTimeField(auto_now_add=True, default=timezone.now)
     update_time = models.DateTimeField(auto_now=True, default=timezone.now)

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}阅读馆{% endblock %}
+{% block content %}
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body">
+    {% if novels %}
+    <div class="">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        {% for novel in novels %}
+        <li role="presentation" class="active"><a href="#{{novel.name}}" aria-controls="{{novel.name}}" role="tab" data-toggle="tab">{{novel.name}}</a></li>
+        {% endfor %}
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        {% for novel in novels %}
+        <div role="tabpanel" class="tab-pane active" id="{{novel.name}}">
+          <ul class="list-group">
+            {% for chapter in novel.has_chapters.all %}
+              <li class="list-group-item"><a href="c-{{c.id}}/">{{chapter.title}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+        <a class="btn btn-default" href="./add_new_chapter/" role="button">新增Chapter</a>
+      </div>
+    </div>
+    {% else %}
+    <h3>你还没有创建过Novel</h3>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

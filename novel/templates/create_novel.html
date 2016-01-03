@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}阅读馆{% endblock %}
+{% block content %}
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body">
+    {% if novels %}
+    <div class="">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        {% for novel in novels %}
+        <li role="presentation" class="active"><a href="#{{novel.name}}" aria-controls="{{novel.name}}" role="tab" data-toggle="tab">{{novel.name}}</a></li>
+        {% endfor %}
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        {% for novel in novels %}
+        <div role="tabpanel" class="tab-pane active" id="{{novel.name}}">
+          <ul class="list-group">
+            {% for chapter in novel.has_chapters.all %}
+              <li class="list-group-item"><a href="c-{{c.id}}/">{{chapter.title}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <h3>你还没有创建过Novel</h3>
+    {% endif %}
+  </div>
+</div>
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body">
+    <form id="renewForm" method="POST" action=".">{%csrf_token%}
+      <div class="form-group input-group">
+        <span class="input-group-addon">名字</span>
+        <input type="text" name="name" class="form-control" placeholder="从查询结果获取">
+      </div>
+      <button class="form-group btn btn-default" type="submit">创建</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

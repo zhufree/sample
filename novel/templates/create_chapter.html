@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}阅读馆{% endblock %}
+{% block content %}
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body">
+    {% if novels %}
+    <div class="">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        {% for novel in novels %}
+        <li role="presentation" class="active"><a href="#{{novel.name}}" aria-controls="{{novel.name}}" role="tab" data-toggle="tab">{{novel.name}}</a></li>
+        {% endfor %}
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        {% for novel in novels %}
+        <div role="tabpanel" class="tab-pane active" id="{{novel.name}}">
+          <ul class="list-group">
+            {% for chapter in novel.has_chapters.all %}
+              <li class="list-group-item"><a href="c-{{c.id}}/">{{chapter.title}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <h3>你还没有创建过Novel</h3>
+    {% endif %}
+  </div>
+</div>
+{% if novels %}
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body">
+    <form id="renewForm" method="POST" action=".">{%csrf_token%}
+      <select class="form-control" name="novel_id">
+        {% for novel in novels %}
+        <option value="{{novel.id}}">{{novel.name}}</option>
+        {% endfor %}
+      </select>
+      <br/>
+      <div class="form-group input-group">
+        <span class="input-group-addon">章节名字</span>
+        <input type="text" name="title" class="form-control" placeholder="从查询结果获取">
+      </div>
+      <textarea class="form-control" name="content"></textarea>
+      <button class="form-group btn btn-default" type="submit">创建</button>
+    </form>
+  </div>
+</div>
+{% else %}
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body">
+    <h3>还没有你创建或参与的Novel，先去 <a href="./add_new_novel/">创建</a>创建一个吧～</h3>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
