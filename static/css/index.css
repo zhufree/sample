@@ -1,0 +1,15 @@
+#cover{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #00896C;
+  opacity: 0.9;
+}
+
+#timeHead{
+  margin: 2em 3.5em;
+  font-size: 50px;
+  color: #fff;
+}

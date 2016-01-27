@@ -3,14 +3,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../static/css/base.css">
     {% block link %}{% endblock %}
     <title>Sample|{% block title %}首页{% endblock%}</title>
 </head>
 {% block style %}
 {% endblock %}
-<body style="background-color:#B2BFCE;">
+<body>
     <div class='container-fluid'  style="opacity:0.5;">
-        <div class='row panel panel-default'>
+        <nav class='row panel panel-default'>
             <ul class="nav nav-pills panel-body">
                 <li role="presentation" ><a href="/">首页</a></li>
                 <li role="presentation" ><a href="/msg/">留言板</a></li>
@@ -36,12 +37,15 @@
   	            <li role="presentation" ><a href="/accounts/register/">注册</a></li>
   	            {% endif %}
             </ul>
-        </div>
+        </nav>
     </div>
     <div class='container-fluid'>
     {% block content %}
     {% endblock %}
     </div>
+    <section id="cover">
+
+    </section>
 </body>
 <!--with internet connected-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
