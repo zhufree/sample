@@ -6,7 +6,7 @@
     <p>也就是只有我自己能发辣</p>
 </div>
 {% for article in articles %}
-<div class="panel panel-default">
+<div class="panel panel-default  col-md-10 col-md-offset-1">
     <div class="panel-heading bg-primary">
         <h3 class="panel-title"><a href="article/{{article.id}}/">{{article.title}}</a>
         {% for tag in article.tags.all %}
@@ -21,7 +21,7 @@
         <br>
         <a href="/blog/article/{{article.id}}/">查看更多</a>
     </div>
-    
+
 </div>
 {% endfor %}
 {% endblock %}

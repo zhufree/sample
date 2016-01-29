@@ -2,7 +2,7 @@
 {% block title %}吃什么？{% endblock %}
 {% block content %}
 <div class="jumbotron col-md-10 col-md-offset-1">
-  <h3>这个是给选择恐惧症的吃货女朋友做的东西（后来发现吃乎公众号好像完美解决了这个问题and现在也没女朋友了科科）</h3>
+  <h3>这个是给选择恐惧症的吃货做的东西（后来发现吃乎公众号好像完美解决了这个问题）</h3>
     <p>使用方法就是把饭店添加进来然后roll一下→_→</p>
 </div>
 <div class="panel panel-default col-md-10 col-md-offset-1">
@@ -35,28 +35,28 @@
 {% endblock %}
 {% block script %}
 <script>
-$(document).ready(function() {  
-    //表单 submit 事件  
-    $('#addRestForm').submit(function() {  
-        //ajax 提交表单  
-        $.post('./add_rest/',  
+$(document).ready(function() {
+    //表单 submit 事件
+    $('#addRestForm').submit(function() {
+        //ajax 提交表单
+        $.post('./add_rest/',
             $('#addRestForm').serialize(),
-            function(data) {  
+            function(data) {
                 var htmlstr='<button type="button" class="btn btn-default">'+data['name']+'<span class="badge">'+data['count']+'</span></button>';
                 $('#restbox').append(htmlstr);
-        });  
-        return false;       //阻止表单提交  
-    });  
-    $('#rollForm').submit(function() {  
-        //ajax 提交表单  
-        $.post('./roll/',  
+        });
+        return false;       //阻止表单提交
+    });
+    $('#rollForm').submit(function() {
+        //ajax 提交表单
+        $.post('./roll/',
             $('#addRestForm').serialize(),
-            function(data) {  
+            function(data) {
                 var htmlstr='<div class="alert alert-success" role="alert">'+data['result']+'</div>';
                 $('#mainbox').append(htmlstr);
-        });  
-        return false;       //阻止表单提交  
+        });
+        return false;       //阻止表单提交
     });
-});  
+});
 </script>
 {% endblock %}

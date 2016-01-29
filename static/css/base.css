@@ -1,3 +1,26 @@
 nav{
-  background-color: #00896C;
+  background-color: rgb(65, 177, 70) !important;
+  padding: 10px 10px;
+  margin: 0 !important;
+  width: 100%;
+}
+nav .dropdown-menu{
+  background-color: rgb(65, 177, 70) !important;
+}
+
+nav .dropdown-menu>li{
+  margin: 10px;
+}
+ul.nav>li{
+  margin-left: 10px;
+}
+
+nav a{
+  text-decoration: none;
+  color: #eee !important;
+  border-radius: 10px;
+}
+
+nav a:hover, a:visited{
+  background-color: rgb(65, 200, 70) !important;
 }

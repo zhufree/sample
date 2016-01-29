@@ -1,15 +1,43 @@
+
 #cover{
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #00896C;
-  opacity: 0.9;
+  background-color: #227D51;
+  /*opacity: 0.9;*/
+  text-align: center;
 }
 
+#exit-btn{
+  top: 0;
+  right: 0;
+  position: absolute;
+  background-color: inherit;
+  border: none;
+  font-size: 2em;
+  color: #fff;
+}
 #timeHead{
-  margin: 2em 3.5em;
+  margin: 1.5em;
   font-size: 50px;
   color: #fff;
+}
+
+form{
+  border: solid 2px #eee;
+  background-color: #eee;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+
+.form-group{
+  margin: 20px 50px !important;
+}
+
+.form-group button{
+  background-color: #227D51;
+  color: #eee;
 }

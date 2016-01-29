@@ -10,42 +10,38 @@
 {% block style %}
 {% endblock %}
 <body>
-    <div class='container-fluid'  style="opacity:0.5;">
-        <nav class='row panel panel-default'>
-            <ul class="nav nav-pills panel-body">
-                <li role="presentation" ><a href="/">首页</a></li>
-                <li role="presentation" ><a href="/msg/">留言板</a></li>
-                <li role="presentation" ><a href="/blog/">个人博客</a></li>
-                <li role="presentation" ><a href="/forum/">论坛</a></li>
-                <li role="presentation" ><a href="/gallery/">画廊</a></li>
-                <li role="presentation" ><a href="/chatroom/">聊天室</a></li>
-                <!--<li role="presentation" ><a href="/tieba/">贴吧工具</a></li>-->
-                <li role="presentation" ><a href="/eat/">吃什么？</a></li>
-                <li role="presentation" ><a href="/novel/">阅读馆</a></li>
-                {% if user.is_authenticated %}
-                <li role="presentation" class="dropdown" style="float:right;">
-    		    <a class="dropdown-toggle" data-toggle="dropdown" href="/accounts/login/" role="button" aria-expanded="false">{{user.username}}
-		    <span class="caret"></span>
-    		    </a>
-      	        <ul class="dropdown-menu" role="menu">
-					<li><a href="/novel/mynovels/">我的Novel</a></li>
-					<li><a href="/accounts/logout/">退出</a></li>
-      	        </ul>
-  	            </li>
-  	            {% else %}
-  	            <li role="presentation" ><a href="/accounts/login/">登陆</a></li>
-  	            <li role="presentation" ><a href="/accounts/register/">注册</a></li>
-  	            {% endif %}
-            </ul>
-        </nav>
-    </div>
+    <nav class='row'>
+        <ul class="nav nav-pills">
+            <li role="presentation" ><a href="/">首页</a></li>
+            <li role="presentation" ><a href="/msg/">留言板</a></li>
+            <li role="presentation" ><a href="/blog/">个人博客</a></li>
+            <li role="presentation" ><a href="/forum/">论坛</a></li>
+            <li role="presentation" ><a href="/gallery/">画廊</a></li>
+            <li role="presentation" ><a href="/chatroom/">聊天室</a></li>
+            <!--<li role="presentation" ><a href="/tieba/">贴吧工具</a></li>-->
+            <li role="presentation" ><a href="/eat/">吃什么？</a></li>
+            <li role="presentation" ><a href="/novel/">阅读馆</a></li>
+            {% if user.is_authenticated %}
+            <li role="presentation" class="dropdown" style="float:right;">
+		    <a class="dropdown-toggle" data-toggle="dropdown" href="/accounts/login/" role="button" aria-expanded="false">{{user.username}}
+    <span class="caret"></span>
+		    </a>
+  	        <ul class="dropdown-menu" role="menu">
+        			<li><a href="/novel/mynovels/">我的Novel</a></li>
+        			<li><a href="/accounts/logout/">退出</a></li>
+  	        </ul>
+            </li>
+            {% else %}
+            <li role="presentation" ><a href="/accounts/login/">登陆</a></li>
+            <li role="presentation" ><a href="/accounts/register/">注册</a></li>
+            {% endif %}
+        </ul>
+    </nav>
     <div class='container-fluid'>
     {% block content %}
     {% endblock %}
     </div>
-    <section id="cover">
 
-    </section>
 </body>
 <!--with internet connected-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
