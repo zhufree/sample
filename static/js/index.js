@@ -34,14 +34,16 @@ function get_cookie(Name){
 }
 $().ready(function(){
     if (get_cookie("popped")===""){
-    //判断是否已经弹出过窗口
-    setInterval(showTime, 1000);
-    //如果没有则弹出窗口
-    document.cookie="popped=yes";
-    //设置cookie值
+        //判断是否已经弹出过窗口
+        $('#cover').show();
+        setInterval(showTime, 1000);
+        //如果没有则弹出窗口
+        document.cookie="popped=yes";
+        //设置cookie值
     }else{
-        $('#cover').hide();
         // setInterval(showTime, 1000);
+        // $('#cover').show();
+        // $('#cover').hide();
     }
     $('#exit-btn').click(function(){
       $('#cover').fadeOut(1000);

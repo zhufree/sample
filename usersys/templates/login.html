@@ -9,25 +9,21 @@
 	{% if form.has_errors %}
 		<h1 class="row">用户名和密码不匹配哦_(:з」∠)_再试试看？</h1>
 	{% endif %}
-	<form method="POST" action="." class="form-horizontal row">{% csrf_token %}
-		<div class="form-group col-md-10 col-md-offset-2">
-			<label  class="col-sm-2 control-label " for="exampleInputUsername">用户名:</label>
-			<div class="col-sm-10">
-				<input type='text' name='username' value="" class="form-control" id="exampleInputUsername" placeholder=""/>
-			</div>
+	<form method="POST" action="." class="form-horizontal form col-md-4 col-md-offset-4">{% csrf_token %}
+		<div class="form-group">
+				<input type='text' name='username' value="" class="form-control" placeholder="用户名"/>
 		</div>
-		<div class="form-group col-md-10 col-md-offset-2">
-			<label  class="col-sm-2 control-label " for="exampleInputPassword">密码:</label>
-			<div class="col-sm-10">
-				<input type='password' name='password' value="" class="form-control" id='exampleInputPassword' placeholder=""/>
-			</div>
+		<div class="form-group">
+				<input type='password' name='password' value="" class="form-control" placeholder="密码"/>
 		</div>
-		<div class="col-md-2 col-md-offset-2">
+		<div class="form-group">
 			<input type="hidden" name="next" value="/"/>
-			<input type="submit" class="col-md-8 col-md-offset-2 btn btn-lg btn-primary" value="login"/>
+			<button type="submit" class="form-control">登陆</button>
 		</div>
 	</form>
 {% endif %}
 {% endblock %}
-			
-
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}

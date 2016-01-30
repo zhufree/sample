@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'forum',
     'gallery',
     'chatroom',
-    'tieba',
+    #'tieba',
     'eat',
     'novel',
 )

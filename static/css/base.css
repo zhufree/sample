@@ -1,18 +1,19 @@
 nav{
-  background-color: rgb(65, 177, 70) !important;
+  background-color: rgb(65, 177, 70) !important;/*nav的背景色,a背景是透明的*/
   padding: 10px 10px;
   margin: 0 !important;
   width: 100%;
 }
-nav .dropdown-menu{
+
+nav .dropdown-menu{/*整个下拉列表*/
   background-color: rgb(65, 177, 70) !important;
+  /* 一样的背景色但没有padding*/
+  min-width: auto;
 }
 
 nav .dropdown-menu>li{
-  margin: 10px;
-}
-ul.nav>li{
-  margin-left: 10px;
+  padding: 0;
+  margin: 10px 0;
 }
 
 nav a{
@@ -21,6 +22,18 @@ nav a{
   border-radius: 10px;
 }
 
-nav a:hover, a:visited{
+nav a:hover{
   background-color: rgb(65, 200, 70) !important;
+}
+
+nav .open{
+  background-color: rgb(65, 200, 70) !important;
+}
+
+.container-fluid{
+  margin-top: 20px;
+}
+
+.user-action{
+  float: right !important;
 }

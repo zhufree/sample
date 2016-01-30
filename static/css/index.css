@@ -1,4 +1,3 @@
-
 #cover{
   width: 100%;
   height: 100%;
@@ -8,6 +7,7 @@
   background-color: #227D51;
   /*opacity: 0.9;*/
   text-align: center;
+  display: none;
 }
 
 #exit-btn{
@@ -19,25 +19,9 @@
   font-size: 2em;
   color: #fff;
 }
+
 #timeHead{
   margin: 1.5em;
   font-size: 50px;
   color: #fff;
-}
-
-form{
-  border: solid 2px #eee;
-  background-color: #eee;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-}
-
-.form-group{
-  margin: 20px 50px !important;
-}
-
-.form-group button{
-  background-color: #227D51;
-  color: #eee;
 }

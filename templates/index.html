@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}首页{% endblock %}
-{% block link %}<link rel="stylesheet" href="../static/css/index.css">{% endblock %}
+
 {% block content %}
 <div class="jumbotron col-md-10 col-md-offset-1">
   <h3>这里是Free的个人站～</h3>
@@ -10,16 +10,16 @@
   <p id="timeHead"></p>
   <button id="exit-btn">关闭</button>
   <form action="accounts/register/" method="post" class="form form-horizontal col-md-4 col-md-offset-4">{% csrf_token %}
-    <div class="form-group" id="inp-usrn">
+    <div class="form-group">
       <input type="text" name="username" class="form-control" placeholder="用户名">
     </div>
-    <div class="form-group" id="inp-email">
+    <div class="form-group">
       <input type="text" name="email" class="form-control" placeholder="邮箱账号">
     </div>
-    <div class="form-group" id="inp-pwd">
+    <div class="form-group">
       <input type="password" name="password1" class="form-control" placeholder="密码">
     </div>
-    <div class="form-group" id="conf-pwd">
+    <div class="form-group">
       <input type="password" name="password2" class="form-control" placeholder="确认密码">
     </div>
     <div class="form-group">
@@ -28,8 +28,14 @@
   </form>
 </section>
 {% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
 {% block script %}
-<script type="text/javascript" src="../static/js/index.js">
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/index.js' %}">
 
 </script>
 {% endblock %}

@@ -3,8 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="../static/css/base.css">
-    {% block link %}{% endblock %}
     <title>Sample|{% block title %}首页{% endblock%}</title>
 </head>
 {% block style %}
@@ -20,20 +18,20 @@
             <li role="presentation" ><a href="/chatroom/">聊天室</a></li>
             <!--<li role="presentation" ><a href="/tieba/">贴吧工具</a></li>-->
             <li role="presentation" ><a href="/eat/">吃什么？</a></li>
-            <li role="presentation" ><a href="/novel/">阅读馆</a></li>
+            <li role="presentation" ><a href="/novel/">文集</a></li>
             {% if user.is_authenticated %}
-            <li role="presentation" class="dropdown" style="float:right;">
-		    <a class="dropdown-toggle" data-toggle="dropdown" href="/accounts/login/" role="button" aria-expanded="false">{{user.username}}
-    <span class="caret"></span>
-		    </a>
+            <li role="presentation" class="dropdown user-action">
+		        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.username}}
+              <span class="caret"></span>
+		        </a>
   	        <ul class="dropdown-menu" role="menu">
-        			<li><a href="/novel/mynovels/">我的Novel</a></li>
+        			<li><a href="/novel/mynovels/">我的文集</a></li>
         			<li><a href="/accounts/logout/">退出</a></li>
   	        </ul>
             </li>
             {% else %}
-            <li role="presentation" ><a href="/accounts/login/">登陆</a></li>
-            <li role="presentation" ><a href="/accounts/register/">注册</a></li>
+            <li role="presentation" class="user-action" ><a href="/accounts/login/">登陆</a></li>
+            <li role="presentation" class="user-action"><a href="/accounts/register/">注册</a></li>
             {% endif %}
         </ul>
     </nav>
@@ -56,6 +54,9 @@
 <!--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">-->
 <!--<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>-->
 <!--<script src="/static/bootstrap/js/bootstrap.min.js"></script>-->
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% block link %}{% endblock %}
 {% block script %}
 {% endblock %}
 </html>
