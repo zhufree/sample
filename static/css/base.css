@@ -3,6 +3,9 @@ nav{
   padding: 10px 10px;
   margin: 0 !important;
   width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
 }
 
 nav .dropdown-menu{/*整个下拉列表*/
@@ -31,7 +34,11 @@ nav .open{
 }
 
 .container-fluid{
-  margin-top: 20px;
+  margin-top:40px;
+}
+
+.container-fluid>*{
+  margin-top:40px;
 }
 
 .user-action{

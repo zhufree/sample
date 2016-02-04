@@ -25,3 +25,41 @@
   font-size: 50px;
   color: #fff;
 }
+
+.index-pages{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    margin: 0;
+}
+
+#index-page-1{
+  background-color: #A8D8B9;
+  top: 0;
+  left: 0;
+}
+#index-page-2{
+  background-color: #00ccdd;
+  top: 100%;
+  left: 0;
+}
+#index-page-3{
+  background-color: #ffa500;
+  top: 200%;
+  left: 0;
+}
+#index-page-4{
+  background-color: #A8D8B9;
+  top: 300%;
+  left: 0;
+}
+
+.next-page{
+  background-color: inherit;
+  border: none;
+  font-size: 2em;
+  color: #fff;
+  bottom: 20px;
+  position: absolute;
+}

@@ -2,7 +2,7 @@ function showTime(){
     var now = new Date();
     var dateStr = "现在是" +
     now.getFullYear() + "年" +
-    now.getMonth() + 1 + "月" +
+    (now.getMonth() + 1) + "月" +
     now.getDate() + "日" +
     now.getHours() + ":" +
     now.getMinutes() + ":" +
@@ -41,11 +41,13 @@ $().ready(function(){
         document.cookie="popped=yes";
         //设置cookie值
     }else{
-        // setInterval(showTime, 1000);
         // $('#cover').show();
         // $('#cover').hide();
     }
     $('#exit-btn').click(function(){
       $('#cover').fadeOut(1000);
+    });
+    $('.next-page').click(function(){
+        $this = $(this);
     });
 });
