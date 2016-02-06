@@ -17,7 +17,7 @@
             <li role="presentation" ><a href="/gallery/">画廊</a></li>
             <li role="presentation" ><a href="/chatroom/">聊天室</a></li>
             <!--<li role="presentation" ><a href="/tieba/">贴吧工具</a></li>-->
-            <li role="presentation" ><a href="/eat/">吃什么？</a></li>
+            <!-- <li role="presentation" ><a href="/eat/">吃什么？</a></li> -->
             <li role="presentation" ><a href="/novel/">文集</a></li>
             {% if user.is_authenticated %}
             <li role="presentation" class="dropdown user-action">
@@ -43,18 +43,18 @@
 </body>
 <!--with internet connected-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<!-- <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<!-- <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<!-- <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!--no internet-->
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-<script src="{% static 'js/jquery-1.12.0.min.js' %}"></script>
-<script src="{% static 'bootstrap/js/bootstrap.min.js'  %}"></script>
+<!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js'  %}"></script> -->
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
 {% block link %}{% endblock %}
 {% block script %}

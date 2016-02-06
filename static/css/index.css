@@ -40,18 +40,33 @@
   left: 0;
 }
 #index-page-2{
-  background-color: #00ccdd;
+  background-color: #81C7D4;
   top: 100%;
   left: 0;
 }
 #index-page-3{
-  background-color: #ffa500;
+  background-color: #33A6B8;
   top: 200%;
   left: 0;
 }
 #index-page-4{
-  background-color: #A8D8B9;
+  background-color: #0089A7;
   top: 300%;
+  left: 0;
+}
+#index-page-5{
+  background-color: #6495ED;
+  top: 400%;
+  left: 0;
+}
+#index-page-6{
+  background-color: #3A8FB7;
+  top: 500%;
+  left: 0;
+}
+#index-page-7{
+  background-color: #2EA9DF;
+  top: 600%;
   left: 0;
 }
 
@@ -59,7 +74,41 @@
   background-color: inherit;
   border: none;
   font-size: 2em;
-  color: #fff;
+  color: #233;
   bottom: 20px;
   position: absolute;
+  text-decoration: none;
+}
+
+h1{
+  margin: 15% auto 0;
+  font-size: 100px;
+}
+h2{
+  margin: 1em 5em;
+  font-size: 30px;
+  text-align: left;
+  line-height: 60px;
+}
+
+.display-icon{
+  width: 50%；
+}
+.display-icon img{
+  width: 30%;
+  height: 30%;
+  margin: 10%;
+  float: right;
+}
+
+.caption{
+  width: 50%;
+  margin: 10% 10%;
+}
+.caption h3{
+  font-size: 40px;
+}
+.caption p{
+  font-size: 30px;
+  text-align: left;
 }

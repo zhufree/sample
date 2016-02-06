@@ -47,7 +47,4 @@ $().ready(function(){
     $('#exit-btn').click(function(){
       $('#cover').fadeOut(1000);
     });
-    $('.next-page').click(function(){
-        $this = $(this);
-    });
 });
