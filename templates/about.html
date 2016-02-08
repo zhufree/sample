@@ -3,13 +3,18 @@
 {% block content %}
 {% load staticfiles %}
 <section>
-  <img src="{% static 'img/moyotee.jpg' %}" alt="">
+  <img src="{% static 'img/moyotee.jpg' %}" alt="" id="head-img">
   <h1>zhufree</h1>
   <h3>武汉大学-信息管理学院-数字出版专业-大三本科生</h3>
   <h3>热爱编程与互联网，以教育事业为梦想</h3>
-  <span>github</span>
-  <span>csdn</span>
-  <p>zhufree@163.com</p>
+  <h4>Email:zhufree2013@gmail.com</h4>
+  <h4>QQ:963949236</h4>
+  <h4>wechat:Zhu_free</h4>
+  <a href="https://github.com/zhufree" target="_blank"><img src="{% static 'img/github.png' %}" alt="" class="social-logo"></a>
+  <a href="http://blog.csdn.net/zhu_free" target="_blank"><img src="{% static 'img/csdn.png' %}" alt="" class="social-logo"></a>
+  <a href="http://zhufree.jisuan.me" target="_blank"><img src="{% static 'img/jisuanke.png' %}" alt="" class="social-logo"></a>
+  <a href="https://www.shiyanlou.com/user/29295" target="_blank"><img src="{% static 'img/shiyanlou.jpg' %}" alt="" class="social-logo"></a>
+
 </section>
 {% endblock %}
 {% block link %}

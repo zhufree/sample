@@ -1,0 +1,15 @@
+section{
+  text-align: center;
+  margin: 10% 20%;
+}
+#head-img{
+  border: 2px #eee solid;
+  border-radius: 50%;
+}
+.social-logo{
+  width: 30px;
+  height: 30px;
+  border: 1px #eee solid;
+  border-radius: 50%;
+  margin: 2% 2%;
+}

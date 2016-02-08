@@ -80,15 +80,28 @@
   text-decoration: none;
 }
 
-h1{
-  margin: 15% auto 0;
-  font-size: 8em;
+@media screen and (min-width: 1000px){
+  h1{
+    margin: 15% auto 0;
+    font-size: 8em;
+  }
+  h2{
+    margin: 1em 1em;
+    font-size: 2em;
+    text-align: left;
+    line-height: 2em;
+  }
 }
-h2{
-  margin: 1em 1em;
-  font-size: 2em;
-  text-align: left;
-  line-height: 2em;
+@media screen and (max-width: 500px){
+  h1{
+    margin: 50% auto 0;
+    font-size: 4em;
+  }
+  h2{
+    margin: 1em 1em;
+    font-size: 2em;
+    text-align: left;
+  }
 }
 
 .display-icon{
@@ -101,9 +114,16 @@ h2{
   float: right;
 }
 
-.caption{
-  /*width: 50%;*/
-  margin: 10% 30%;
+@media screen and (min-width: 1000px){
+  .caption{
+    /*width: 50%;*/
+    margin: 10% 30%;
+  }
+}
+@media screen and (max-width: 500px){
+  .caption{
+    margin: 50% 10%;
+  }
 }
 
 .caption h3{

@@ -8,7 +8,6 @@ from usersys.forms import *
 import json
 # Create your views here.
 
-
 def index(request):
     return render(request, 'index.html')
 
@@ -60,7 +59,7 @@ def register_(request):
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
-    return render_to_response('register.html', variables)
+    return render(request, 'register.html', variables)
 
 
 @csrf_exempt
@@ -116,4 +115,4 @@ def api_register_(request):
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
-    return render_to_response('register.html', variables)
+    return render(request, 'register.html', variables)

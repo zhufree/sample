@@ -1,5 +1,6 @@
 body{
   font-size: 14px;
+  min-height:100%;
 }
 
 nav{
@@ -37,14 +38,30 @@ nav .open{
   background-color: rgb(65, 200, 70) !important;
 }
 
-.container-fluid{
-  margin-top:40px;
+@media screen and (min-width: 1000px){
+  .container-fluid{
+    margin-top:40px;
+  }
+  .container-fluid>*{
+    margin-top:40px;
+  }
 }
-
-.container-fluid>*{
-  margin-top:40px;
+@media screen and (max-width: 500px) {
+  .container-fluid{
+    margin-top: 100px;
+  }
+  .container-fluid>*{
+    margin-top: 100px;
+  }
 }
 
 .user-action{
   float: right !important;
+}
+
+footer{
+  text-align: center;
+  background-color: rgb(65, 177, 70);
+  font-size: 2em;
+  padding: 2%;
 }
