@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.template import RequestContext
@@ -10,8 +10,10 @@ import json
 
 
 def index(request):
-    return render_to_response('index.html', RequestContext(request))
+    return render(request, 'index.html')
 
+def about(request):
+    return render(request, 'about.html')
 
 @csrf_protect
 def login_(request):
@@ -30,7 +32,7 @@ def login_(request):
                 return HttpResponse('disabled account')
         else:
             return HttpResponse('invalid login')
-    return render_to_response('login.html', RequestContext(request))
+    return render(request, 'login.html')
 
 
 def logout_(request):

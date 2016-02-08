@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}关于开发者{% endblock %}
+{% block content %}
+{% load staticfiles %}
+<section>
+  <img src="{% static 'img/moyotee.jpg' %}" alt="">
+  <h1>zhufree</h1>
+  <h3>武汉大学-信息管理学院-数字出版专业-大三本科生</h3>
+  <h3>热爱编程与互联网，以教育事业为梦想</h3>
+  <span>github</span>
+  <span>csdn</span>
+  <p>zhufree@163.com</p>
+</section>
+{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+{% block script %}
+{% load staticfiles %}
+<!-- <script type="text/javascript" src="{% static 'js/index.js' %}"></script> -->
+{% endblock %}

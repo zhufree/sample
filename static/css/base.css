@@ -1,3 +1,7 @@
+body{
+  font-size: 14px;
+}
+
 nav{
   background-color: rgb(65, 177, 70) !important;/*nav的背景色,a背景是透明的*/
   padding: 10px 10px;

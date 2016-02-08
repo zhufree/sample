@@ -82,13 +82,13 @@
 
 h1{
   margin: 15% auto 0;
-  font-size: 100px;
+  font-size: 8em;
 }
 h2{
-  margin: 1em 5em;
-  font-size: 30px;
+  margin: 1em 1em;
+  font-size: 2em;
   text-align: left;
-  line-height: 60px;
+  line-height: 2em;
 }
 
 .display-icon{
@@ -102,13 +102,14 @@ h2{
 }
 
 .caption{
-  width: 50%;
-  margin: 10% 10%;
+  /*width: 50%;*/
+  margin: 10% 30%;
 }
+
 .caption h3{
-  font-size: 40px;
+  font-size: 2em;
 }
 .caption p{
-  font-size: 30px;
+  font-size: 1.5em;
   text-align: left;
 }

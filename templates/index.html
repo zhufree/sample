@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}首页{% endblock %}
-
 {% block content %}
 {% load staticfiles %}
 <section id="cover">
@@ -67,6 +66,7 @@
     <h3>画廊</h3>
     <p>一个图片展示页面，可以上传图片，使用七牛存储图片文件，目前似乎有一些bug，同样使用Tag进行信息组织。</p>
   </aside>
+  <a class="next-page" href="#index-page-6">Next</a>
 </section>
 <section id="index-page-6" class="index-pages">
   <!-- <div class="display-icon">
@@ -76,6 +76,7 @@
     <h3>聊天室</h3>
     <p>简易在线聊天室，使用ajax轮询请求消息。</p>
   </aside>
+  <a class="next-page" href="#index-page-7">Next</a>
 </section>
 <section id="index-page-7" class="index-pages">
   <!-- <div class="display-icon">
@@ -94,7 +95,5 @@
 {% endblock %}
 {% block script %}
 {% load staticfiles %}
-<script type="text/javascript" src="{% static 'js/index.js' %}">
-
-</script>
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
