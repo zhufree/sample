@@ -1,0 +1,17 @@
+.blog-box{
+  box-shadow: 5px 8px 5px #ccc;
+  display: none;
+}
+
+.tag-link{
+  font-size: 0.5em;
+}
+
+.publish-time{
+  text-align: right;
+}
+
+.no-comment{
+  min-height: 100px;
+  font-size: 2em;
+}

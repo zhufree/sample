@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Blog{% endblock %}
 {% block content %}
-<div class="jumbotron col-md-10 col-md-offset-1">
-  <h3>这里是Free的个人博客</h3>
-    <p>也就是只有我自己能发辣</p>
-</div>
 {% for article in articles %}
-<div class="panel panel-default  col-md-10 col-md-offset-1">
-    <div class="panel-heading bg-primary">
+<section class="panel panel-default col-md-10 col-md-offset-1 blog-box">
+    <section class="panel-heading bg-primary">
         <h3 class="panel-title"><a href="article/{{article.id}}/">{{article.title}}</a>
         {% for tag in article.tags.all %}
         <a href="/blog/tag/{{tag.id}}" ><span class="label label-default">{{tag}}</span></a>
@@ -15,13 +11,20 @@
         <cite title="Source Title">发表于 {{article.time}}</cite>
         </h3>
 
-    </div>
+    </section>
     <div class="panel-body">
         {{ article.content|safe|truncatewords_html:20 }}
         <br>
         <a href="/blog/article/{{article.id}}/">查看更多</a>
     </div>
-
-</div>
+</section>
 {% endfor %}
+{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+{% block script %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
 {% endblock %}
