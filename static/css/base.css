@@ -37,7 +37,9 @@ nav a:hover{
 nav .open{
   background-color: rgb(65, 200, 70) !important;
 }
-
+#main-box{
+  min-height: 500px;
+}
 @media screen and (min-width: 1000px){
   .container-fluid{
     margin-top:40px;

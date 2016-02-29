@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="zh">
+<html lang="zh" ng-app="proApp">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -20,6 +20,7 @@
             <!-- <li role="presentation" ><a href="/eat/">吃什么？</a></li> -->
             <li role="presentation" ><a href="/novel/">文集</a></li>
             <li role="presentation" ><a href="/about/">关于开发者</a></li>
+            <li role="presentation" ><a href="/projects/">前端show</a></li>
             {% if user.is_authenticated %}
             <li role="presentation" class="dropdown user-action">
 		        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.username}}
@@ -36,28 +37,32 @@
             {% endif %}
         </ul>
     </nav>
-    <div class='container-fluid'>
+    <div class='container-fluid' id="main-box">
     {% block content %}
     {% endblock %}
     </div>
   <footer>
-    &copy; Copyright 2015 by <a href="http://dj.zhufree.info/">dj.zhufree.info</a>.
+    &copy; Copyright 2016 by <a href="http://dj.zhufree.info/">dj.zhufree.info</a>.
   </footer>
 </body>
 <!--with internet connected-->
 <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!-- <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> -->
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<!--no internet-->
+<!-- <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+
+<!--Angularjs文件-->
+<!-- <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script> -->
+
 {% load staticfiles %}
-<!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js'  %}"></script> -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script src="{% static 'js/bootstrap.min.js'  %}"></script>
+<script src="{% static 'js/angular.min.js'  %}"></script>
 <script src="{% static 'js/base.js'  %}"></script>
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
 {% block link %}{% endblock %}

@@ -1,4 +1,4 @@
-section{
+#logo{
   text-align: center;
   /*margin: 10% 20%;*/
 }
@@ -9,7 +9,16 @@ section{
 .social-logo{
   width: 30px;
   height: 30px;
-  border: 1px #eee solid;
   border-radius: 50%;
-  margin: 2% 2%;
+  margin: 1% 1%;
+}
+.info-box{
+  /*text-align: left;*/
+  display: none;
+}
+hr{
+  border-color: #aaa;
+}
+.info-box:last-child{
+  margin-bottom: 20px;
 }

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}前端show{% endblock %}
+{% block content %}
+{% load staticfiles %}
+<section class="pro col-md-4 col-md-offset-4" id="tag-cloud" ng-controller="tagCloud">
+  <span ng-repeat="word in words" class="words" data-size="[[word.size]]">
+    [[word.name]]
+  </span>
+</section>
+<!-- <section class="pro">
+
+</section> -->
+
+{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/projects.css' %}">
+{% endblock %}
+{% block script %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/projects.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/projectsCtrl.js' %}"></script>
+{% endblock %}

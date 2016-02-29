@@ -1,0 +1,7 @@
+#tag-cloud{
+  border: transparent 2px solid;
+  border-radius: 45%;
+}
+.words{
+  position: absolute;
+}

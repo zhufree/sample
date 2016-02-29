@@ -17,6 +17,7 @@ urlpatterns = patterns(
     url(r'^eat/', include('eat.urls')),
     url(r'^novel/', include('novel.urls')),
     url(r'^about/$', about),
+    url(r'^projects/$', projects),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve'),

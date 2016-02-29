@@ -2,19 +2,52 @@
 {% block title %}关于开发者{% endblock %}
 {% block content %}
 {% load staticfiles %}
-<section class="col-md-10 col-md-offset-1">
+<section class="col-md-10 col-md-offset-1" id="logo">
   <img src="{% static 'img/moyotee.jpg' %}" alt="" id="head-img">
   <h1>zhufree</h1>
-  <h3>武汉大学-信息管理学院-数字出版专业-大三本科生</h3>
   <h3>热爱编程与互联网，以教育事业为梦想</h3>
-  <h4>Email:zhufree2013@gmail.com</h4>
-  <h4>QQ:963949236</h4>
-  <h4>wechat:Zhu_free</h4>
   <a href="https://github.com/zhufree" target="_blank"><img src="{% static 'img/github.png' %}" alt="" class="social-logo"></a>
   <a href="http://blog.csdn.net/zhu_free" target="_blank"><img src="{% static 'img/csdn.png' %}" alt="" class="social-logo"></a>
   <a href="http://zhufree.jisuan.me" target="_blank"><img src="{% static 'img/jisuanke.png' %}" alt="" class="social-logo"></a>
   <a href="https://www.shiyanlou.com/user/29295" target="_blank"><img src="{% static 'img/shiyanlou.jpg' %}" alt="" class="social-logo"></a>
 
+</section>
+<section class="col-md-10 col-md-offset-1 info-box" id="person-info">
+  <h2>个人信息</h2>
+  <hr>
+  <h4>姓名：朱赋蕊</h4>
+  <h4>性别：女</h4>
+  <!-- <h4>电话：18207147818</h4> -->
+  <h4>QQ：963949236</h4>
+  <h4>wechat：Zhu_free</h4>
+  <h4>Email：zhufree2013@gmail.com</h4>
+</section>
+<section class="col-md-10 col-md-offset-1 info-box" id="edu-info">
+  <h2>教育背景</h2>
+  <hr>
+  <h4>WHU 武汉大学</h4>
+  <h4>SIM 信息管理学院</h4>
+  <h4>DP 数字出版</h4>
+  <h4>大三本科在读</h4>
+</section>
+<section class="col-md-10 col-md-offset-1 info-box" id="pro-skill">
+  <h2>计算机专业技能</h2>
+  <hr>
+  <h4>熟悉<code>python</code>，有使用<code>python+django</code>进行web的开发经验，对数据库使用也有一定的了解；</h4>
+  <h4>掌握<code>html,css,javascript</code>，熟悉<code>bootstrap</code>及<code>jquery</code>的使用；</h4>
+  <h4>了解基本算法及数据结构；</h4>
+</section>
+<section class="col-md-10 col-md-offset-1 info-box" id="life-skill">
+  <h2>软技能</h2>
+  <hr>
+  <h4>责任心强，守时；</h4>
+  <h4>有较强的信息搜索，总结及归纳能力；</h4>
+  <h4>有较好自学能力，习惯尝试新的学习方法并积累总结经验；</h4>
+  <h4>生活作息规律，热爱体育运动，坚持锻炼，身体健康，能承受高强度工作；</h4>
+</section>
+<section class="col-md-10 col-md-offset-1 info-box" id="pro-display">
+  <h2>项目展示</h2>
+  <hr>
 </section>
 {% endblock %}
 {% block link %}
@@ -23,5 +56,5 @@
 {% endblock %}
 {% block script %}
 {% load staticfiles %}
-<!-- <script type="text/javascript" src="{% static 'js/index.js' %}"></script> -->
+<script type="text/javascript" src="{% static 'js/about.js' %}"></script>
 {% endblock %}
