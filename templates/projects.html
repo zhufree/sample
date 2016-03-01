@@ -2,10 +2,15 @@
 {% block title %}前端show{% endblock %}
 {% block content %}
 {% load staticfiles %}
-<section class="pro col-md-4 col-md-offset-4" id="tag-cloud" ng-controller="tagCloud">
-  <span ng-repeat="word in words" class="words" data-size="[[word.size]]">
-    [[word.name]]
-  </span>
+<section class="pro col-md-6 col-md-offset-3" ng-controller="showPro">
+  <div ng-repeat="pro in pros" class="pros" style="background: url([[pro.imgLink]]) no-repeat;background-size:100%;">
+    <a href="[[pro.link]]" target="_blank">
+      <div class="cover">
+        <h1>[[pro.name]]</h1>
+        <h3>[[pro.desc]]</h3>
+      </div>
+    </a>
+  </div>
 </section>
 <!-- <section class="pro">
 

@@ -4,25 +4,13 @@ proApp.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('[[');
   $interpolateProvider.endSymbol(']]');
 });
-proApp.controller('tagCloud', ['$scope', function($scope){
-  $scope.words = [
-    {name: 'python', size: Math.random() * 10 + 1},
-    {name: 'django', size: Math.random() * 10 + 1},
-    {name: 'flask', size: Math.random() * 10 + 1},
-    {name: 'html', size: Math.random() * 10 + 1},
-    {name: 'css', size: Math.random() * 10 + 1},
-    {name: 'javascript', size: Math.random() * 10 + 1},
-    {name: '数据结构', size: Math.random() * 10 + 1},
-    {name: '算法', size: Math.random() * 10 + 1},
-    {name: '教育', size: Math.random() * 10 + 1},
-    {name: '互联网', size: Math.random() * 10 + 1},
-    {name: '编程', size: Math.random() * 10 + 1},
-    {name: '信息管理', size: Math.random() * 10 + 1},
-    {name: '数字出版', size: Math.random() * 10 + 1},
-    {name: '篮球', size: Math.random() * 10 + 1},
-    {name: 'free', size: Math.random() * 10 + 1},
-    {name: 'WHU', size: Math.random() * 10 + 1},
-    {name: '柚子君', size: Math.random() * 10 + 1},
+proApp.controller('showPro', ['$scope', function($scope){
+  $scope.pros = [
+    {name: 'TagCloud', desc: '随机位置大小和颜色的标签云',
+      imgLink: 'http://7xlfws.com1.z0.glb.clouddn.com/1395922265.jpg',
+      link: 'http://codepen.io/zhufree/full/xVbrrJ/'},
+    {name: 'FoodShop', desc: '食物商品展示单页面应用，可以添加商品',
+      imgLink: 'http://7xlfws.com1.z0.glb.clouddn.com/foodshop2016-03-01T06-54-05.448Z.png',
+      link: 'http://codepen.io/zhufree/full/ZWYyJX/'}
   ];
-  // console.log($scope.words);
 }]);

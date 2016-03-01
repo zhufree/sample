@@ -38,7 +38,7 @@ nav .open{
   background-color: rgb(65, 200, 70) !important;
 }
 #main-box{
-  min-height: 500px;
+  min-height: 600px;
 }
 @media screen and (min-width: 1000px){
   .container-fluid{
@@ -66,4 +66,8 @@ footer{
   background-color: rgb(65, 177, 70);
   font-size: 1.8em;
   padding: 1%;
+}
+
+a, a:active, a:hover, a:link{
+  text-decoration: none;
 }

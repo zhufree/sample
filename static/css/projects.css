@@ -1,7 +1,15 @@
-#tag-cloud{
+.pros{
   border: transparent 2px solid;
-  border-radius: 45%;
+  text-align: center;
+  margin: 2em;
 }
-.words{
-  position: absolute;
+.cover{
+  background-color: #5DAC81;
+  opacity: 0.9;
+  min-height: 300px;
+  border-radius: 10px;
+  padding: 4em 2em;
+}
+.cover *{
+  color: white;
 }
