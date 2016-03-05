@@ -1,8 +1,12 @@
 .blog-box{
-  box-shadow: 5px 8px 5px #ccc;
+  box-shadow: 5px 5px 5px #0089A7;
+  padding: 0;
   display: none;
 }
 
+.panel-heading{
+  border-radius: 5px;
+}
 .tag-link{
   font-size: 0.5em;
 }

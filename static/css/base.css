@@ -1,6 +1,7 @@
 body{
   font-size: 14px;
   min-height:100%;
+  background-color: #81C7D4;
 }
 
 nav{
@@ -44,7 +45,7 @@ nav .open{
   .container-fluid{
     margin-top:40px;
   }
-  .container-fluid>*{
+  .container-fluid>*:first-child{
     margin-top:40px;
   }
 }
@@ -52,7 +53,7 @@ nav .open{
   .container-fluid{
     margin-top: 100px;
   }
-  .container-fluid>*{
+  .container-fluid>*:first-child{
     margin-top: 100px;
   }
 }

@@ -2,13 +2,13 @@
 {% block title %}论坛{% endblock %}
 {% block content %}
 <!--display post-->
-<div class="panel panel-default col-md-10 col-md-offset-1">
+<div class="panel panel-default col-md-10 col-md-offset-1" id="post-box">
     <div class="panel-heading">
         <h4>
             <span class="label label-info"><a href="/forum/topic/{{post.topic.id}}">{{post.topic}}</a></span>
             <a href="/forum/p/{{post.id}}/">{{post.title}}</a>
-            <span class="badge">create by {{post.author.username}}</span>
-            <span class="badge">{{post.reply_count}}</span>
+            <span class="badge">由{{post.author.username}}发表</span>
+            <span class="badge">{{post.reply_count}}回复</span>
             <span class="badge">{{post.last_reply_time}}</span>
         </h4>
     </div>
@@ -17,21 +17,21 @@
     </div>
 </div>
 <!--display reply-->
-<div class="panel panel-default col-md-10 col-md-offset-1">
 {% for reply in replys %}
-<div class="list-group ">
-    <div class="list-group-item" style="min-height:100px;">
-        {{reply.content}}
-    </div>
-    <div class="list-group-item" align="right">
-        <button class="btn btn-primary" onclick="cause_reply(this)">回复</button>
-        <p>{{reply.floor_num}}楼 {{reply.author.username}} at {{reply.time}}</p>
-    </div>
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="list-group ">
+      <div class="list-group-item" style="min-height:100px;">
+          {{reply.content}}
+      </div>
+      <div class="list-group-item" align="right">
+          <button class="btn btn-primary" onclick="cause_reply(this)">回复</button>
+          <p>{{reply.floor_num}}楼 {{reply.author.username}} at {{reply.time}}</p>
+      </div>
+  </div>
 </div>
 {% endfor %}
-</div>
 <!--post reply-->
-<form class="form-horizontal panel col-md-10 col-md-offset-1 container" method="POST" action="/forum/post/">{% csrf_token %}
+<form class="form-horizontal panel col-md-10 col-md-offset-1" method="POST" action="/forum/post/">{% csrf_token %}
     <div class="form-group col-md-12">
         <label  class="control-label" for="exampleContent"></label>
         <br><br/>
@@ -44,23 +44,11 @@
     </div>
 </form>
 {% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
+{% endblock %}
 {% block script %}
-<script language="JavaScript" type="text/javascript">
-function cause_reply(obj){
-    if($("#reply_id").length>0){
-        $("#reply_id").remove();
-        $("textarea").empty();
-    }
-    var new_inp=document.createElement("input");
-    var reply_floor=$(obj).next().text().substr(0,1);
-    var quote_reply_content=$(obj).parent().prev().text();
-    new_inp.setAttribute("type", "hidden");
-    new_inp.setAttribute("id", "reply_id");
-    new_inp.setAttribute("name", "reply_id");
-    new_inp.setAttribute("value", reply_floor);
-    $('#post_field').append(new_inp);
-    $("textarea").append("回复"+reply_floor+"楼：<br>"+quote_reply_content+"<br>");
-
-}
-</script>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/forum.js' %}"></script>
 {% endblock %}

@@ -14,7 +14,7 @@
 <!-- post messages -->
 <form id="msgForm" class="form-horizontal col-md-6 col-md-offset-3 container" method="POST" >{% csrf_token %}
     <div class="form-group">
-        <label  class="control-label" for="exampleMessage">留言：</label>
+        <label class="control-label" for="exampleMessage">留言：</label>
         <textarea wrap="physical" rows="5"  type="text" name="content" value="" placeholder="" class="form-control" id="exampleMessage"></textarea>
         <br/>
         <input type="submit" id="msg-btn" class="form-control btn btn-lg btn-primary" value="发布"/>

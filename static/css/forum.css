@@ -1,0 +1,39 @@
+.post-list, .panel{
+  box-shadow: 5px 3px 3px #0089A7;
+  padding: 0;
+}
+.list-group-item-heading>*:first-child{
+  margin: 0.5em 1em;
+}
+.badge{
+  float:right;
+  margin: auto 0.5em;
+}
+#forumForm{
+  margin: 2em;
+}
+label{
+  font-size: 1.5em;
+}
+
+#sub-btn{
+  float: right;
+  margin-top: 1em;
+}
+#sub-btn .btn{
+  margin-top: .5em;
+  width: 100%;
+  padding: .5em ;
+  font-size: 2em;
+  background-color: rgb(65, 177, 70);
+  border: none;
+  color: white;
+  border-radius: 0;
+}
+.panel-heading{
+  border-radius: 5px;
+}
+#post-box{
+  padding: 0;
+  font-size: 1.5em;
+}
