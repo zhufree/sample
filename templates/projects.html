@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}前端show{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/projects.css' %}">
+{% endblock %}
 {% block content %}
 {% load staticfiles %}
 <section class="pro col-md-6 col-md-offset-3" ng-controller="showPro">
@@ -17,10 +21,7 @@
 </section> -->
 
 {% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/projects.css' %}">
-{% endblock %}
+
 {% block script %}
 <!--Angularjs文件-->
 <script src="https://code.angularjs.org/1.5.0/angular.min.js"></script>

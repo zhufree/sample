@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}论坛{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
+{% endblock %}
 {% block content %}
 <!--display post-->
 <div class="panel panel-default col-md-10 col-md-offset-1" id="post-box">
@@ -44,10 +48,7 @@
     </div>
 </form>
 {% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/forum.css' %}">
-{% endblock %}
+
 {% block script %}
 {% load staticfiles %}
 <script type="text/javascript" src="{% static 'js/forum.js' %}"></script>

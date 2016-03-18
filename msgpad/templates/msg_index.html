@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}留言板{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/msgpad.css' %}">
+{% endblock %}
 {% block content %}
 <!-- display messages by id -->
 <div class="list-group col-md-10 col-md-offset-1">
@@ -21,10 +25,7 @@
     </div>
 </form>
 {% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/msgpad.css' %}">
-{% endblock %}
+
 {% block script %}
 {% load staticfiles %}
 <script type="text/javascript" src="{% static 'js/msgpad.js' %}"></script>

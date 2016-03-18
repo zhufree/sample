@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Blog{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
 {% block content %}
 {% for article in articles %}
 <section class="panel panel-default col-md-10 col-md-offset-1 blog-box">
@@ -20,10 +24,7 @@
 </section>
 {% endfor %}
 {% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-{% endblock %}
+
 {% block script %}
 {% load staticfiles %}
 <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>

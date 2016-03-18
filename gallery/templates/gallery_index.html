@@ -1,47 +1,8 @@
 {% extends "base.html" %}
 {% block title %}画廊{% endblock %}
-{% block style %}
-<style>
-    /* force scrollbar */
-    /*html { overflow-y: scroll; }*/
-    body {
-        font-family: sans-serif;
-    }
-    /* ---- isotope ---- */
-    .grid {
-        padding: 0;
-       /* min-height: 450px; */
-        margin: 0 auto;
-        overflow:hidden;
-    }
-    /* clear fix */
-    .grid:after {
-      content: '';
-      display: block;
-      clear: both;
-    }
-    /* ---- .grid-item ---- */
-
-    .grid-sizer,
-    .grid-item {
-      width: 30%;
-    }
-
-    .grid-item {
-      float: left;
-      margin: 20px;
-      padding: 10px;
-      border-width: 1px;
-      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    }
-
-    .grid-item img {
-      display: block;
-      max-width: 100%;
-      margin-bottom: 5px;
-    }
-</style>
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
 {% endblock %}
 {% block content %}
 <div class="jumbotron  col-md-10 col-md-offset-1">
@@ -116,7 +77,7 @@
               <p class="list-group-item-text" align="right">at {{cmt.time}}</p>
             </div>
         </div>
-    {% endfor %}
+      {% endfor %}
     <!--
   {% if user.is_superuser %}
   <form class="form container" method="POST" action=".">{% csrf_token %}
@@ -137,7 +98,7 @@
   </form>
   {% endif %}-->
     </div>
-{% endfor %}
+    {% endfor %}
 </div>
 {% endblock %}
 {% block script %}
@@ -147,7 +108,4 @@
 <script type="text/javascript" src="../static/js/qiniu.js"></script>
 <script type="text/javascript" src="../static/js/highlight/highlight.js"></script>
 <script type="text/javascript" src="../static/js/main.js"></script>
-<script type="text/javascript">
-	
-</script>
 {% endblock %}

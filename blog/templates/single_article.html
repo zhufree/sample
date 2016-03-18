@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Blog|{{article.title}}{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
 {% block content %}
 {% if article %}
 <!--title-->
@@ -69,10 +73,7 @@
 </div>
 {% endif %}
 {% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-{% endblock %}
+
 {% block script %}
 {% load staticfiles %}
 <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>

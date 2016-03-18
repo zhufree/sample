@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}论坛{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
+{% endblock %}
 {% block content %}
 <section class="list-group col-md-10 col-md-offset-1 post-list">
 {% for post in posts %}
@@ -39,8 +43,4 @@
   </form>
 </section>
 
-{% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/forum.css' %}">
 {% endblock %}

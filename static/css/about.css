@@ -1,9 +1,13 @@
+body {
+  background-color: #fff;
+}
 #logo{
   text-align: center;
 }
 #head-img{
   border: 2px #eee solid;
   border-radius: 50%;
+  width: 100px;;
 }
 .social-logo{
   width: 30px;

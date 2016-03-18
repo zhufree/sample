@@ -1,0 +1,39 @@
+/* force scrollbar */
+/*html { overflow-y: scroll; }*/
+body {
+    font-family: sans-serif;
+}
+/* ---- isotope ---- */
+.grid {
+    padding: 0;
+   /* min-height: 450px; */
+    margin: 0 auto;
+    overflow:hidden;
+}
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 30%;
+}
+
+.grid-item {
+  float: left;
+  margin: 20px;
+  padding: 10px;
+  border-width: 1px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 5px;
+}

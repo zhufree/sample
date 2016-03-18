@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 {% block title %}关于开发者{% endblock %}
+{% block link %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
 {% block content %}
 {% load staticfiles %}
 <section class="col-md-10 col-md-offset-1" id="logo">
   <img src="{% static 'img/moyotee.jpg' %}" alt="" id="head-img">
   <h1>zhufree</h1>
   <h3>热爱编程与互联网，以教育事业为梦想</h3>
-  <!-- <a href="https://github.com/zhufree" target="_blank"><img src="{% static 'img/github.png' %}" alt="" class="social-logo"></a>
+   <a href="https://github.com/zhufree" target="_blank"><img src="{% static 'img/github.png' %}" alt="" class="social-logo"></a>
   <a href="http://blog.csdn.net/zhu_free" target="_blank"><img src="{% static 'img/csdn.png' %}" alt="" class="social-logo"></a>
   <a href="http://zhufree.jisuan.me" target="_blank"><img src="{% static 'img/jisuanke.png' %}" alt="" class="social-logo"></a>
-  <a href="https://www.shiyanlou.com/user/29295" target="_blank"><img src="{% static 'img/shiyanlou.jpg' %}" alt="" class="social-logo"></a> -->
-
+  <a href="https://www.shiyanlou.com/user/29295" target="_blank"><img src="{% static 'img/shiyanlou.jpg' %}" alt="" class="social-logo"></a>
 </section>
 <section class="col-md-10 col-md-offset-1 info-box" id="person-info">
   <h1>个人信息</h1>
@@ -26,12 +29,9 @@
   <h4>CodePen：<a href="http://codepen.io/zhufree/">http://codepen.io/zhufree/</a></h4>
 </section>
 <section class="col-md-10 col-md-offset-1 info-box" id="edu-info">
-  <h1>教育背景及自学道路</h1>
+  <h1>教育背景</h1>
   <hr>
-  <h4>WHU 武汉大学</h4>
-  <h4>SIM 信息管理学院</h4>
-  <h4>DP 数字出版</h4>
-  <h4>大三本科在读</h4>
+  <h4>WHU 武汉大学-SIM 信息管理学院-DP 数字出版-大三本科在读</h4>
   <h4>实验楼：<a href="https://www.shiyanlou.com/user/29295">https://www.shiyanlou.com/user/29295</a></h4>
   <h4>计蒜客：<a href="http://zhufree.jisuan.me/">http://zhufree.jisuan.me/</a></h4>
 </section>
@@ -40,16 +40,14 @@
   <hr>
   <h4>熟悉<code>python</code>，有使用<code>python+django</code>进行web的开发经验，对数据库使用也有一定的了解；</h4>
   <h4>掌握<code>html,css,javascript</code>，了解<code>html5</code>及<code>css3</code>，熟悉<code>bootstrap</code>及<code>jquery</code>的使用，尝试使用<code>angularjs</code>编写单页小型web app；</h4>
-  <h4>了解基本算法及数据结构，了解HTTP，TCP/IP协议等网络基础知识；</h4>
+  <h4>了解基本算法及数据结构，了解HTTP，TCP/IP协议等网络基础知识。</h4>
 </section>
 <section class="col-md-10 col-md-offset-1 info-box" id="life-skill">
   <h1>自我评价</h1>
   <hr>
   <h4>热爱编程及互联网行业；</h4>
   <h4>自律，责任心强，守时；</h4>
-  <h4>有较强的信息检索，组织，及总结归纳能力；</h4>
-  <h4>学习能力强，喜欢探索新的学习方式及工具，使用互联网产品提高工作学习效率；</h4>
-  <h4>有较好自学能力，习惯尝试新的学习方法并积累总结经验；</h4>
+  <h4>学习能力强，习惯尝试新的学习方法并积累总结经验，有较强的信息检索，组织，及总结归纳能力，使用互联网产品提高工作学习效率；</h4>
   <h4>生活习惯及作息健康，有长期健身的习惯，身体素质优秀，能承受高强度工作；</h4>
 </section>
 <section class="col-md-10 col-md-offset-1 info-box" id="pro-show">
@@ -69,10 +67,7 @@
   <h4>网站地址：<a href="http://whufree.pythonanywhere.com/">http://whufree.pythonanywhere.com/</a></h4>
 </section>
 {% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/about.css' %}">
-{% endblock %}
+
 {% block script %}
 {% load staticfiles %}
 <script type="text/javascript" src="{% static 'js/about.js' %}"></script>

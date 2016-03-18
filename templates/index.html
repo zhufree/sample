@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block title %}首页{% endblock %}
-{% block content %}
+{% block link %}
 {% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+{% block content %}
+<!-- {% load staticfiles %} -->
 <section id="cover">
   <p id="timeHead"></p>
   <button id="exit-btn">关闭</button>
@@ -87,11 +92,6 @@
     <p>以Novel和Chapter的形式组织内容，可以多人编辑同一个文集，目前刚刚写完框架，bug很多。</p>
   </aside>
 </section>
-{% endblock %}
-{% block link %}
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
-<link rel="stylesheet" href="{% static 'css/register.css' %}">
 {% endblock %}
 {% block script %}
 {% load staticfiles %}
