@@ -25,3 +25,17 @@ hr{
 .info-box:last-child{
   margin-bottom: 20px;
 }
+.work {
+  margin: 20px 0;
+}
+.project-work {
+  overflow: hidden;
+}
+.project-work img {
+  float: left;
+  width: 33%;
+  margin: 10px 0;
+}
+.display-box {
+  padding: 20px 0;
+}
