@@ -1,8 +1,8 @@
 __author__ = 'zhufree'
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from views import *
 
-urlpatterns = patterns(
+urlpatterns = [
     '',
     # Examples:
     # url(r'^$', 'sample.views.home', name='home'),
@@ -12,4 +12,4 @@ urlpatterns = patterns(
     url(r'add_new_novel/$', add_new_novel),
     url(r'add_new_chapter/$', add_new_chapter),
     url(r'mynovels/$', my_novels),
-)
+]

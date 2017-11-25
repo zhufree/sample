@@ -1,8 +1,7 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from views import *
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     # Examples:
     url(r'^register/$', register_),
     url(r'^login/$', login_),
@@ -10,4 +9,4 @@ urlpatterns = patterns(
     url(r'^register/api/', api_register_),
     url(r'^login/api/', api_login_),
     url(r'^logout/api/', api_logout_),
-)
+]

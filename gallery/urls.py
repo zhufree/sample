@@ -1,8 +1,8 @@
 __author__ = 'zhufree'
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from views import *
 
-urlpatterns = patterns(
+urlpatterns = [
     '',
     # Examples:
     url(r'^$', index),
@@ -11,4 +11,4 @@ urlpatterns = patterns(
     url(r'^t/(?P<tid>\d+)/$', show_tag),
     url(r'^post/$', post),
 
-)
+]

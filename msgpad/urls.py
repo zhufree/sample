@@ -1,11 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from views import *
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     # Examples:
     # url(r'^$', 'sample.views.home', name='home'),
     url(r'^$', index),
     url(r'^post/$', post),
 
-)
+]

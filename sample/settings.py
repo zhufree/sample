@@ -41,11 +41,11 @@ INSTALLED_APPS = (
     'usersys',
     'blog',
     'forum',
-    'gallery',
-    'chatroom',
-    #'tieba',
-    'eat',
-    'novel',
+    # 'gallery',
+    # 'chatroom',
+    # 'tieba',
+    # 'eat',
+    # 'novel',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,6 +58,22 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sessions.serializers.JSONSerializer',
 )
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 ROOT_URLCONF = 'sample.urls'
 
@@ -77,7 +93,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'zh-CN'
+# LANGUAGE_CODE = 'zh-CN'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -102,6 +118,6 @@ STATICFILES_DIRS = (
 
 # 必须，否则无法加载模板
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
-)
+# TEMPLATE_DIRS = (
+#     os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
+# )
