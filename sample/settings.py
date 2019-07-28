@@ -41,22 +41,22 @@ INSTALLED_APPS = (
     'usersys',
     'blog',
     'forum',
-    # 'gallery',
-    # 'chatroom',
+    'gallery',
+    'chatroom',
     # 'tieba',
-    # 'eat',
-    # 'novel',
+    'eat',
+    'novel',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sessions.serializers.JSONSerializer',
+    # 'django.contrib.sessions.serializers.JSONSerializer',
 )
 
 TEMPLATES = [
@@ -121,3 +121,21 @@ STATICFILES_DIRS = (
 # TEMPLATE_DIRS = (
 #     os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
 # )
+
+# Password validation
+# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]

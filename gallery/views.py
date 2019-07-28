@@ -2,18 +2,18 @@
 from django.shortcuts import render, Http404
 from django.http import HttpResponse, HttpResponseRedirect
 import json
-from qiniu import Auth
-from models import *
+# from qiniu import Auth
+from .models import *
 # 关于七牛的key信息
-from private_settings import *
+# from private_settings import *
 # Create your views here.
 
 
-def uptoken(request):
-    q = Auth(ACCESS_KEY, SECRET_KEY)
-    token = q.upload_token(BUCKET_NAME)
-    data = {'uptoken': token}
-    return HttpResponse(json.dumps(data), content_type="application/json")
+# def uptoken(request):
+#     q = Auth(ACCESS_KEY, SECRET_KEY)
+#     token = q.upload_token(BUCKET_NAME)
+#     data = {'uptoken': token}
+#     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
 def index(request):

@@ -7,9 +7,9 @@ from django.utils import timezone
 
 
 class Chat(models.Model):
-    sender = models.ForeignKey(User, related_name='has_chats')
+    sender = models.ForeignKey(User, related_name='has_chats',on_delete=models.CASCADE)
     content = models.TextField()
-    time = models.DateTimeField(auto_now_add=True, default=timezone.now)
+    time = models.DateTimeField(auto_now_add=True)
 
 
     def __unicode__(self):

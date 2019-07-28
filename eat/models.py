@@ -7,7 +7,7 @@ from django.contrib import admin
 class Restaurant(models.Model):
     name = models.CharField(max_length=20)
     count = models.BigIntegerField(default=0)
-    user = models.ForeignKey(User, related_name='like_restaurant')
+    user = models.ForeignKey(User, related_name='like_restaurant',on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u'%s' % self.name

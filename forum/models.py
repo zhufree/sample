@@ -13,11 +13,11 @@ class Topic(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(User, related_name='has_posts')
+    author = models.ForeignKey(User, related_name='has_posts',on_delete=models.CASCADE)
     title = models.CharField(max_length=30, blank=False)
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
-    topic = models.ForeignKey(Topic, related_name='has_posts')
+    topic = models.ForeignKey(Topic, related_name='has_posts',on_delete=models.CASCADE)
     last_reply_time = models.DateTimeField(auto_now=True)
     reply_count = models.IntegerField(default=0)
 
@@ -26,11 +26,11 @@ class Post(models.Model):
 
 
 class Reply(models.Model):
-    author = models.ForeignKey(User, related_name='user_has_replys')
+    author = models.ForeignKey(User, related_name='user_has_replys',on_delete=models.CASCADE)
     content = models.TextField()
     floor_num = models.IntegerField(default=2)
-    to_post = models.ForeignKey(Post, related_name='post_has_replys')
-    to_reply = models.ForeignKey('self', related_name='reply_has_replys', null=True, blank=True)
+    to_post = models.ForeignKey(Post, related_name='post_has_replys',on_delete=models.CASCADE)
+    to_reply = models.ForeignKey('self', related_name='reply_has_replys', null=True, blank=True,on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):

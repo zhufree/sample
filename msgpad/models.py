@@ -9,7 +9,7 @@ from django.utils import timezone
 class Message(models.Model):
     content = models.CharField(max_length=500, null=False, blank=False, default='')
     time = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, related_name='user_messages')
+    author = models.ForeignKey(User, related_name='user_messages',on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u'%s' % self.content

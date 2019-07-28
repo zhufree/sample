@@ -18,8 +18,8 @@ class Photo(models.Model):
     name = models.CharField(max_length=30, blank=True, null=True)
     link = models.URLField(unique=True, blank=False,null=False)
     description = models.TextField(null=True)
-    up_loader = models.ForeignKey(User, related_name='user_has_photos')
-    time = models.DateTimeField(auto_now_add=True, default=timezone.now)
+    up_loader = models.ForeignKey(User, related_name='user_has_photos',on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name='tag_has_photos')
     like_count = models.IntegerField(default=0)
 
@@ -29,8 +29,8 @@ class Photo(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    author = models.ForeignKey(User, related_name='use_has_comments')
-    photo = models.ForeignKey(Photo, null=True, related_name='photo_has_comments')
+    author = models.ForeignKey(User, related_name='use_has_comments',on_delete=models.CASCADE)
+    photo = models.ForeignKey(Photo, null=True, related_name='photo_has_comments',on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True, null=True)
     def __unicode__(self):
         return u'%s' % self.content

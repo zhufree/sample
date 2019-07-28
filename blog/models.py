@@ -26,7 +26,7 @@ class Comment(models.Model):
     email = models.EmailField()
     name = models.CharField(max_length=20, null=False, blank=False, default='无名氏')
     content = models.TextField()
-    article = models.ForeignKey(Article, related_name='has_comments', null=True)
+    article = models.ForeignKey(Article, related_name='has_comments', null=True,on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):

@@ -3,7 +3,7 @@ from django.shortcuts import render, Http404
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.contrib.auth.decorators import login_required
-from models import *
+from .models import *
 # Create your views here.
 
 
@@ -51,7 +51,7 @@ def add_new_novel(request):
 def add_new_chapter(request):
     if request.method == 'POST':
         cur_novel = Novel.objects.get(id=request.POST.get('novel_id'))
-        print cur_novel, request.POST.get('novel_id')
+        print(cur_novel, request.POST.get('novel_id'))
         new_chapter = Chapter(
             title=request.POST.get('title'),
             content=request.POST.get('content'),

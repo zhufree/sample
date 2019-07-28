@@ -1,7 +1,7 @@
 from django.shortcuts import render, Http404, HttpResponseRedirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
-from models import Chat
+from .models import Chat
 # Create your views here.
 
 def index(request):

@@ -7,7 +7,7 @@ from django.contrib import admin
 class StudentAcc(models.Model):
     sid = models.BigIntegerField(unique=True, blank=False, null=False)
     pwd = models.BigIntegerField(blank=False, null=False)
-    user = models.ForeignKey(User, related_name='has_student_account')
+    user = models.ForeignKey(User, related_name='has_student_account',on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u'%s' % self.sid

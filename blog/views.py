@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, render, get_object_or_404, Http
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
-from blog.models import *
+from .models import *
 import json
 # import markdown
 # Create your views here.

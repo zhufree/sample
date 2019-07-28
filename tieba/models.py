@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
-from account import Account as _Account
+from .account import Account as _Account
 # Create your models here.
 
 
