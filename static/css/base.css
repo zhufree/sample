@@ -4,7 +4,7 @@ body{
   background-color: #81C7D4;
 }
 
-nav{
+ul.top{
   background-color: rgb(65, 177, 70) !important;/*nav的背景色,a背景是透明的*/
   padding: 10px 10px;
   margin: 0 !important;
@@ -14,32 +14,33 @@ nav{
   top: 0;
 }
 
-nav .dropdown-menu{/*整个下拉列表*/
+ul.top .dropdown-menu{/*整个下拉列表*/
   background-color: rgb(65, 177, 70) !important;
   /* 一样的背景色但没有padding*/
   min-width: auto;
 }
 
-nav .dropdown-menu>li{
+ul.top .dropdown-menu>li{
   padding: 0;
   margin: 10px 0;
 }
 
-nav a{
+ul.top a{
   text-decoration: none;
   color: #eee !important;
   border-radius: 10px;
 }
 
-nav a:hover{
+ul.top a:hover{
   background-color: rgb(65, 200, 70) !important;
 }
 
-nav .open{
+ul.top .open{
   background-color: rgb(65, 200, 70) !important;
 }
 #main-box{
   min-height: 600px;
+  margin-top: 80px;
 }
 @media screen and (min-width: 1000px){
   .container-fluid{
