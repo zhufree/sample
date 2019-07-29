@@ -15,14 +15,19 @@ $(function() {
 
 //更新消息
 function updateMsg() {
-   $.post(
+    var last_chat_id = $(".chat_id").last().val()
+    console.log(last_chat_id)
+    if (last_chat_id !== undefined) {
+    $.post(
      "./post/",
      {
        post_type: "get_chat",
-     last_chat_id: $(".chat_id").last().val()
+        last_chat_id: last_chat_id
    },
    function(data) {
          $('.list-group-item').append(data);    //解析返回的 xml
    });
+    }
+
    setTimeout(updateMsg, 1000);        //每秒更新一次
 }

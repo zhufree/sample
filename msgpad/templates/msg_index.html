@@ -5,8 +5,13 @@
 <link rel="stylesheet" href="{% static 'css/msgpad.css' %}">
 {% endblock %}
 {% block content %}
+<style>
+    #msgForm{
+    margin-top: 30px;
+    }
+</style>
 <!-- display messages by id -->
-<div class="list-group col-md-10 col-md-offset-1">
+<div class="list-group col">
 {% for msg in msgs %}
     <div class="list-group-item">
         <pre class="list-group-item-heading msg-content" style="word-break:break-all;word-wrap:break-word;" >{{msg.content}}</pre>
@@ -16,7 +21,7 @@
 {% endfor %}
 </div>
 <!-- post messages -->
-<form id="msgForm" class="form-horizontal col-md-6 col-md-offset-3 container" method="POST" >{% csrf_token %}
+<form id="msgForm" class="form-horizontal col container" method="POST" >{% csrf_token %}
     <div class="form-group">
         <label class="control-label" for="exampleMessage">留言：</label>
         <textarea wrap="physical" rows="5"  type="text" name="content" value="" placeholder="" class="form-control" id="exampleMessage"></textarea>

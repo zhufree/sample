@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block title %}聊天室{% endblock %}
 {% block content %}
-<div class="list-group col-md-10 col-md-offset-1 well">
+<style>
+    #chatForm{
+        margin-top:50px;
+    }
+    div.list-group-item {
+    min-height:200px;
+    }
+</style>
+<div class="list-group col well">
     <div class="list-group-item">
     	{% for chat in chats %}
         <h4 class="list-group-item-heading">{{chat.sender}}:{{chat.content}}</h4>
@@ -12,11 +20,11 @@
     </div>
 </div>
 
-<form id="chatForm" class="form-horizontal panel col-md-offset-1" method="POST" action=".">{% csrf_token %}
-    <div class="form-group col-md-11">
+<form id="chatForm" style="" class="form-horizontal panel col" method="POST" action=".">{% csrf_token %}
+    <div class="form-group col">
         <textarea type="text" name="content" id="content" value="" class="form-control" id="exampleMessage" placeholder=""></textarea>
     </div>
-    <div class="form-group col-md-4 ">
+    <div class="form-group col">
         <input type="hidden" name="post_type" value="send_chat"/>
         <input type="submit" class="btn btn-lg btn-primary" value="发送"/>
     </div>
@@ -24,5 +32,4 @@
 {% endblock %}
 {% block script %}
 {% load staticfiles %}
-<script type="text/javascript" src="{% static 'js/chatroom.js' %}"></script>
 {% endblock %}
