@@ -1,8 +1,5 @@
 # sample
 samples for django
-汇集各种django做的小app
-不知道为什么那么多js,我明明只是用了几个js库啊喂.
-目前网址:zhufree.fun
 
 ## 留言板(maspad)
 发表单条留言
